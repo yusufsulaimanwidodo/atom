@@ -179,7 +179,7 @@ const elementData = [
 
         // 2. Mengisi perabotan di dalam ruang rahasia (HTML dalam backtick/String Literal)
         modalOverlay.innerHTML = `
-            <div class="modal-card">
+            <div class="modal-card" data-category="${data.category}">
                 <!-- Tombol silang untuk membongkar ruang rahasia -->
                 <button class="close-btn" id="close-modal" aria-label="Tutup Modal">
                     <img src="images/close_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="Tutup">
