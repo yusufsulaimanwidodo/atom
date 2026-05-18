@@ -8,17 +8,45 @@ kita cukup menggantinya di gudang ini.
 :root {
     /* Palet Light Mode (Terang) */
     --bg-color: #FAFAFA;
-    --surface-color: #E0F2F1;     /* Warna Header, Footer, Bottom Card */
-    --surface-variant: #80CBC4;   /* Warna Top Card */
-    --text-primary: #004D40;
-    --text-secondary: #00695C;
+    --header-footer-bg: #9e9e9e;
+    --text-primary: #212121;
     --shadow-color: rgba(0, 0, 0, 0.08);
-    --toggle-bg: #B2DFDB;
-    --toggle-btn: #80CBC4;
-    --icon-color: #004D40;
-    /* Filter warna CSS untuk mengubah SVG hitam (#1F1F1F) menjadi hijau gelap (#004D40) */
-    --icon-filter: invert(21%) sepia(87%) saturate(1476%) hue-rotate(149deg) brightness(97%) contrast(104%);
-    --icon-filter-active: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+
+    /* Filter Icons */
+    --logo-filter: invert(10%) sepia(3%) saturate(15%) hue-rotate(314deg) brightness(97%) contrast(91%);
+    --theme-btn-filter: invert(37%) sepia(3%) saturate(11%) hue-rotate(314deg) brightness(97%) contrast(89%);
+    --footer-btn-filter: invert(37%) sepia(3%) saturate(11%) hue-rotate(314deg) brightness(97%) contrast(89%);
+    --footer-btn-active-filter: invert(10%) sepia(3%) saturate(15%) hue-rotate(314deg) brightness(97%) contrast(91%);
+
+    /* Logam */
+    --logam-name-bg: #ffcdd2;
+    --logam-symbol-bg1: #ef9a9a;
+    --logam-symbol-bg2: #ef5350;
+    --logam-font: #b71c1c;
+
+    /* Non-Logam */
+    --nonlogam-name-bg: #bbdefb;
+    --nonlogam-symbol-bg1: #90caf9;
+    --nonlogam-symbol-bg2: #42a5f5; 
+    --nonlogam-font: #0d47a1;
+
+    /* Metaloid */
+    --metaloid-name-bg: #c8e6c9;
+    --metaloid-symbol-bg1: #c8e6c9;
+    --metaloid-symbol-bg2: #66bb6a;
+    --metaloid-font: #1b5e20;
+
+    /* Gas Mulia */
+    --gasmulia-name-bg: #ffe0b2;
+    --gasmulia-symbol-bg1: #ffcc80;
+    --gasmulia-symbol-bg2: #ffa726;
+    --gasmulia-font: #e65100;
+
+    /* Radioaktif */
+    --radioaktif-name-bg: #e1bee7;
+    --radioaktif-symbol-bg1: #ce93d8;
+    --radioaktif-symbol-bg2: #ab47bc;
+    --radioaktif-font: #4a148c;
 }
 
 /* 
@@ -29,17 +57,77 @@ Rumah akan otomatis menyesuaikan warnanya!
 [data-theme="dark"] {
     /* Palet Dark Mode (Gelap) */
     --bg-color: #212121;
-    --surface-color: #006B5F;     /* Warna Header, Footer, Bottom Card */
-    --surface-variant: #167E70;   /* Warna Top Card */
-    --text-primary: #FFFFFF;
-    --text-secondary: #E0F2F1;
+    --header-footer-bg: #757575;
+    --text-primary: #FAFAFA;
     --shadow-color: rgba(0, 0, 0, 0.3);
-    --toggle-bg: #004D40;
-    --toggle-btn: #00332A;
-    --icon-color: #FFFFFF;
-    /* Filter warna CSS untuk mengubah SVG hitam (#1F1F1F) menjadi putih (#FFFFFF) */
-    --icon-filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
-    --icon-filter-active: invert(11%) sepia(0%) saturate(1%) hue-rotate(152deg) brightness(91%) contrast(85%);
+
+    /* Filter Icons */
+    --logo-filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+    --theme-btn-filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(185deg) brightness(95%) contrast(89%);
+    --footer-btn-filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(185deg) brightness(95%) contrast(89%);
+    --footer-btn-active-filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+
+    /* Logam */
+    --logam-name-bg: #e53935;
+    --logam-symbol-bg1: #d32f2f;
+    --logam-symbol-bg2: #b71c1c;
+    --logam-font: #ffebee;
+
+    /* Non-Logam */
+    --nonlogam-name-bg: #1e88e5;
+    --nonlogam-symbol-bg1: #1976d2;
+    --nonlogam-symbol-bg2: #0d47a1;
+    --nonlogam-font: #e3f2fd;
+
+    /* Metaloid */
+    --metaloid-name-bg: #43a047;
+    --metaloid-symbol-bg1: #388e3c;
+    --metaloid-symbol-bg2: #1b5e20;
+    --metaloid-font: #e8f5e9;
+
+    /* Gas Mulia */
+    --gasmulia-name-bg: #fb8c00;
+    --gasmulia-symbol-bg1: #f57c00;
+    --gasmulia-symbol-bg2: #e65100;
+    --gasmulia-font: #fff3e0;
+
+    /* Radioaktif */
+    --radioaktif-name-bg: #8e24aa;
+    --radioaktif-symbol-bg1: #7b1fa2;
+    --radioaktif-symbol-bg2: #4a148c;
+    --radioaktif-font: #f3e5f5;
+}
+
+/* Category Variable Mapping */
+[data-category="logam"] {
+    --card-name-bg: var(--logam-name-bg);
+    --card-symbol-bg1: var(--logam-symbol-bg1);
+    --card-symbol-bg2: var(--logam-symbol-bg2);
+    --card-font: var(--logam-font);
+}
+[data-category="nonlogam"] {
+    --card-name-bg: var(--nonlogam-name-bg);
+    --card-symbol-bg1: var(--nonlogam-symbol-bg1);
+    --card-symbol-bg2: var(--nonlogam-symbol-bg2);
+    --card-font: var(--nonlogam-font);
+}
+[data-category="metaloid"] {
+    --card-name-bg: var(--metaloid-name-bg);
+    --card-symbol-bg1: var(--metaloid-symbol-bg1);
+    --card-symbol-bg2: var(--metaloid-symbol-bg2);
+    --card-font: var(--metaloid-font);
+}
+[data-category="gas_mulia"] {
+    --card-name-bg: var(--gasmulia-name-bg);
+    --card-symbol-bg1: var(--gasmulia-symbol-bg1);
+    --card-symbol-bg2: var(--gasmulia-symbol-bg2);
+    --card-font: var(--gasmulia-font);
+}
+[data-category="radioaktif"] {
+    --card-name-bg: var(--radioaktif-name-bg);
+    --card-symbol-bg1: var(--radioaktif-symbol-bg1);
+    --card-symbol-bg2: var(--radioaktif-symbol-bg2);
+    --card-font: var(--radioaktif-font);
 }
 
 html {
@@ -56,9 +144,8 @@ html {
 
 /* Memastikan semua icon SVG mengikuti warna tema menggunakan filter */
 img.header-icon, 
-img.theme-icon, 
 .close-btn img {
-    filter: var(--icon-filter);
+    filter: var(--logo-filter);
     transition: filter 0.3s ease;
 }
 
@@ -88,7 +175,7 @@ body.modal-open {
     align-items: center;
     justify-content: center;
     gap: 32px;
-    background-color: var(--surface-color);
+    background-color: var(--header-footer-bg);
     padding: 12px 24px;
     border-radius: 50px;
     width: fit-content;
@@ -127,7 +214,7 @@ body.modal-open {
 }
 
 .theme-btn img {
-    filter: var(--icon-filter);
+    filter: var(--theme-btn-filter);
     opacity: 0.5;
     transition: all 0.2s ease;
     width: 36px;
@@ -218,7 +305,8 @@ body.modal-open {
 }
 
 .card-top {
-    background-color: var(--surface-variant);
+    background: linear-gradient(135deg, var(--card-symbol-bg1), var(--card-symbol-bg2));
+    color: var(--card-font);
     padding: 16px;
     height: 160px;
     position: relative;
@@ -240,10 +328,12 @@ body.modal-open {
 .symbol {
     font-size: 5rem;
     font-weight: 700;
+    font-style: italic;
 }
 
 .card-bottom {
-    background-color: var(--surface-color);
+    background-color: var(--card-name-bg);
+    color: var(--card-font);
     padding: 16px;
     text-align: center;
 }
@@ -268,7 +358,7 @@ body.modal-open {
     bottom: 20px;
     display: flex;
     gap: 24px;
-    background-color: var(--surface-color);
+    background-color: var(--header-footer-bg);
     padding: 12px 24px;
     border-radius: 50px;
     box-shadow: 0 4px 12px var(--shadow-color);
@@ -288,7 +378,7 @@ body.modal-open {
 }
 
 .category-btn img {
-    filter: var(--icon-filter);
+    filter: var(--footer-btn-filter);
     opacity: 0.5;
     transition: all 0.2s ease;
     width: 32px;
@@ -296,6 +386,7 @@ body.modal-open {
 }
 
 .category-btn:hover img, .category-btn.active img {
+    filter: var(--footer-btn-active-filter);
     opacity: 1;
     transform: scale(1.1);
 }
@@ -407,7 +498,8 @@ body.modal-open {
 }
 
 .modal-top {
-    background-color: var(--surface-variant);
+    background: linear-gradient(135deg, var(--card-symbol-bg1), var(--card-symbol-bg2));
+    color: var(--card-font);
     padding: 40px;
     height: 250px;
     position: relative;
@@ -421,7 +513,8 @@ body.modal-open {
 }
 
 .modal-bottom {
-    background-color: var(--surface-color);
+    background-color: var(--card-name-bg);
+    color: var(--card-font);
     padding: 24px;
     max-height: 50vh; /* Membatasi tinggi agar tidak tembus layar */
     overflow-y: auto; /* Memunculkan scrollbar otomatis jika teks terlalu panjang */
