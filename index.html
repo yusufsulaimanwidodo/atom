@@ -1,34 +1,54 @@
 <!doctype html>
 <html lang="id" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabel Periodik</title>
+    <link rel="icon" href="images/explosion.svg" type="image/svg+xml" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tabel Periodik</title>
-  <link rel="icon" href="images/explosion.svg" type="image/svg+xml" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,700&display=swap" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-  <link rel="stylesheet" href="style.css" />
-</head>
+  <body>
+    <header class="floating-header">
+      <div class="logo-area">
+        <img
+          src="images/explosion.svg"
+          alt="Ikon Tabel Periodik"
+          class="header-icon"
+          width="36"
+          height="36"
+        />
+        <h1>Tabel Periodik</h1>
+      </div>
+      <button
+        class="theme-btn"
+        id="theme-toggle"
+        aria-label="Ganti Tema"
+        data-tooltip="Ganti Tema"
+      >
+        <img
+          src="images/light_mode.svg"
+          alt="Ganti Tema"
+          class="theme-icon"
+          id="theme-icon"
+          width="36"
+          height="36"
+        />
+      </button>
+    </header>
 
-<body>
-  <header class="floating-header">
-    <div class="logo-area">
-      <img src="images/explosion.svg" alt="Ikon Tabel Periodik" class="header-icon" width="36" height="36" />
-      <h1>Tabel Periodik</h1>
-    </div>
-    <button class="theme-btn" id="theme-toggle" aria-label="Ganti Tema" data-tooltip="Ganti Tema">
-      <img src="images/light_mode.svg" alt="Ganti Tema" class="theme-icon" id="theme-icon" width="36" height="36" />
-    </button>
-  </header>
+    <main class="main-content" id="elements-container"></main>
 
-  <main class="main-content" id="elements-container"></main>
+    <footer class="floating-footer" id="main-footer"></footer>
 
-  <footer class="floating-footer" id="main-footer"></footer>
-
-  <script src="script.js"></script>
-</body>
-
+    <script src="script.js"></script>
+  </body>
 </html>

@@ -407,7 +407,7 @@ body.modal-open {
   position: absolute;
   bottom: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(60%);
+  transform: translateX(-50%) translateY(50%);
   margin-bottom: 6px;
   border-width: 6px;
   border-style: solid;
