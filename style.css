@@ -1,453 +1,440 @@
-/*
-ANALOGI CSS: File CSS ini seperti 'cat, perabotan, dan tata letak' untuk kerangka rumah (HTML).
-:root adalah 'gudang cat' di mana kita menyimpan warna-warna utama (variabel) 
-yang bisa kita pakai berulang-ulang. Jika kita ingin mengganti warna seisi rumah, 
-kita cukup menggantinya di gudang ini.
-*/
-
 :root {
-    /* Palet Light Mode (Terang) */
-    --bg-color: #FAFAFA;
-    --header-footer-bg: #9e9e9e;
-    --text-primary: #212121;
-    --shadow-color: rgba(0, 0, 0, 0.08);
+  --bg-color: #fafafa;
+  --header-footer-bg: #9e9e9e;
+  --text-primary: #212121;
+  --shadow-color: rgba(0, 0, 0, 0.08);
 
-    /* Filter Icons */
-    --logo-filter: invert(10%) sepia(3%) saturate(15%) hue-rotate(314deg) brightness(97%) contrast(91%);
-    --theme-btn-filter: invert(37%) sepia(3%) saturate(11%) hue-rotate(314deg) brightness(97%) contrast(89%);
-    --footer-btn-filter: invert(37%) sepia(3%) saturate(11%) hue-rotate(314deg) brightness(97%) contrast(89%);
-    --footer-btn-active-filter: invert(10%) sepia(3%) saturate(15%) hue-rotate(314deg) brightness(97%) contrast(91%);
+  --logo-filter: invert(10%) sepia(3%) saturate(15%) hue-rotate(314deg)
+    brightness(97%) contrast(91%);
+  --theme-btn-filter: invert(37%) sepia (3%) saturate(11%) hue-rotate(314deg)
+    brightness(97%) contrast(89%);
+  --footer-btn-filter: invert(37%) sepia (3%) saturate(11%) hue-rotate(314deg)
+    brightness(97%) contrast(89%);
+  --footer-btn-active-filter: invert(10%) sepia(3%) saturate(15%)
+    hue-rotate(314deg) brightness(97%) contrast(91%);
 
-    /* Logam */
-    --logam-name-bg: #ffcdd2;
-    --logam-symbol-bg1: #ef9a9a;
-    --logam-symbol-bg2: #ef5350;
-    --logam-font: #b71c1c;
+  --logam-name-bg: #ffcdd2;
+  --logam-symbol-bg1: #ef9a9a;
+  --logam-symbol-bg2: #ef5350;
+  --logam-font: #b71c1c;
 
-    /* Non-Logam */
-    --nonlogam-name-bg: #bbdefb;
-    --nonlogam-symbol-bg1: #90caf9;
-    --nonlogam-symbol-bg2: #42a5f5; 
-    --nonlogam-font: #0d47a1;
+  --nonlogam-name-bg: #bbdefb;
+  --nonlogam-symbol-bg1: #90caf9;
+  --nonlogam-symbol-bg2: #42a5f5;
+  --nonlogam-font: #0d47a1;
 
-    /* Metaloid */
-    --metaloid-name-bg: #c8e6c9;
-    --metaloid-symbol-bg1: #c8e6c9;
-    --metaloid-symbol-bg2: #66bb6a;
-    --metaloid-font: #1b5e20;
+  --metaloid-name-bg: #c8e6c9;
+  --metaloid-symbol-bg1: #c8e6c9;
+  --metaloid-symbol-bg2: #66bb6a;
+  --metaloid-font: #1b5e20;
 
-    /* Gas Mulia */
-    --gasmulia-name-bg: #ffe0b2;
-    --gasmulia-symbol-bg1: #ffcc80;
-    --gasmulia-symbol-bg2: #ffa726;
-    --gasmulia-font: #e65100;
+  --gasmulia-name-bg: #ffe0b2;
+  --gasmulia-symbol-bg1: #ffcc80;
+  --gasmulia-symbol-bg2: #ffa726;
+  --gasmulia-font: #e65100;
 
-    /* Radioaktif */
-    --radioaktif-name-bg: #e1bee7;
-    --radioaktif-symbol-bg1: #ce93d8;
-    --radioaktif-symbol-bg2: #ab47bc;
-    --radioaktif-font: #4a148c;
+  --radioaktif-name-bg: #e1bee7;
+  --radioaktif-symbol-bg1: #ce93d8;
+  --radioaktif-symbol-bg2: #ab47bc;
+  --radioaktif-font: #4a148c;
 }
 
-/* 
-ANALOGI THEME: Saat saklar (atribut data-theme) dipindahkan ke "dark", 
-seluruh cat di 'gudang' diganti dengan warna-warna gelap. 
-Rumah akan otomatis menyesuaikan warnanya!
-*/
 [data-theme="dark"] {
-    /* Palet Dark Mode (Gelap) */
-    --bg-color: #212121;
-    --header-footer-bg: #757575;
-    --text-primary: #FAFAFA;
-    --shadow-color: rgba(0, 0, 0, 0.3);
+  --bg-color: #212121;
+  --header-footer-bg: #757575;
+  --text-primary: #fafafa;
+  --shadow-color: rgba(0, 0, 0, 0.3);
 
-    /* Filter Icons */
-    --logo-filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
-    --theme-btn-filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(185deg) brightness(95%) contrast(89%);
-    --footer-btn-filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(185deg) brightness(95%) contrast(89%);
-    --footer-btn-active-filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+  --logo-filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg)
+    brightness(102%) contrast(102%);
+  --theme-btn-filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(185deg)
+    brightness(95%) contrast(89%);
+  --footer-btn-filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(185deg)
+    brightness(95%) contrast(89%);
+  --footer-btn-active-filter: invert(100%) sepia(100%) saturate(0%)
+    hue-rotate(288deg) brightness(102%) contrast(102%);
 
-    /* Logam */
-    --logam-name-bg: #e53935;
-    --logam-symbol-bg1: #d32f2f;
-    --logam-symbol-bg2: #b71c1c;
-    --logam-font: #ffebee;
+  --logam-name-bg: #e53935;
+  --logam-symbol-bg1: #d32f2f;
+  --logam-symbol-bg2: #b71c1c;
+  --logam-font: #ffebee;
 
-    /* Non-Logam */
-    --nonlogam-name-bg: #1e88e5;
-    --nonlogam-symbol-bg1: #1976d2;
-    --nonlogam-symbol-bg2: #0d47a1;
-    --nonlogam-font: #e3f2fd;
+  --nonlogam-name-bg: #1e88e5;
+  --nonlogam-symbol-bg1: #1976d2;
+  --nonlogam-symbol-bg2: #0d47a1;
+  --nonlogam-font: #e3f2fd;
 
-    /* Metaloid */
-    --metaloid-name-bg: #43a047;
-    --metaloid-symbol-bg1: #388e3c;
-    --metaloid-symbol-bg2: #1b5e20;
-    --metaloid-font: #e8f5e9;
+  --metaloid-name-bg: #43a047;
+  --metaloid-symbol-bg1: #388e3c;
+  --metaloid-symbol-bg2: #1b5e20;
+  --metaloid-font: #e8f5e9;
 
-    /* Gas Mulia */
-    --gasmulia-name-bg: #fb8c00;
-    --gasmulia-symbol-bg1: #f57c00;
-    --gasmulia-symbol-bg2: #e65100;
-    --gasmulia-font: #fff3e0;
+  --gasmulia-name-bg: #fb8c00;
+  --gasmulia-symbol-bg1: #f57c00;
+  --gasmulia-symbol-bg2: #e65100;
+  --gasmulia-font: #fff3e0;
 
-    /* Radioaktif */
-    --radioaktif-name-bg: #8e24aa;
-    --radioaktif-symbol-bg1: #7b1fa2;
-    --radioaktif-symbol-bg2: #4a148c;
-    --radioaktif-font: #f3e5f5;
+  --radioaktif-name-bg: #8e24aa;
+  --radioaktif-symbol-bg1: #7b1fa2;
+  --radioaktif-symbol-bg2: #4a148c;
+  --radioaktif-font: #f3e5f5;
 }
 
-/* Category Variable Mapping */
 [data-category="logam"] {
-    --card-name-bg: var(--logam-name-bg);
-    --card-symbol-bg1: var(--logam-symbol-bg1);
-    --card-symbol-bg2: var(--logam-symbol-bg2);
-    --card-font: var(--logam-font);
+  --name-bg: var(--logam-name-bg);
+  --symbol-bg1: var(--logam-symbol-bg1);
+  --symbol-bg2: var(--logam-symbol-bg2);
+  --font-color: var(--logam-font);
+  --card-name-bg: var(--name-bg);
+  --card-symbol-bg1: var(--symbol-bg1);
+  --card-symbol-bg2: var(--symbol-bg2);
+  --card-color: var(--font-color);
 }
+
 [data-category="nonlogam"] {
-    --card-name-bg: var(--nonlogam-name-bg);
-    --card-symbol-bg1: var(--nonlogam-symbol-bg1);
-    --card-symbol-bg2: var(--nonlogam-symbol-bg2);
-    --card-font: var(--nonlogam-font);
+  --name-bg: var(--nonlogam-name-bg);
+  --symbol-bg1: var(--nonlogam-symbol-bg1);
+  --symbol-bg2: var(--nonlogam-symbol-bg2);
+  --font-color: var(--nonlogam-font);
+  --card-name-bg: var(--name-bg);
+  --card-symbol-bg1: var(--symbol-bg1);
+  --card-symbol-bg2: var(--symbol-bg2);
+  --card-color: var(--font-color);
 }
+
 [data-category="metaloid"] {
-    --card-name-bg: var(--metaloid-name-bg);
-    --card-symbol-bg1: var(--metaloid-symbol-bg1);
-    --card-symbol-bg2: var(--metaloid-symbol-bg2);
-    --card-font: var(--metaloid-font);
+  --name-bg: var(--metaloid-name-bg);
+  --symbol-bg1: var(--metaloid-symbol-bg1);
+  --symbol-bg2: var(--metaloid-symbol-bg2);
+  --font-color: var(--metaloid-font);
+  --card-name-bg: var(--name-bg);
+  --card-symbol-bg1: var(--symbol-bg1);
+  --card-symbol-bg2: var(--symbol-bg2);
+  --card-color: var(--font-color);
 }
+
 [data-category="gas_mulia"] {
-    --card-name-bg: var(--gasmulia-name-bg);
-    --card-symbol-bg1: var(--gasmulia-symbol-bg1);
-    --card-symbol-bg2: var(--gasmulia-symbol-bg2);
-    --card-font: var(--gasmulia-font);
+  --name-bg: var(--gasmulia-name-bg);
+  --symbol-bg1: var(--gasmulia-symbol-bg1);
+  --symbol-bg2: var(--gasmulia-symbol-bg2);
+  --font-color: var(--gasmulia-font);
+  --card-name-bg: var(--name-bg);
+  --card-symbol-bg1: var(--symbol-bg1);
+  --card-symbol-bg2: var(--symbol-bg2);
+  --card-color: var(--font-color);
 }
+
 [data-category="radioaktif"] {
-    --card-name-bg: var(--radioaktif-name-bg);
-    --card-symbol-bg1: var(--radioaktif-symbol-bg1);
-    --card-symbol-bg2: var(--radioaktif-symbol-bg2);
-    --card-font: var(--radioaktif-font);
+  --name-bg: var(--radioaktif-name-bg);
+  --symbol-bg1: var(--radioaktif-symbol-bg1);
+  --symbol-bg2: var(--radioaktif-symbol-bg2);
+  --font-color: var(--radioaktif-font);
+  --card-name-bg: var(--name-bg);
+  --card-symbol-bg1: var(--symbol-bg1);
+  --card-symbol-bg2: var(--symbol-bg2);
+  --card-color: var(--font-color);
 }
 
 html {
-    scrollbar-gutter: stable; /* Mencegah layout bergeser (jitter) saat modal terbuka dan scrollbar hilang */
+  scrollbar-gutter: stable;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Transisi halus saat ganti tema */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
-/* Memastikan semua icon SVG mengikuti warna tema menggunakan filter */
-img.header-icon, 
+img.header-icon,
 .close-btn img {
-    filter: var(--logo-filter);
-    transition: filter 0.3s ease;
+  filter: var(--logo-filter);
+  transition: filter 0.3s ease;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
-    /* Mencegah scroll saat body dikunci */
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 body.modal-open {
-    overflow: hidden;
+  overflow: hidden;
 }
 
-/* =========================================================
-   BAGIAN HEADER (PAPAN NAMA MENGAPUNG)
-   ========================================================= */
 .floating-header {
-    position: fixed;
-    top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 32px;
-    background-color: var(--header-footer-bg);
-    padding: 12px 24px;
-    border-radius: 50px;
-    width: fit-content;
-    box-shadow: 0 4px 12px var(--shadow-color);
-    z-index: 100;
+  position: fixed;
+  top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  background-color: var(--header-footer-bg);
+  padding: 12px 24px;
+  border-radius: 50px;
+  width: fit-content;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  z-index: 100;
 }
 
 .logo-area {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .header-icon {
-    color: var(--text-primary);
+  color: var(--text-primary);
 }
 
 .floating-header h1 {
-    font-size: 1.25rem;
-    font-weight: 700;
+  font-size: 1.25rem;
+  font-weight: 700;
 }
 
-/* =========================================================
-   BAGIAN SAKLAR TEMA (THEME TOGGLE)
-   ========================================================= */
 .theme-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    transition: all 0.2s ease;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .theme-btn img {
-    filter: var(--theme-btn-filter);
-    opacity: 0.5;
-    transition: all 0.2s ease;
-    width: 36px;
-    height: 36px;
+  filter: var(--theme-btn-filter);
+  opacity: 0.5
+  transition: filter 0.3s ease;
+  width: 36px;
+  height: 36px;
 }
 
 .theme-btn:hover img {
-    opacity: 1;
-    transform: scale(1.1);
+  opacity: 1;
+  transform: scale(1.1);
+  transition: 0.3s ease;
 }
 
-/* Tooltip */
 .theme-btn::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: 12px;
-    background-color: var(--text-primary);
-    color: var(--bg-color);
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-    pointer-events: none;
-    box-shadow: 0 4px 6px var(--shadow-color);
-    font-weight: 500;
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 12px;
+  background-color: var(--text-primary);
+  color: var(--bg-color);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  font-weight: 500
 }
 
-/* Segitiga panah di atas tooltip */
 .theme-btn::before {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: 6px;
-    border-width: 6px;
-    border-style: solid;
-    border-color: transparent transparent var(--text-primary) transparent;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-    pointer-events: none;
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  margin-top: 6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent var(--text-primary) transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
 }
 
 .theme-btn:hover::after, .theme-btn:hover::before {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
-/* =========================================================
-   BAGIAN KARTU UTAMA (MAIN CARD)
-   ========================================================= */
 .main-content {
-    margin-top: 100px;
-    margin-bottom: 100px;
-    display: flex;
-    flex-wrap: wrap; /* Memungkinkan kartu untuk turun ke bawah jika layar tidak muat */
-    gap: 24px; /* Memberi jarak antar kartu */
-    justify-content: center;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 1200px; /* Lebar maksimal area pameran */
+  margin-top: 100px;
+  margin-bottom: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .element-card {
-    width: 280px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px var(--shadow-color);
-    cursor: pointer;
-    /* 
-    ANALOGI ANIMASI: Transformasi z-index ini ibarat kartu fisik.
-    Saat disentuh (hover), kita sedikit mengangkat kartunya ke arah kita.
-    */
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.element-card:hover, .element-card:focus-visible {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px var(--shadow-color);
-    outline: none;
+.element-card:hover, .element-card:focus-visible{
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px var(--shadow-color);
+  outline: none;
 }
 
 .card-top {
-    background: linear-gradient(135deg, var(--card-symbol-bg1), var(--card-symbol-bg2));
-    color: var(--card-font);
-    padding: 16px;
-    height: 160px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  background: linear-gradient(135deg, var(--card-symbol-bg1), var(--card-symbol-bg2));
+  color: var(--card-color);
+  padding: 16px;
+  height: 160px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .atomic-number {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    font-size: 0.9rem;
-    font-style: italic;
-    opacity: 0.9;
+ position: absolute;
+ top: 12px;
+ left: 12px;
+ font-size: 0.9rem;
+ font-style: italic;
+ opacity: 0.9;
 }
 
 .symbol {
-    font-size: 5rem;
-    font-weight: 700;
-    font-style: italic;
+  font-size: 5rem;
+  font-weight: 700;
+  font-style: italic;
 }
 
 .card-bottom {
-    background-color: var(--card-name-bg);
-    color: var(--card-font);
-    padding: 16px;
-    text-align: center;
+  background-color: var(--card-name-bg);
+  color: var(--card-color);
+  padding: 16px;
+  text-align: center;
 }
 
 .name {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-bottom: 4px;
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 4px;
 }
 
 .category {
-    font-size: 0.9rem;
-    font-style: italic;
-    opacity: 0.8;
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.8;
 }
 
-/* =========================================================
-   BAGIAN FOOTER (TOMBOL OLAHRAGA BAWAH)
-   ========================================================= */
 .floating-footer {
-    position: fixed;
-    bottom: 20px;
-    display: flex;
-    gap: 24px;
-    background-color: var(--header-footer-bg);
-    padding: 12px 24px;
-    border-radius: 50px;
-    box-shadow: 0 4px 12px var(--shadow-color);
-    z-index: 100;
+  position: fixed;
+  bottom: 20px;
+  display: flex;
+  gap: 24px;
+  background-color: var(--header-footer-bg);
+  padding: 12px 24px;
+  border-radius: 50px;
+  width: fit-content;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  z-index: 100;
 }
 
 .category-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    transition: all 0.2s ease;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 12px;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .category-btn img {
-    filter: var(--footer-btn-filter);
-    opacity: 0.5;
-    transition: all 0.2s ease;
-    width: 32px;
-    height: 32px;
+  filter: var(--footer-btn-filter);
+  opacity: 0.5;
+  transition: all 0.2s ease;
+  width: 32px;
+  height: 32px;
 }
 
 .category-btn:hover img, .category-btn.active img {
-    filter: var(--footer-btn-active-filter);
-    opacity: 1;
-    transform: scale(1.1);
+ filter: var(--footer-btn-active-filter);
+ opacity: 1;
+ transform: scale(1.1);
+ transition: 0.3s ease;
 }
 
-/* Tooltip */
 .category-btn::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 8px;
-    background-color: var(--text-primary);
-    color: var(--bg-color);
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-    pointer-events: none;
-    box-shadow: 0 4px 6px var(--shadow-color);
-    font-weight: 500;
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 12px;
+  background-color: var(--text-primary);
+  color: var(--bg-color);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  font-weight: 500;
 }
 
-/* Segitiga panah di bawah tooltip */
 .category-btn::before {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 2px;
-    border-width: 6px;
-    border-style: solid;
-    border-color: var(--text-primary) transparent transparent transparent;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-    pointer-events: none;
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(60%);
+  margin-bottom: 6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--text-primary) transparent transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
 }
 
 .category-btn:hover::after, .category-btn:hover::before {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
-/* =========================================================
-   BAGIAN MODAL (RUANG RAHASIA)
-   ========================================================= */
 .modal-overlay {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Efek gelap di belakang */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    
-    /* State awal: disembunyikan */
+
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -462,16 +449,10 @@ body.modal-open {
 .modal-card {
     width: 100%;
     max-width: 600px;
-    border-radius: 12px;
     overflow: hidden;
     position: relative;
+    border-radius: 12px;
     box-shadow: 0 24px 48px var(--shadow-color);
-    
-    /* 
-    ANALOGI ANIMASI EASE-IN MD3: 
-    Saat modal muncul, ukurannya membesar dari 90% menjadi 100% dengan
-    kecepatan awal lambat lalu melambat lagi di akhir agar terasa natural (seperti per, bukan kaku).
-    */
     transform: scale(0.9);
     transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
 }
@@ -486,44 +467,43 @@ body.modal-open {
     right: 12px;
     background: none;
     border: none;
-    color: var(--text-primary);
     cursor: pointer;
     z-index: 10;
     opacity: 0.7;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s ease;
 }
 
 .close-btn:hover {
     opacity: 1;
 }
 
-.modal-top {
-    background: linear-gradient(135deg, var(--card-symbol-bg1), var(--card-symbol-bg2));
-    color: var(--card-font);
-    padding: 40px;
-    height: 250px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.modal-top .symbol {
+    font-size: 6rem;
 }
 
-.modal-top .symbol {
-    font-size: 8rem; /* Lebih besar dari kartu utama */
+.modal-top {
+    background: linear-gradient(135deg, var(--card-symbol-bg1), var(--card-symbol-bg2));
+    color: var(--card-color);
+    padding: 32px;
+    min-height: 220px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-bottom {
     background-color: var(--card-name-bg);
-    color: var(--card-font);
+    color: var(--card-color);
     padding: 24px;
-    max-height: 50vh; /* Membatasi tinggi agar tidak tembus layar */
-    overflow-y: auto; /* Memunculkan scrollbar otomatis jika teks terlalu panjang */
+    max-height: 50vh;
+    overflow-y: auto;
 }
 
 .modal-bottom .name {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 12px
 }
 
 .description {
