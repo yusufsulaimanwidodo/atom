@@ -1,458 +1,60 @@
 <!DOCTYPE html>
-<!-- Deklarasi DOCTYPE: memberitahu browser bahwa ini adalah dokumen HTML5 -->
-
-<!--
-=============================================================
-ROOT ELEMENT - ELEMEN POKOK
-Tag <html> adalah elemen paling luar dari dokumen HTML.
-Atribut lang="id" membantu mesin pencari & screen reader
-memahami bahasa halaman adalah Indonesia.
-
-data-theme="dark" adalah atribut kustom (data attribute) yang
-kita buat sendiri untuk menyimpan tema aktif (dark/light).
-Nilainya dibaca oleh CSS (di file style.css) dan JavaScript
-(di file script.js) untuk mengubah tampilan halaman.
-=============================================================
--->
 <html lang="id" data-theme="dark">
 
 <head>
-  <!--
-  =============================================================
-  META CHARSET - PENGKODEAN KARAKTER
-  Charset UTF-8 memungkinkan halaman menampilkan semua karakter
-  internasional termasuk huruf Indonesia (é, è, dll) dan simbol
-  kimia seperti H₂O, α, β, dll. Tanpa ini, karakter khusus akan
-  tampil sebagai kotak atau tanda tanya.
-  =============================================================
-  -->
-  <meta charset="UTF-8">
-
-  <!--
-  =============================================================
-  META VIEWPORT - RESPONSIVE DESIGN
-  Membuat halaman menyesuaikan tampilan di semua perangkat:
-  - width=device-width: lebar halaman = lebar layar perangkat
-  - initial-scale=1.0: zoom awal 100%, tidak ada zoom paksa
-  
-  Tanpa viewport meta, halaman akan tampil kecil/zoomed out
-  di smartphone dan tablet.
-  =============================================================
-  -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!--
-  =============================================================
-  TITLE - JUDUL HALAMAN
-  <title> menentukan teks yang muncul:
-  - Di tab browser
-  - Di bookmark/favorit browser
-  - Di hasil pencarian Google (SEO)
-  
-  Penting untuk SEO - judul yang deskriptif membantu ranking.
-  =============================================================
-  -->
-  <title>Tabel Periodik Interaktif</title>
-
-  <!--
-  =============================================================
-  GOOGLE FONTS - MEMUAT FONT EKSTERNAL
-  Mengambil 3 jenis font premium dari server Google:
-  
-  1. Playfair Display (400, 700, 900)
-     - Font serif elegan untuk judul halaman
-     - Tampilan klasik seperti koran/majalah ilmiah
-  
-  2. DM Mono (400, 500)
-     - Font monospace (lebar karakter sama) untuk nomor atom
-     - Simbol kimia dan data numerik tampil rapi
-  
-  3. DM Sans (300, 400, 500)
-     - Font sans-serif modern untuk teks umum
-     - Mudah dibaca di layar digital
-  
-  display=swap: Teknik font-display yang memastikan teks tetap
-  tampil dengan font sistem saat menunggu font dimuat.
-  =============================================================
-  -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap"
-    rel="stylesheet">
-
-  <!--
-  =============================================================
-  CSS EKSTERNAL - FILE STYLING
-  Tag <link> menghubungkan file CSS eksternal ke halaman HTML.
-  rel="stylesheet" menentukan bahwa ini adalah file stylesheet.
-  href="style.css" adalah path relatif ke file CSS di folder yang sama.
-  
-  Memisahkan HTML dan CSS adalah best practice:
-  - HTML untuk struktur konten
-  - CSS untuk presentasi/visual
-  - JavaScript untuk perilaku/interaktivitas
-  =============================================================
-  -->
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabel Periodik</title>
+    <!-- Ikon di title tab (Favicon) -->
+    <link rel="icon" type="image/svg+xml" href="images/explosion_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg">
+    <!-- 
+    ANALOGI: Tag <link> ini seperti 'kurir' yang mengambil barang dari tempat lain. 
+    Di sini kita menugaskan kurir untuk mengambil jenis tulisan (font) 'Roboto' dan 
+    ikon-ikon (Material Symbols) dari server Google untuk dibawa ke website kita.
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <!--
-  =============================================================
-  BODY - KONTEN UTAMA HALAMAN
-  Semua konten yang terlihat oleh user diletakkan di dalam <body>.
-  
-  STRUKTUR HALAMAN (semantik HTML5):
-  1. <header> - Bagian atas dengan judul & kontrol
-  2. <section> - Area filter dan pencarian
-  3. <div> - Grid kartu unsur (tabel periodik)
-  4. <div> - Modal/popup untuk detail
-  =============================================================
-  -->
 
-  <!--
-  =============================================================
-  HEADER - BAGIAN ATAS HALAMAN
-  Elemen <header> secara semantik menandakan bagian kepala halaman.
-  Berisi: judul aplikasi, informasi meta (118 unsur, 2024),
-  dan tombol toggle tema (dark/light).
-  =============================================================
-  -->
-  <header class="header">
-
-    <!--
-    -------------------------------------------------------------
-    HEADER-INNER: WRAPPER FLEXBOX
-    <div> dengan class "header-inner" berfungsi sebagai container
-    yang menggunakan CSS Flexbox untuk menata tiga kolom:
-    - Kolom kiri: jumlah unsur (118)
-    - Kolom tengah: judul utama
-    - Kolom kanan: tahun edisi (2024)
-    
-    Flexbox memungkinkan layout responsif tanpa float.
-    -------------------------------------------------------------
+    <!-- 
+    ANALOGI: <header> adalah 'papan nama toko' yang selalu melayang (floating) 
+    di bagian paling atas layar supaya pengunjung selalu tahu di mana mereka berada.
     -->
-    <div class="header-inner">
+    <header class="floating-header">
+        <div class="logo-area">
+            <img src="images/explosion_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="Ikon Tabel Periodik" class="header-icon" width="36" height="36">
+            <h1>Tabel Periodik</h1>
+        </div>
 
-      <!--
-      -------------------------------------------------------------
-      KOLOM KIRI: INFORMASI META (JUMLAH UNSUR)
-      class "header-meta" digunakan untuk menata angka dan label.
-      class "left" bisa untuk styling tambahan di CSS.
-      
-      <span> adalah elemen inline yang tidak memaksa baris baru.
-      meta-number: angka besar 118 dengan warna aksen (emas/coklat)
-      meta-label: teks "Unsur" di bawah angka
-      -------------------------------------------------------------
-      -->
-      <div class="header-meta left">
-        <span class="meta-number">118</span>   <!-- angka besar berwarna aksen -->
-        <span class="meta-label">Unsur</span>  <!-- label penjelas -->
-      </div>
+        <!-- Tombol untuk ganti tema Gelap/Terang -->
+        <button class="theme-btn" id="theme-toggle" aria-label="Ganti Tema" data-tooltip="Ganti Tema">
+            <img src="images/light_mode_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="Ganti Tema" class="theme-icon" id="theme-icon" width="36" height="36">
+        </button>
+    </header>
 
-      <!--
-      -------------------------------------------------------------
-      KOLOM TENGAH: JUDUL UTAMA HALAMAN
-      <h1>: heading level 1 - hanya boleh ada SATU per halaman!
-      Ini adalah judul utama yang akan dibaca oleh search engine
-      dan screen reader untuk memahami topik halaman.
-      -------------------------------------------------------------
-      -->
-      <div class="header-center">
-        <h1 class="header-title">Tabel Periodik</h1>
-      </div>
-
-      <!--
-      -------------------------------------------------------------
-      KOLOM KANAN: INFORMASI EDISI
-      Struktur yang sama dengan kolom kiri (header-meta)
-      tapi dengan class "right" untuk styling posisi.
-      Menampilkan tahun edisi aplikasi: 2024
-      -------------------------------------------------------------
-      -->
-      <div class="header-meta right theme-toggle-wrap">
-
-    <!--
-    =============================================================
-    THEME TOGGLE - TOMBOL GANTI TEMA (DARK/LIGHT MODE)
-    Area ini berisi tombol interaktif untuk mengubah tema halaman
-    antara mode gelap (dark) dan mode terang (light).
-    
-    id="themeToggle" digunakan JavaScript untuk:
-    - Mendengarkan event "click"
-    - Memanggil fungsi toggleTheme()
-    - Menyimpan preferensi ke localStorage
-    =============================================================
+    <!-- 
+    ANALOGI: <main> adalah 'ruang pameran' utama tempat kita meletakkan barang-barang
+    yang ingin ditunjukkan. Di sini kita meletakkan kartu unsur kimia.
     -->
-    
-      <!--
-      -------------------------------------------------------------
-      BUTTON - TOMBOL INTERAKTIF
-      <button> adalah elemen yang seharusnya digunakan untuk aksi
-      yang bisa diklik (bukan <div> atau <a> tanpa href).
-      
-      Atribut penting:
-      - id="themeToggle": untuk JavaScript seleksi elemen
-      - aria-label="Ganti tema": untuk screen reader (aksesibilitas)
-        Pembaca layar akan mengumumkan "Tombol, Ganti tema"
-      - class="theme-toggle": untuk styling CSS
-      -------------------------------------------------------------
-      -->
-      <button class="theme-toggle" id="themeToggle" aria-label="Ganti tema">
+    <main class="main-content" id="elements-container">
+        <!-- Kartu-kartu elemen akan di-generate oleh JavaScript secara dinamis di sini -->
+    </main>
 
-        <!--
-        -------------------------------------------------------------
-        ICON MOON (BULAN) - SVG INLINE
-        SVG (Scalable Vector Graphics) adalah format grafis vektor
-        yang tidak pecah saat diperbesar, berbeda dengan PNG/JPG.
-        
-        Atribut SVG:
-        - width/height="22": ukuran ikon 22x22 pixel
-        - viewBox="0 0 24 24": sistem koordinat SVG
-        - stroke="currentColor": mengikuti warna teks induk
-        - stroke-width="2": ketebalan garis
-        
-        Ikon ini tampil saat mode gelap aktif (untuk switch ke terang)
-        -------------------------------------------------------------
-        -->
-        <svg class="icon-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <!-- path "d" = instruksi menggambar bentuk bulan sabit menggunakan SVG path commands -->
-          <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" />
-        </svg>
+    <!-- Footer yang mengapung di bagian bawah -->
+    <footer class="floating-footer" id="main-footer">
+    </footer>
 
-        <!--
-        -------------------------------------------------------------
-        ICON SUN (MATAHARI) - SVG INLINE
-        Terdiri dari:
-        1. <circle>: lingkaran pusat sebagai badan matahari
-           cx="12" cy="12" adalah koordinat pusat, r="5" adalah radius
-        2. 8 elemen <line>: garis sinar matahari ke semua arah
-           (atas, bawah, diagonal, kiri, kanan)
-        
-        Ikon ini tampil saat mode terang aktif (untuk switch ke gelap)
-        CSS mengontrol visibility berdasarkan data-theme aktif.
-        -------------------------------------------------------------
-        -->
-        <svg class="icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <!-- Lingkaran = badan matahari -->
-          <circle cx="12" cy="12" r="5" />
-          <!-- 8 garis sinar matahari -->
-          <line x1="12" y1="1" x2="12" y2="3" />
-          <line x1="12" y1="21" x2="12" y2="23" />
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-          <line x1="1" y1="12" x2="3" y2="12" />
-          <line x1="21" y1="12" x2="23" y2="12" />
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-        </svg>
-
-      </button>
-    </div>
-
-    <!--
-    -------------------------------------------------------------
-    HEADER DIVIDER - GARIS PEMBATAS DEKORATIF
-    Elemen div kosong dengan border untuk membuat garis pembatas
-    visual yang memisahkan header dari konten di bawahnya.
-    Menggunakan border-top: 2px dashed untuk efek garis putus-putus.
-    -------------------------------------------------------------
+    <!-- 
+    ANALOGI: <script> adalah 'sistem listrik' dari rumah kita. 
+    Tanpa ini, lampu (tema terang/gelap) tidak bisa dinyalakan, dan pintu (modal) tidak bisa dibuka,
+    meskipun kabel dan saklarnya sudah terpasang.
     -->
-    <div class="header-divider"></div>
-  </header>
-
-  <!--
-  =============================================================
-  SECTION CONTROLS - AREA KONTROL FILTER & PENCARIAN
-  Elemen <section> secara semantik menandakan bagian konten
-  yang terkait secara tematik. Berisi:
-  1. Filter kategori (Logam, Non-logam, Metaloid, Gas Mulia, Radioaktif)
-  2. Kotak pencarian unsur (berdasarkan nama atau simbol)
-  =============================================================
-  -->
-  <section class="controls">
-
-    <!--
-    -------------------------------------------------------------
-    FILTER GROUP - KELOMPOK FILTER KATEGORI
-    Container untuk label "KATEGORI" dan tombol-tombol filter.
-    Tombol-tombol ini akan dibuat secara dinamis oleh JavaScript
-    berdasarkan kategori yang ada di data unsur.
-    -------------------------------------------------------------
-    -->
-    <div class="filter-group">
-      <span class="filter-label">KATEGORI</span>
-      <!--
-      -------------------------------------------------------------
-      FILTER BAR - TEMPAT TOMBOL KATEGORI
-      id="filterBar" adalah target untuk JavaScript yang akan:
-      1. Membaca kategori unik dari array elements
-      2. Membuat <button> untuk setiap kategori
-      3. Menambahkannya sebagai child dari div ini
-      
-      Tombol "Semua" sudah ada secara default (static HTML)
-      -------------------------------------------------------------
-      -->
-      <div class="filter-bar" id="filterBar">
-        <!--
-        -------------------------------------------------------------
-        TOMBOL FILTER "SEMUA"
-        class="filter-btn": styling dasar untuk semua tombol filter
-        class="active": menandakan tombol ini sedang aktif dipilih
-        data-cat="semua": data attribute untuk identifikasi kategori
-        
-        Data attributes (data-*) adalah cara HTML5 untuk menyimpan
-        data custom pada elemen HTML. JavaScript bisa mengaksesnya
-        dengan: element.dataset.cat
-        -------------------------------------------------------------
-        -->
-        <button class="filter-btn active" data-cat="semua">Semua</button>
-      </div>
-    </div>
-
-    <!--
-    -------------------------------------------------------------
-    SEARCH GROUP - KELOMPOK PENCARIAN
-    Container untuk label "CARI UNSUR" dan input pencarian.
-    -------------------------------------------------------------
-    -->
-    <div class="search-group">
-      <span class="filter-label">CARI UNSUR</span>
-      <div class="search-wrap">
-        <!--
-        -------------------------------------------------------------
-        SEARCH INPUT - KOTAK PENCARIAN
-        <input type="text"> membuat field teks untuk user input.
-        
-        Atribut penting:
-        - id="searchInput": untuk JavaScript event listener
-        - class="search-input": untuk styling CSS
-        - placeholder: teks petunjuk yang muncul saat field kosong
-        
-        JavaScript akan listen event 'input' untuk pencarian real-time
-        tanpa perlu menekan Enter.
-        -------------------------------------------------------------
-        -->
-        <input type="text" id="searchInput" class="search-input" placeholder="Nama atau simbol...">
-      </div>
-    </div>
-  </section>
-
-  <!--
-  =============================================================
-  GRID KARTU - AREA TAMPILAN UNSUR
-  Div ini akan diisi dengan kartu-kartu unsur secara dinamis
-  oleh fungsi renderCards() di JavaScript.
-  
-  Struktur setiap kartu yang di-generate:
-  <div class="kartu [kategori]">
-    <div class="kartu-atas">
-      <span class="kartu-nomor">[nomor atom]</span>
-      <span class="kartu-simbol">[simbol]</span>
-    </div>
-    <div class="kartu-garis"></div>
-    <div class="kartu-bawah">
-      <div class="kartu-nama">[nama]</div>
-      <div class="kartu-desc">[deskripsi singkat]</div>
-    </div>
-  </div>
-  =============================================================
-  -->
-  <div class="grid" id="cardGrid">
-    <!-- Kartu-kartu akan di-generate oleh JavaScript - lihat renderCards() -->
-  </div>
-
-  <!--
-  =============================================================
-  MODAL - JENDELA POPUP DETAIL UNSUR
-  Modal adalah UI pattern yang menampilkan konten di atas
-  halaman utama, menggelapkan latar belakang.
-  
-  Struktur modal:
-  1. modal-overlay: background gelap semi-transparan (z-index tinggi)
-  2. modal-ticket: kotak konten berbentuk "tiket"
-  3. Bagian atas: nomor atom & simbol besar
-  4. Bagian bawah: nama, badge kategori, deskripsi panjang
-  
-  Kelas "show" ditambahkan via JavaScript untuk animasi muncul.
-  =============================================================
-  -->
-  <div class="modal-overlay" id="modalOverlay">
-
-    <!--
-    -------------------------------------------------------------
-    MODAL TICKET - KOTAK KONTEN POPUP
-    id="modalTiket" digunakan untuk mengubah warna background
-    berdasarkan kategori unsur yang dipilih.
-    -------------------------------------------------------------
-    -->
-    <div class="modal-ticket" id="modalTiket">
-
-      <!--
-      -------------------------------------------------------------
-      MODAL TOP - BAGIAN ATAS POPUP
-      Menampilkan nomor atom dan simbol kimia besar.
-      id="modalAtas" dan id lainnya digunakan untuk mengisi
-      konten secara dinamis saat user mengklik kartu.
-      -------------------------------------------------------------
-      -->
-      <div class="modal-top" id="modalAtas">
-        <!-- Elemen ini akan diisi konten oleh JavaScript openModal() -->
-        <span class="modal-atomic-number" id="modalNomorAtom"></span>  <!-- nomor atom -->
-        <span class="modal-symbol" id="modalSimbolBesar"></span>      <!-- simbol besar -->
-      </div>
-
-      <!--
-      -------------------------------------------------------------
-      MODAL DIVIDER - GARIS PEMISAH
-      Efek visual garis putus-putus yang memisahkan bagian atas
-      (nomor & simbol) dari bagian bawah (informasi detail).
-      -------------------------------------------------------------
-      -->
-      <div class="modal-divider"></div>
-
-      <!--
-      -------------------------------------------------------------
-      MODAL CONTENT - BAGIAN BAWAH POPUP
-      Berisi informasi lengkap unsur:
-      1. Nama lengkap unsur
-      2. Badge kategori dengan warna sesuai jenis unsur
-      3. Deskripsi panjang/detail
-      4. Tombol tutup (X) di pojok kanan atas
-      -------------------------------------------------------------
-      -->
-      <div class="modal-content">
-        <div class="modal-name" id="modalNamaBesar"></div>          <!-- nama lengkap unsur -->
-        <div class="modal-badge" id="modalKategoriBadge"></div>     <!-- badge berwarna kategori -->
-        <div class="modal-description" id="modalDescText"></div>    <!-- deskripsi panjang -->
-
-        <!--
-        -------------------------------------------------------------
-        MODAL CLOSE - TOMBOL TUTUP POPUP
-        id="modalClose" digunakan JavaScript untuk listen click event.
-        Tombol ini menggunakan karakter Unicode ✕ (U+2715) sebagai
-        ikon X tanpa memerlukan gambar atau SVG.
-        -------------------------------------------------------------
-        -->
-        <button class="modal-close" id="modalClose">✕</button>
-      </div>
-    </div>
-  </div>
-
-  <!--
-  =============================================================
-  JAVASCRIPT - FILE PERILAKU/INTERAKTIVITAS
-  <script> diletakkan di AKHIR body (sebelum </body>) karena:
-  1. HTML sudah diparsing, elemen DOM sudah tersedia
-  2. JavaScript tidak memblok rendering halaman
-  3. Mencegah error "element not found" saat querySelector
-  
-  Ini adalah best practice untuk performa loading halaman.
-  Alternatif: gunakan defer/async attribute di <head>.
-  =============================================================
-  -->
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

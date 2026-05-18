@@ -1,878 +1,441 @@
-/* =============================================================
-   CSS RESET & GLOBAL STYLES
-   
-   Reset CSS menghapus styling default browser yang berbeda-beda
-   antar browser. Ini memberikan "clean slate" untuk styling kita.
-   
-   box-sizing: border-box adalah trik penting:
-   - Default: width/height hanya mencakup konten
-   - border-box: width/height mencakup padding dan border juga
-   - Ini membuat perhitungan layout jauh lebih mudah
-   
-   Margin dan padding di-reset ke 0 agar tidak ada kejutan
-   dari browser defaults.
-   ============================================================= */
+/*
+ANALOGI CSS: File CSS ini seperti 'cat, perabotan, dan tata letak' untuk kerangka rumah (HTML).
+:root adalah 'gudang cat' di mana kita menyimpan warna-warna utama (variabel) 
+yang bisa kita pakai berulang-ulang. Jika kita ingin mengganti warna seisi rumah, 
+kita cukup menggantinya di gudang ini.
+*/
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+:root {
+    /* Palet Light Mode (Terang) */
+    --bg-color: #FAFAFA;
+    --surface-color: #E0F2F1;     /* Warna Header, Footer, Bottom Card */
+    --surface-variant: #80CBC4;   /* Warna Top Card */
+    --text-primary: #004D40;
+    --text-secondary: #00695C;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --toggle-bg: #B2DFDB;
+    --toggle-btn: #80CBC4;
+    --icon-color: #004D40;
+    /* Filter warna CSS untuk mengubah SVG hitam (#1F1F1F) menjadi hijau gelap (#004D40) */
+    --icon-filter: invert(21%) sepia(87%) saturate(1476%) hue-rotate(149deg) brightness(97%) contrast(104%);
+    --icon-filter-active: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+}
+
+/* 
+ANALOGI THEME: Saat saklar (atribut data-theme) dipindahkan ke "dark", 
+seluruh cat di 'gudang' diganti dengan warna-warna gelap. 
+Rumah akan otomatis menyesuaikan warnanya!
+*/
+[data-theme="dark"] {
+    /* Palet Dark Mode (Gelap) */
+    --bg-color: #212121;
+    --surface-color: #006B5F;     /* Warna Header, Footer, Bottom Card */
+    --surface-variant: #167E70;   /* Warna Top Card */
+    --text-primary: #FFFFFF;
+    --text-secondary: #E0F2F1;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --toggle-bg: #004D40;
+    --toggle-btn: #00332A;
+    --icon-color: #FFFFFF;
+    /* Filter warna CSS untuk mengubah SVG hitam (#1F1F1F) menjadi putih (#FFFFFF) */
+    --icon-filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    --icon-filter-active: invert(11%) sepia(0%) saturate(1%) hue-rotate(152deg) brightness(91%) contrast(85%);
 }
 
 html {
-  scroll-behavior: smooth;
-  overflow-y: scroll;
-  scrollbar-gutter: stable;
+    scrollbar-gutter: stable; /* Mencegah layout bergeser (jitter) saat modal terbuka dan scrollbar hilang */
 }
 
-/* =============================================================
-   DESIGN TOKENS (VARIABEL CSS/CUSTOM PROPERTIES)
-   
-   CSS Variables (variabel dengan -- prefix) memungkinkan kita
-   menyimpan nilai yang digunakan berulang dan mengubahnya
-   di satu tempat.
-   
-   Kelebihan:
-   - Konsistensi warna/ukuran di seluruh file
-   - Mudah ganti tema (dark/light) hanya dengan ubah variabel
-   - Nilai bisa diakses dari JavaScript via getPropertyValue()
-   
-   :root = elemen paling atas (html), scope global
-   [data-theme="dark"] = variabel khusus untuk tema gelap
-   ============================================================= */
-
-/* -------------------------------------------------------------
-   TEMA GELAP (DARK MODE) - DEFAULT
-   Kombinasi warna untuk tema gelap:
-   - Background: gelap (#1a1a18)
-   - Card: terang (#f5f0e8) dengan efek "kertas"
-   - Text: terang di background gelap, gelap di card
-   - Accent: warna emas/coklat (#8b7355)
-   ------------------------------------------------------------- */
-:root,
-[data-theme="dark"] {
-  --bg: #1a1a18;
-  --bg-card: #f5f0e8;
-  --bg-card-dark: #f5f0e8;
-  /* card face stays light (it's the "paper" metaphor) */
-  --text-dark: #1a1a18;
-  --text-light: #f5f0e8;
-  --text-muted: #7a7060;
-  --accent: #8b7355;
-  --divider: #c8b898;
-
-  /* Symbol / kartu-atas bg: 25% lebih gelap dari sebelumnya */
-  --symbol-bg-a: rgba(139, 115, 85, 0.44);
-  --symbol-bg-b: rgba(245, 240, 232, 0.19);
-
-  --color-metal: #5c8a5c;
-  --color-nonmetal: #4a7fa5;
-  --color-metaloid: #7a5c9e;
-  --color-noble-gas: #b8860b;
-  --color-radioactive: #a04040;
-
-  --font-display: 'Playfair Display', serif;
-  --font-mono: 'DM Mono', monospace;
-  --font-body: 'DM Sans', sans-serif;
-
-  --radius-card: 16px;
-  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
-  --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.6);
-
-  /* toggle button */
-  --toggle-bg: rgba(245, 240, 232, 0.12);
-  --toggle-color: #f5f0e8;
-  --toggle-hover: rgba(245, 240, 232, 0.22);
-
-  /* modal overlay */
-  --overlay-bg: rgba(0, 0, 0, 0.75);
-
-  /* body gradient */
-  --body-grad-a: rgba(139, 115, 85, 0.08);
-  --body-grad-b: rgba(90, 130, 90, 0.06);
-
-  /* controls */
-  --filter-btn-active-bg: #f5f0e8;
-  --filter-btn-active-fg: #1a1a18;
-  --search-bg: rgba(245, 240, 232, 0.05);
-  --search-color: #f5f0e8;
-  --search-focus-bg: rgba(245, 240, 232, 0.10);
-
-  color-scheme: dark;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transisi halus saat ganti tema */
 }
 
-/* -------------------------------------------------------------
-   TEMA TERANG (LIGHT MODE)
-   Warna yang dibalik dari tema gelap:
-   - Background: terang (#f0ece2)
-   - Card: putih bersih (#ffffff)
-   - Text: gelap di semua tempat
-   
-   User bisa switch tema via tombol toggle di header.
-   Preferensi disimpan di localStorage.
-   ------------------------------------------------------------- */
-[data-theme="light"] {
-  --bg: #f0ece2;
-  --bg-card: #ffffff;
-  --text-dark: #1a1a18;
-  --text-light: #1a1a18;
-  --text-muted: #7a7060;
-  --accent: #8b7355;
-  --divider: #c8b898;
-
-  /* Symbol / kartu-atas bg: 50% lebih gelap dari sebelumnya */
-  --symbol-bg-a: rgba(139, 115, 85, 0.38);
-  --symbol-bg-b: rgba(140, 120, 95, 0.23);
-
-  --toggle-bg: rgba(26, 26, 24, 0.09);
-  --toggle-color: #1a1a18;
-  --toggle-hover: rgba(26, 26, 24, 0.17);
-
-  --overlay-bg: rgba(0, 0, 0, 0.55);
-
-  --body-grad-a: rgba(139, 115, 85, 0.06);
-  --body-grad-b: rgba(90, 130, 90, 0.04);
-
-  --filter-btn-active-bg: #1a1a18;
-  --filter-btn-active-fg: #f5f0e8;
-  --search-bg: rgba(26, 26, 24, 0.06);
-  --search-color: #1a1a18;
-  --search-focus-bg: rgba(26, 26, 24, 0.10);
-
-  color-scheme: light;
+/* Memastikan semua icon SVG mengikuti warna tema menggunakan filter */
+img.header-icon, 
+img.theme-icon, 
+.close-btn img {
+    filter: var(--icon-filter);
+    transition: filter 0.3s ease;
 }
-
-/* =============================================================
-   BODY - STYLING ELEMEN BODY
-   
-   Body adalah container utama yang mencakup seluruh halaman.
-   - min-height: 100vh memastikan body minimal setinggi viewport
-   - background-image: radial-gradient memberi efek cahaya lembut
-   - transition: animasi smooth saat ganti tema
-   ============================================================= */
 
 body {
-  font-family: var(--font-body);
-  background-color: var(--bg);
-  color: var(--text-light);
-  min-height: 100vh;
-  padding: 0 0 60px;
-  background-image:
-    radial-gradient(ellipse at 20% 20%, var(--body-grad-a) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, var(--body-grad-b) 0%, transparent 50%);
-  transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    /* Mencegah scroll saat body dikunci */
 }
 
-/* -------------------------------------------------------------
-   SCROLL LOCK - MENCEGAH SCROLL SAAT MODAL TERBUKA
-   
-   Saat modal popup terbuka, kita tidak ingin user bisa scroll
-   halaman background. Class .scroll-locked dipasang via JS.
-   
-   position: fixed "menyumbat" body di posisi tertentu
-   width: 100% memastikan body tetap full-width
-   
-   Keuntungan approach ini: scrollbar track tetap visible,
-   jadi tidak ada layout shift yang mengganggu.
-   ------------------------------------------------------------- */
-body.scroll-locked {
-  position: fixed;
-  width: 100%;
-  /* top is set by JS to preserve scroll position */
+body.modal-open {
+    overflow: hidden;
 }
 
-/* =============================================================
-   HEADER - BAGIAN ATAS HALAMAN
-   
-   Header menggunakan warna card (terang) agar kontras dengan
-   background body. Menggunakan CSS Flexbox untuk layout 3 kolom.
-   
-   max-width: 1200px dengan margin: 0 auto adalah pattern
-   "centered container" yang umum untuk konten terbatas lebar.
-   ============================================================= */
-
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 900;
-  background: var(--header-bg, var(--bg-card));
-  color: var(--text-dark);
-  padding: 20px 28px 0;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+/* =========================================================
+   BAGIAN HEADER (PAPAN NAMA MENGAPUNG)
+   ========================================================= */
+.floating-header {
+    position: fixed;
+    top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    background-color: var(--surface-color);
+    padding: 12px 24px;
+    border-radius: 50px;
+    width: fit-content;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    z-index: 100;
 }
 
-/* Dark mode: header background lebih gelap */
-[data-theme="dark"] .header {
-  --header-bg: rgba(30, 30, 28, 0.95);
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-/*
-Header floating state - hanya tambahkan shadow,
-TIDAK mengubah ukuran font untuk mencegah jitter saat scroll
-*/
-.header.is-floating {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+.header-icon {
+    color: var(--text-primary);
 }
 
-/* Dark mode shadow lebih terang untuk kontras */
-[data-theme="dark"] .header.is-floating {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+.floating-header h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
 }
 
-.header-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
+/* =========================================================
+   BAGIAN SAKLAR TEMA (THEME TOGGLE)
+   ========================================================= */
+.theme-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    transition: all 0.2s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.header-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
+.theme-btn img {
+    filter: var(--icon-filter);
+    opacity: 0.5;
+    transition: all 0.2s ease;
+    width: 36px;
+    height: 36px;
 }
 
-.meta-number {
-  font-size: 2rem;
-  font-weight: 900;
-  font-family: var(--font-mono);
-  color: var(--accent);
-  transition: color 0.3s ease;
-}
-
-/* Dark mode: angka 118 jadi putih */
-[data-theme="dark"] .meta-number {
-  color: var(--text-light);
-}
-
-.meta-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  transition: color 0.3s ease;
-}
-
-/* Dark mode: teks 'Unsur' jadi putih */
-[data-theme="dark"] .meta-label {
-  color: var(--text-light);
-  opacity: 0.9;
-}
-
-.header-center {
-  flex: 1;
-  text-align: center;
-  padding: 0 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.header-subtitle {
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-}
-
-.header-title {
-  font-family: var(--font-display);
-  font-size: 2.6rem;
-  font-weight: 900;
-  color: var(--text-light);
-  margin: 0;
-  transition: color 0.3s ease;
-}
-
-.header-description {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  margin-top: 8px;
-}
-
-.header-divider {
-  height: 2px;
-  border-top: 2px dashed var(--divider);
-  margin-top: 14px;
-}
-
-/* -------------------------------------------------------------
-   THEME TOGGLE - TOMBOL GANTI TEMA
-   
-   Tombol rounded pill-shape dengan hover effect:
-   - transform: scale(1.04) membesar sedikit saat hover
-   - transition membuat perubahan menjadi animasi smooth
-   - box-shadow memberi efek depth
-   ------------------------------------------------------------- */
-.theme-toggle-wrap {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px 0 0;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.header-meta.theme-toggle-wrap {
-  max-width: none;
-  margin: 0;
-  padding: 0;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.theme-toggle {
-  background: var(--toggle-bg);
-  border: 1px solid var(--divider);
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--toggle-color);
-  transition: background 0.3s ease, color 0.3s ease, transform 0.18s ease, border-color 0.3s ease;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16);
-}
-
-.theme-toggle:hover {
-  background: var(--toggle-hover);
-  transform: scale(1.04);
-}
-
-.theme-toggle:active {
-  transform: scale(0.97);
-}
-
-.theme-toggle svg {
-  flex-shrink: 0;
-  transition: transform 0.4s ease;
-}
-
-.theme-toggle:hover svg {
-  transform: rotate(18deg);
-}
-
-/* -------------------------------------------------------------
-   ICON VISIBILITY - KONTROL TAMPILAN IKON MATAHARI/BULAN
-   
-   CSS mengontrol icon mana yang tampil berdasarkan tema aktif:
-   - Mode gelap: tampilkan bulan, sembunyikan matahari
-   - Mode terang: tampilkan matahari, sembunyikan bulan
-   
-   display: none menghilangkan elemen dari layout (tidak ambil space)
-   display: block/block mengembalikan elemen ke layout
-   ------------------------------------------------------------- */
-/*
-Icon visibility - dibalik agar sesuai harapan user:
-- Dark mode: tampilkan SUN (mau switch ke terang)
-- Light mode: tampilkan MOON (mau switch ke gelap)
-*/
-.icon-sun {
-  display: block;
-}
-
-.icon-moon {
-  display: none;
-}
-
-[data-theme="light"] .icon-sun {
-  display: none;
-}
-
-[data-theme="light"] .icon-moon {
-  display: block;
-}
-
-/* =============================================================
-   CONTROLS - AREA FILTER & PENCARIAN
-   
-   Section ini berisi dua grup kontrol:
-   1. Filter kategori (tombol-tombol kategori)
-   2. Search input (kotak pencarian)
-   
-   flex-wrap: wrap memungkinkan grup turun ke baris baru
-   di layar kecil (responsive design).
-   ============================================================= */
-
-.controls {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  padding: 32px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.filter-group,
-.search-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  min-width: 280px;
-}
-
-.filter-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text-muted);
-}
-
-.filter-bar {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.filter-btn {
-  padding: 8px 16px;
-  border: 1px solid var(--divider);
-  background: transparent;
-  color: var(--text-light);
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: 20px;
-  transition: all 0.3s ease;
-}
-
-.filter-btn:hover {
-  border-color: var(--text-light);
-  background: rgba(245, 240, 232, 0.1);
-}
-
-.filter-btn.active {
-  background: var(--filter-btn-active-bg);
-  color: var(--filter-btn-active-fg);
-  border-color: var(--filter-btn-active-bg);
-}
-
-.search-wrap {
-  position: relative;
-}
-
-.search-input {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1px solid var(--divider);
-  background: var(--search-bg);
-  color: var(--search-color);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-}
-
-.search-input::placeholder {
-  color: var(--text-muted);
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  background: var(--search-focus-bg);
-}
-
-/* =============================================================
-   GRID & CARDS - AREA TAMPILAN UNSUR
-   
-   CSS Grid Layout untuk menampilkan kartu-kartu unsur:
-   - grid-template-columns: repeat(auto-fill, ...) = kolom otomatis
-   - minmax(160px, 1fr) = minimum 160px, maksimum sisa ruang
-   - gap: 12px = jarak antar kartu
-   
-   Staggered Animation: setiap kartu punya animation-delay berbeda
-   untuk efek wave saat muncul.
-   ============================================================= */
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 12px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px 40px;
-}
-
-.kartu {
-  background: var(--bg-card);
-  border: 1px solid #ddd;
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  animation: slideIn 0.5s ease-out forwards;
-  opacity: 0;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
+.theme-btn:hover img {
     opacity: 1;
-    transform: translateY(0);
-  }
+    transform: scale(1.1);
 }
 
-.kartu:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-hover);
-  border-color: var(--accent);
+/* Tooltip */
+.theme-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 12px;
+    background-color: var(--text-primary);
+    color: var(--bg-color);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    font-weight: 500;
 }
 
-/* -------------------------------------------------------------
-   KARTU ATAS - AREA SIMBOL UNSUR
-   
-   Bagian atas kartu berisi nomor atom dan simbol kimia.
-   Menggunakan gradient background untuk efek visual yang menarik.
-   
-   CSS Variables untuk warna yang berbeda tiap tema:
-   - Mode gelap: warna lebih terang agar kontras dengan page gelap
-   - Mode terang: warna lebih gelap agar kontras dengan card terang
-   
-   Setiap kategori punya warna accent yang berbeda (hijau, biru, ungu, dll).
-   ------------------------------------------------------------- */
-
-.kartu-atas {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 140px;
-  position: relative;
-  background: linear-gradient(135deg, var(--symbol-bg-a) 0%, var(--symbol-bg-b) 100%);
+/* Segitiga panah di atas tooltip */
+.theme-btn::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 6px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent var(--text-primary) transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
 }
 
-.kartu.logam .kartu-atas {
-  background: linear-gradient(135deg, rgba(92, 138, 92, var(--symbol-alpha, .15)) 0%, transparent 100%);
+.theme-btn:hover::after, .theme-btn:hover::before {
+    opacity: 1;
+    visibility: visible;
 }
 
-.kartu.nonlogam .kartu-atas {
-  background: linear-gradient(135deg, rgba(74, 127, 165, var(--symbol-alpha, .15)) 0%, transparent 100%);
+/* =========================================================
+   BAGIAN KARTU UTAMA (MAIN CARD)
+   ========================================================= */
+.main-content {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    display: flex;
+    flex-wrap: wrap; /* Memungkinkan kartu untuk turun ke bawah jika layar tidak muat */
+    gap: 24px; /* Memberi jarak antar kartu */
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1200px; /* Lebar maksimal area pameran */
 }
 
-.kartu.metaloid .kartu-atas {
-  background: linear-gradient(135deg, rgba(122, 92, 158, var(--symbol-alpha, .15)) 0%, transparent 100%);
+.element-card {
+    width: 280px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    cursor: pointer;
+    /* 
+    ANALOGI ANIMASI: Transformasi z-index ini ibarat kartu fisik.
+    Saat disentuh (hover), kita sedikit mengangkat kartunya ke arah kita.
+    */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.kartu.gas_mulia .kartu-atas {
-  background: linear-gradient(135deg, rgba(184, 134, 11, var(--symbol-alpha, .15)) 0%, transparent 100%);
+.element-card:hover, .element-card:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px var(--shadow-color);
+    outline: none;
 }
 
-.kartu.radioaktif .kartu-atas {
-  background: linear-gradient(135deg, rgba(160, 64, 64, var(--symbol-alpha, .15)) 0%, transparent 100%);
+.card-top {
+    background-color: var(--surface-variant);
+    padding: 16px;
+    height: 160px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-/* -------------------------------------------------------------
-   SYMBOL ALPHA - TRANSPARANSI GRADIENT
-   
-   Variabel --symbol-alpha mengontrol transparansi gradient
-   di area simbol kartu. Nilai berbeda untuk tiap tema:
-   
-   - Mode gelap: 0.44 (25% lebih gelap)
-   - Mode terang: 0.33 (50% lebih gelap)
-   
-   Ini adalah teknik "adaptive transparency" untuk UX yang konsisten.
-   ------------------------------------------------------------- */
-:root {
-  --symbol-alpha: 0.44;
+.atomic-number {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 0.9rem;
+    font-style: italic;
+    opacity: 0.9;
 }
 
-[data-theme="light"] {
-  --symbol-alpha: 0.33;
+.symbol {
+    font-size: 5rem;
+    font-weight: 700;
 }
 
-.kartu-nomor {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--text-muted);
+.card-bottom {
+    background-color: var(--surface-color);
+    padding: 16px;
+    text-align: center;
 }
 
-.kartu-simbol {
-  font-family: var(--font-mono);
-  font-size: 2.7rem;
-  font-weight: 700;
-  color: var(--text-dark);
+.name {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 4px;
 }
 
-.kartu-garis {
-  height: 2px;
-  border-top: 1px dashed var(--divider);
+.category {
+    font-size: 0.9rem;
+    font-style: italic;
+    opacity: 0.8;
 }
 
-.kartu-bawah {
-  padding: 12px;
-  text-align: center;
+/* =========================================================
+   BAGIAN FOOTER (TOMBOL OLAHRAGA BAWAH)
+   ========================================================= */
+.floating-footer {
+    position: fixed;
+    bottom: 20px;
+    display: flex;
+    gap: 24px;
+    background-color: var(--surface-color);
+    padding: 12px 24px;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    z-index: 100;
 }
 
-.kartu-nama {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-bottom: 4px;
+.category-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    transition: all 0.2s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.kartu-desc {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  line-height: 1.3;
+.category-btn img {
+    filter: var(--icon-filter);
+    opacity: 0.5;
+    transition: all 0.2s ease;
+    width: 32px;
+    height: 32px;
 }
 
-.kosong {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--text-muted);
+.category-btn:hover img, .category-btn.active img {
+    opacity: 1;
+    transform: scale(1.1);
 }
 
-.kosong-ikon {
-  font-size: 3rem;
-  margin-bottom: 16px;
+/* Tooltip */
+.category-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 8px;
+    background-color: var(--text-primary);
+    color: var(--bg-color);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    font-weight: 500;
 }
 
-/* =============================================================
-   MODAL - JENDELA POPUP DETAIL
-   
-   Modal terdiri dari:
-   1. .modal-overlay: background gelap yang menutupi seluruh halaman
-   2. .modal-ticket: kotak konten yang melayang di tengah
-   
-   Z-index: 1000 memastikan modal di atas semua elemen lain.
-   pointer-events: none pada overlay yang belum show mencegah
-   klik yang tidak diinginkan.
-   ============================================================= */
+/* Segitiga panah di bawah tooltip */
+.category-btn::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 2px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: var(--text-primary) transparent transparent transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+}
 
+.category-btn:hover::after, .category-btn:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* =========================================================
+   BAGIAN MODAL (RUANG RAHASIA)
+   ========================================================= */
 .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--overlay-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 1000;
-}
-
-.modal-overlay.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.modal-ticket {
-  background: var(--bg-card);
-  border-radius: var(--radius-card);
-  width: 90%;
-  max-width: 500px;
-  box-shadow: var(--shadow-hover);
-  overflow: hidden;
-  animation: modalIn 0.3s ease;
-}
-
-@keyframes modalIn {
-  from {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Efek gelap di belakang */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    
+    /* State awal: disembunyikan */
     opacity: 0;
-    transform: scale(0.95);
-  }
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 20px;
+}
 
-  to {
+.modal-overlay.active {
     opacity: 1;
+    visibility: visible;
+}
+
+.modal-card {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 24px 48px var(--shadow-color);
+    
+    /* 
+    ANALOGI ANIMASI EASE-IN MD3: 
+    Saat modal muncul, ukurannya membesar dari 90% menjadi 100% dengan
+    kecepatan awal lambat lalu melambat lagi di akhir agar terasa natural (seperti per, bukan kaku).
+    */
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.modal-overlay.active .modal-card {
     transform: scale(1);
-  }
+}
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.close-btn:hover {
+    opacity: 1;
 }
 
 .modal-top {
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 180px;
-  background: linear-gradient(135deg, rgba(139, 115, 85, var(--symbol-alpha, .2)) 0%, transparent 100%);
-}
-
-.modal-ticket.logam .modal-top {
-  background: linear-gradient(135deg, rgba(92, 138, 92, var(--symbol-alpha, .2)) 0%, transparent 100%);
-}
-
-.modal-ticket.nonlogam .modal-top {
-  background: linear-gradient(135deg, rgba(74, 127, 165, var(--symbol-alpha, .2)) 0%, transparent 100%);
-}
-
-.modal-ticket.metaloid .modal-top {
-  background: linear-gradient(135deg, rgba(122, 92, 158, var(--symbol-alpha, .2)) 0%, transparent 100%);
-}
-
-.modal-ticket.gas_mulia .modal-top {
-  background: linear-gradient(135deg, rgba(184, 134, 11, var(--symbol-alpha, .2)) 0%, transparent 100%);
-}
-
-.modal-ticket.radioaktif .modal-top {
-  background: linear-gradient(135deg, rgba(160, 64, 64, var(--symbol-alpha, .2)) 0%, transparent 100%);
-}
-
-.modal-atomic-number {
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--text-muted);
-}
-
-.modal-symbol {
-  font-family: var(--font-mono);
-  font-size: 4.05rem;
-  font-weight: 900;
-  color: var(--text-dark);
-}
-
-.modal-divider {
-  height: 2px;
-  border-top: 2px dashed var(--divider);
-}
-
-.modal-content {
-  padding: 24px;
-  position: relative;
-}
-
-.modal-name {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  margin-bottom: 12px;
-}
-
-.modal-badge {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 20px;
-  color: white;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-
-.modal-description {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--text-muted);
-}
-
-.modal-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: var(--accent);
-  color: var(--bg-card);
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.modal-close:hover {
-  background: var(--text-dark);
-  transform: scale(1.1);
-}
-
-/* =============================================================
-   RESPONSIVE DESIGN - MEDIA QUERIES
-   
-   Media queries mengubah styling berdasarkan lebar layar.
-   Mobile-first approach: styling default untuk mobile,
-   lalu tambahkan/ubah untuk layar lebih besar.
-   
-   Breakpoint yang digunakan:
-   - max-width: 768px (tablet)
-   - max-width: 480px (smartphone)
-   
-   Di breakpoint ini kita:
-   - Mengubah layout flex jadi column
-   - Mengurangi ukuran font
-   - Menyesuaikan grid columns
-   ============================================================= */
-
-@media (max-width: 768px) {
-  .theme-toggle-wrap {
+    background-color: var(--surface-variant);
+    padding: 40px;
+    height: 250px;
+    position: relative;
+    display: flex;
     justify-content: center;
-  }
-
-  .header-inner {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .header-center {
-    padding: 16px 20px;
-  }
-
-  .header-title {
-    font-size: 2rem;
-  }
-
-  .controls {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .filter-group,
-  .search-group {
-    min-width: auto;
-  }
-
-  .grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 8px;
-  }
-
-  .modal-ticket {
-    width: 95%;
-  }
+    align-items: center;
 }
 
-@media (max-width: 480px) {
-  .header-title {
+.modal-top .symbol {
+    font-size: 8rem; /* Lebih besar dari kartu utama */
+}
+
+.modal-bottom {
+    background-color: var(--surface-color);
+    padding: 24px;
+    max-height: 50vh; /* Membatasi tinggi agar tidak tembus layar */
+    overflow-y: auto; /* Memunculkan scrollbar otomatis jika teks terlalu panjang */
+}
+
+.modal-bottom .name {
     font-size: 1.5rem;
-  }
+    font-weight: 700;
+    margin-bottom: 12px;
+}
 
-  .grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  }
-
-  .modal-symbol {
-    font-size: 2rem;
-  }
-
-  .modal-name {
-    font-size: 1.3rem;
-  }
+.description {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-style: italic;
+    opacity: 0.9;
 }
