@@ -1035,6 +1035,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const elementsContainer = document.querySelector(".main-content");
 
+  // Set up Intersection Observer for GSAP-like scroll animations
+  const observerOptions = {
+    root: null,
+    rootMargin: '50px 0px -50px 0px',
+    threshold: 0.1
+  };
+
+  let delayCounter = 0;
+  let delayTimer = null;
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        // Staggered delay for elements entering at the same time
+        setTimeout(() => {
+          entry.target.classList.add('in-view');
+        }, delayCounter * 60); // 60ms stagger
+        
+        delayCounter++;
+        
+        // Reset delay counter after a short gap
+        clearTimeout(delayTimer);
+        delayTimer = setTimeout(() => {
+          delayCounter = 0;
+        }, 150);
+
+        // Stop observing once animated in
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
   const categoryLabels = {
     semua: "Semua",
     logam: "Logam",
@@ -1068,13 +1100,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const selectedCategory = key;
 
         document.querySelectorAll(".element-card").forEach((card) => {
+          // Temporarily remove animation class to re-animate when category changes
+          card.classList.remove('in-view');
+          
           if (
             selectedCategory === "semua" ||
             card.dataset.category === selectedCategory
           ) {
             card.style.display = "block";
+            // Re-observe the card to trigger the entrance animation again
+            setTimeout(() => observer.observe(card), 10);
           } else {
             card.style.display = "none";
+            observer.unobserve(card);
           }
         });
       });
@@ -1106,5 +1144,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     elementsContainer.appendChild(card);
+    observer.observe(card); // Observe card for scroll animation
   });
 });
