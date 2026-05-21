@@ -1,35 +1,54 @@
+// DOMContentLoaded memastikan JavaScript berjalan setelah struktur HTML selesai dibaca.
 document.addEventListener("DOMContentLoaded", () => {
-  const themeToggle = document.getElementById("theme-toggle");
-  const themeIcon = document.getElementById("theme-icon");
+  // Ambil elemen-elemen yang dibutuhkan untuk fitur header dan tema.
+  const header = document.querySelector(".floating-header");
+  const menuToggle = document.getElementById("menu-toggle");
+  const menuClose = document.getElementById("menu-close");
+  const categoryActions = document.getElementById("category-actions");
+  const themeSwitch = document.getElementById("theme-switch");
   const htmlElement = document.documentElement;
 
-  const updateThemeIcon = (theme) => {
-    if (theme === "light") {
-      themeIcon.src = "images/dark_mode.svg";
-    } else {
-      themeIcon.src = "images/light_mode.svg";
-    }
+  // Fungsi ini menandai posisi switch tema yang sedang aktif.
+  const updateThemeSwitch = (theme) => {
+    const isDark = theme === "dark";
+    themeSwitch.dataset.themeState = theme;
+    themeSwitch.setAttribute("aria-pressed", String(isDark));
+    themeSwitch.dataset.tooltip = isDark ? "Tema Gelap" : "Tema Terang";
   };
 
+  // localStorage menyimpan pilihan tema supaya tetap sama saat halaman dibuka lagi.
   let currentTheme = localStorage.getItem("theme") || "dark";
   htmlElement.setAttribute("data-theme", currentTheme);
-  updateThemeIcon(currentTheme);
+  updateThemeSwitch(currentTheme);
 
-  themeToggle.addEventListener("click", () => {
+  themeSwitch.addEventListener("click", () => {
     currentTheme = currentTheme === "dark" ? "light" : "dark";
     htmlElement.setAttribute("data-theme", currentTheme);
     localStorage.setItem("theme", currentTheme);
-    updateThemeIcon(currentTheme);
+    updateThemeSwitch(currentTheme);
   });
 
+  const setMenuExpanded = (isExpanded) => {
+    header.classList.toggle("menu-expanded", isExpanded);
+    menuToggle.setAttribute("aria-expanded", String(isExpanded));
+  };
+
+  menuToggle.addEventListener("click", () => setMenuExpanded(true));
+  menuClose.addEventListener("click", () => setMenuExpanded(false));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setMenuExpanded(false);
+  });
+
+  // Data unsur disimpan dalam array of object.
+  // Setiap object dipakai untuk membuat satu kartu dan isi modalnya.
   const elementData = [
     {
       number: 1,
-      category: "nonlogam",
+      category: "nonlogam_reaktif",
       symbol: "H",
       name: "Hidrogen",
       description:
-        "Hidrogen adalah suatu unsur kimia dengan lambang kimia H dan nomor atom 1. Dengan berat atom 1,00794 u, hidrogen merupakan unsur paling ringan dalam tabel periodik. Bentuk monatomiknya (H) adalah zat kimia paling melimpah di Alam Semesta, yang mencakup sekitar 75% dari seluruh massa barionik.",
+        "Hidrogen (\\(H_{2}\\)) adalah unsur kimia teringan dan paling melimpah di alam semesta. Di Bumi, unsur ini banyak terikat dalam senyawa seperti air (\\(H_{2}O\\)). Sebagai gas yang tidak berwarna, tidak berbau, dan tidak beracun, hidrogen kini menjadi pilar utama transisi energi bersih.",
     },
     {
       number: 2,
@@ -37,23 +56,23 @@ document.addEventListener("DOMContentLoaded", () => {
       symbol: "He",
       name: "Helium",
       description:
-        "Helium adalah unsur kimia dengan simbol He dan nomor atom 2. Helium adalah gas monoatomik yang tidak berwarna, tidak berbau, tidak berasa, tidak beracun, inert, dan mengepalai kelompok gas mulia dalam tabel periodik. Titik didih dan titik lelehnya paling rendah diantara semua unsur.",
+        "Helium adalah unsur kimia dengan lambang He dan nomor atom 2. Gas mulia ini tidak berwarna, tidak berbau, dan tidak beracun. Karena lebih ringan dari udara dan tidak mudah terbakar, helium sering digunakan untuk mengisi balon hias dan balon udara.",
     },
     {
       number: 3,
-      category: "logam",
+      category: "logam_alkali",
       symbol: "Li",
       name: "Litium",
       description:
-        'Litium (dari bahasa Yunani:λίθος lithos, "batu") adalah suatu unsur kimia dengan lambang Li dan nomor atom 3. Merupakan logam lunak berwarna putih keperakan yang termasuk dalam kelompok unsur kimia logam alkali. Dalam kondisi standar, ini adalah logam paling ringan dan unsur padat paling padat.',
+        'Litium (simbol: Li) adalah unsur kimia logam alkali yang paling ringan dan sangat reaktif. Dikenal sebagai "emas putih," komoditas ini memiliki harga pasar global yang sangat dinamis dan menjadi fondasi utama dalam teknologi masa kini, khususnya kendaraan listrik (EV).',
     },
     {
       number: 4,
-      category: "logam",
+      category: "logam_alkali_tanah",
       symbol: "Be",
       name: "Berilium",
       description:
-        "Berilium adalah unsur kimia dengan simbol Be dan nomor atom 4. Berilium tercipta melalui nukleosintesis bintang dan merupakan unsur yang relatif langka di alam semesta. Ini adalah unsur divalen yang terjadi secara alami hanya dalam kombinasi dengan unsur lain dalam mineral.",
+        "Berilium (simbol: Be, nomor atom: 4) adalah logam alkali tanah berwarna abu-abu yang sangat ringan, keras, dan tahan panas. Unsur ini banyak dimanfaatkan dalam industri dirgantara (aerospace), nuklir, dan elektronik.",
     },
     {
       number: 5,
@@ -61,39 +80,39 @@ document.addEventListener("DOMContentLoaded", () => {
       symbol: "B",
       name: "Boron",
       description:
-        "Boron adalah unsur kimia metaloid dengan simbol B dan nomor atom 5. Diproduksi seluruhnya oleh spalasi sinar kosmik dan supernova dan bukan oleh nukleosintesis bintang, boron merupakan unsur dengan kelimpahan rendah di Tata Surya dan Bumi's crust. Boron is concentrated on Earth by the water-solubility of its more common naturally occurring compounds, the borate minerals.",
+        "Boron (simbol kimia: B, nomor atom 5) adalah unsur metaloid yang sangat penting. Di alam, mineral ini tidak ditemukan dalam bentuk murni, melainkan terikat dengan unsur lain (seperti boraks). Boron memainkan peran krusial bagi kehidupan, mulai dari nutrisi esensial untuk kesuburan tanaman hingga mikronutrien yang dibutuhkan oleh tubuh manusia.",
     },
     {
       number: 6,
-      category: "nonlogam",
+      category: "nonlogam_reaktif",
       symbol: "C",
       name: "Karbon",
       description:
-        'Karbon (dari bahasa Latin:carbo "batubara") adalah suatu unsur kimia dengan lambang C dan nomor atom 6. Pada tabel periodik, karbon merupakan unsur pertama (baris 2) dari enam unsur dalam kolom (golongan) 14, yang memiliki komposisi kulit elektron terluar yang sama. Ini bukan logam dan tetravalen — membuat empat elektron tersedia untuk membentuk ikatan kimia kovalen.',
+        "Karbon (simbol: C, nomor atom: 6) adalah unsur kimia nonlogam yang menjadi tulang punggung seluruh kehidupan di Bumi. Unsur ini unik karena kemampuannya membentuk rantai dengan atom lain, menghasilkan jutaan senyawa organik dan anorganik yang sangat penting.",
     },
     {
       number: 7,
-      category: "nonlogam",
+      category: "nonlogam_reaktif",
       symbol: "N",
       name: "Nitrogen",
       description:
-        "Nitrogen adalah unsur kimia dengan simbol N dan nomor atom 7. Nitrogen adalah pniktogen paling ringan dan pada suhu kamar, merupakan gas diatomik transparan dan tidak berbau. Nitrogen adalah unsur umum di alam semesta, diperkirakan berada pada urutan ketujuh dalam kelimpahan total di Bima Sakti dan Tata Surya.",
+        "Nitrogen (simbol \\(N\\), nomor atom \\(7\\)) adalah unsur kimia berupa gas tidak berwarna, tidak berbau, dan tidak berasa yang membentuk sekitar \\(78\\%\\) dari atmosfer bumi. Karena sifatnya yang inert (tidak mudah bereaksi), gas ini sangat serbaguna dan digunakan luas dalam berbagai bidang.",
     },
     {
       number: 8,
-      category: "nonlogam",
+      category: "nonlogam_reaktif",
       symbol: "O",
       name: "Oksigen",
       description:
-        "Oksigen adalah unsur kimia dengan simbol O dan nomor atom 8. Ia adalah anggota kelompok kalkogen pada tabel periodik dan merupakan zat bukan logam dan pengoksidasi yang sangat reaktif yang mudah membentuk senyawa (terutama oksida) dengan sebagian besar unsur. Berdasarkan massanya, oksigen adalah unsur ketiga terbanyak di alam semesta, setelah hidrogen dan helium.",
+        "Oksigen (\\(O_{2}\\)) adalah unsur kimia dan gas vital yang menyusun sekitar \\(21\\%\\) atmosfer Bumi. Fungsinya sangat penting sebagai bahan bakar utama untuk metabolisme sel tubuh manusia dan digunakan dalam berbagai proses biologis serta sektor industri.",
     },
     {
       number: 9,
-      category: "nonlogam",
+      category: "nonlogam_reaktif",
       symbol: "F",
       name: "Fluorin",
       description:
-        "Fluor adalah unsur kimia dengan simbol F dan nomor atom 9. Ini adalah halogen paling ringan dan terdapat sebagai gas diatomik kuning pucat yang sangat beracun pada kondisi standar. Sebagai unsur yang paling elektronegatif, ia sangat reaktif: hampir semua unsur lainnya, termasuk beberapa gas mulia, membentuk senyawa dengan fluor.",
+        "Fluorin (lambang F) adalah unsur kimia golongan halogen dengan nomor atom 9. Sebagai unsur paling elektronegatif, ia berupa gas kuning pucat yang sangat reaktif dan beracun. Dalam kehidupan sehari-hari, Anda tidak menggunakan fluorin murni, melainkan fluorida (bentuk ionnya) yang aman dan bermanfaat.",
     },
     {
       number: 10,
@@ -101,31 +120,31 @@ document.addEventListener("DOMContentLoaded", () => {
       symbol: "Ne",
       name: "Neon",
       description:
-        "Neon adalah suatu unsur kimia dengan simbol Ne dan nomor atom 10. Ia termasuk dalam golongan 18 (gas mulia) pada tabel periodik. Neon adalah gas monatomik inert yang tidak berwarna, tidak berbau, dalam kondisi standar, dengan kepadatan sekitar dua pertiga udara.",
+        "Neon adalah unsur kimia dengan lambang Ne dan nomor atom 10. Neon termasuk dalam golongan gas mulia. Neon adalah gas monoatomik lengai yang nirwarna dan nirbau pada kondisi standar, dengan massa jenis sekitar dua pertiga udara.",
     },
     {
       number: 11,
-      category: "logam",
+      category: "logam_alkali",
       symbol: "Na",
       name: "Natrium",
       description:
-        "Natrium /ˈsoʊdiəm/ adalah suatu unsur kimia dengan simbol Na (dari bahasa Yunani Kuno Νάτριο) dan nomor atom 11. Merupakan logam lunak, berwarna putih keperakan, dan sangat reaktif. Dalam tabel periodik unsur ini berada di kolom 1 (logam alkali), dan sama dengan enam unsur lain dalam kolom tersebut bahwa ia mempunyai satu elektron pada kulit terluarnya, yang siap didonasikannya, sehingga menghasilkan atom bermuatan positif - kation.",
+        "Natrium (atau sodium) adalah unsur kimia dengan lambang Na dan nomor atom 11. Sebagai mineral dan elektrolit esensial, natrium sangat penting untuk menjaga keseimbangan cairan tubuh, transmisi saraf, dan kontraksi otot.",
     },
     {
       number: 12,
-      category: "logam",
+      category: "logam_alkali_tanah",
       symbol: "Mg",
       name: "Magnesium",
       description:
-        "Magnesium adalah suatu unsur kimia dengan simbol Mg dan nomor atom 12. Magnesium merupakan padatan berwarna abu-abu mengkilat yang memiliki kemiripan fisik dengan lima unsur lainnya pada kolom kedua (golongan 2, atau logam alkali tanah) pada tabel periodik: masing-masing unsur tersebut mempunyai konfigurasi elektron yang sama pada kulit elektron terluarnya yang menghasilkan struktur kristal serupa. Magnesium adalah unsur paling melimpah kesembilan di alam semesta.",
+        "Magnesium adalah mineral penting yang mendukung ratusan fungsi tubuh, termasuk fungsi otot, saraf, jantung, dan pembentukan energi. Pria dewasa membutuhkan 400–420 mg per hari, sedangkan wanita dewasa membutuhkan 310–320 mg. Kekurangan mineral ini dapat memicu kram otot, kelelahan, dan gangguan tidur.",
     },
     {
       number: 13,
-      category: "logam",
+      category: "logam_pascatransisi",
       symbol: "Al",
       name: "Aluminium",
       description:
-        "Aluminium (atau aluminium; lihat akhiran yang berbeda) adalah suatu unsur kimia dalam golongan boron dengan simbol Al dan nomor atom 13. Aluminium adalah logam berwarna putih keperakan, lunak, nonmagnetik, dan ulet. Aluminium adalah unsur ketiga yang paling melimpah (setelah oksigen dan silikon), dan logam paling melimpah di bumi's crust.",
+        "Aluminium adalah logam putih perak yang ringan dan tahan korosi. Merupakan unsur paling melimpah di kerak bumi, logam ini memiliki nomor atom 13 dengan simbol \\(Al\\). Aluminium sangat penting dalam industri konstruksi, peralatan rumah tangga, dan elektronik karena sifatnya yang kuat, mudah dibentuk, serta merupakan penghantar listrik dan panas yang baik.",
     },
     {
       number: 14,
@@ -133,31 +152,31 @@ document.addEventListener("DOMContentLoaded", () => {
       symbol: "Si",
       name: "Silikon",
       description:
-        "Silikon adalah unsur kimia dengan simbol Si dan nomor atom 14. Ini adalah metaloid tetravalen, lebih reaktif daripada germanium, metaloid tepat di bawahnya dalam tabel. Kontroversi tentang silikon's character dates to its discovery.",
+        "Silikon, yang juga disebut zat pasir, adalah unsur kimia dengan lambang Si dan nomor atom 14. Senyawa yang dibentuk bersifat paramagnetik. Unsur kimia ini ditemukan oleh Jöns Jakob Berzelius. Silikon merupakan unsur metaloid tetravalen, bersifat lebih tidak reaktif daripada karbon",
     },
     {
       number: 15,
-      category: "nonlogam",
+      category: "nonlogam_reaktif",
       symbol: "P",
-      name: "Fosfor",
+      name: "Fosforus",
       description:
-        "Fosfor adalah unsur kimia dengan simbol P dan nomor atom 15. Sebagai suatu unsur, fosfor terdapat dalam dua bentuk utama—fosfor putih dan fosfor merah—tetapi karena reaktivitasnya yang tinggi, fosfor tidak pernah ditemukan sebagai unsur bebas di Bumi. Sebaliknya mineral yang mengandung fosfor hampir selalu ada dalam keadaan teroksidasi maksimal, seperti batuan fosfat anorganik.",
+        "Fosforus (atau fosfor) adalah mineral penting dan unsur kimia dengan simbol P dan nomor atom 15. Zat ini sangat krusial bagi tubuh manusia, di mana sekitar 85% fosfor di dalam tubuh ditemukan pada tulang dan gigi untuk menjaga kekuatan dan kepadatannya.",
     },
     {
       number: 16,
-      category: "nonlogam",
+      category: "nonlogam_reaktif",
       symbol: "S",
       name: "Belerang",
       description:
-        "Belerang atau belerang (lihat perbedaan ejaan) adalah unsur kimia dengan simbol S dan nomor atom 16. Ia merupakan unsur non-logam multivalen yang melimpah. Dalam kondisi normal, atom belerang membentuk molekul oktatom siklik dengan rumus kimia S8.",
+        "Belerang, yang juga disebut sulfur, adalah unsur kimia dengan lambang S dan nomor atom 16. Belerang merupakan unsur nonlogam yang melimpah dan multivalen. Dalam kondisi normal, atom belerang membentuk molekul oktatomik siklik dengan rumus kimia S₈.",
     },
     {
       number: 17,
-      category: "nonlogam",
+      category: "nonlogam_reaktif",
       symbol: "Cl",
       name: "Klorin",
       description:
-        "Klorin adalah unsur kimia dengan lambang Cl dan nomor atom 17. Ia juga memiliki massa atom relatif 35,5. Klorin berada dalam kelompok halogen (17) dan merupakan halogen paling ringan kedua setelah fluor.",
+        "Hidrogen (\\(H_{2}\\)) adalah unsur kimia teringan dan paling melimpah di alam semesta. Di Bumi, unsur ini banyak terikat dalam senyawa seperti air (\\(H_{2}O\\)). Sebagai gas yang tidak berwarna, tidak berbau, dan tidak beracun, hidrogen kini menjadi pilar utama transisi energi bersih.",
     },
     {
       number: 18,
@@ -165,111 +184,111 @@ document.addEventListener("DOMContentLoaded", () => {
       symbol: "Ar",
       name: "Argon",
       description:
-        "Argon adalah suatu unsur kimia dengan lambang Ar dan nomor atom 18. Argon berada pada golongan 18 tabel periodik dan merupakan gas mulia. Argon adalah gas ketiga yang paling melimpah di bumi's atmosphere, at 0.934% (9,340 ppmv), making it over twice as abundant as the next most common atmospheric gas, water vapor (which averages about 4000 ppmv, but varies greatly), and 23 times as abundant as the next most common non-condensing atmospheric gas, carbon dioxide (400 ppmv), and more than 500 times as abundant as the next most common noble gas, neon (18 ppmv).",
+        "Argon adalah gas mulia (unsur kimia dengan simbol Ar dan nomor atom 18). Gas ini tidak berwarna, tidak berbau, dan dikenal sangat stabil atau inert (tidak mudah bereaksi dengan unsur lain). Argon adalah gas terbanyak ketiga di atmosfer bumi.",
     },
     {
       number: 19,
-      category: "logam",
+      category: "logam_alkali",
       symbol: "K",
       name: "Kalium",
       description:
-        "Kalium adalah unsur kimia dengan simbol K (berasal dari Neo-Latin, kalium) dan nomor atom 19. Kalium pertama kali diisolasi dari kalium, abu tanaman, yang menjadi asal mula namanya. Dalam tabel periodik, kalium adalah salah satu dari tujuh unsur dalam kolom (golongan) 1 (logam alkali): semuanya mempunyai satu elektron valensi di kulit elektron terluarnya, yang siap dilepaskan untuk membentuk atom bermuatan positif - kation, dan bergabung dengan anion membentuk garam.",
+        "Kalium (potasium) adalah mineral dan elektrolit penting yang berfungsi menjaga keseimbangan cairan, mengatur kontraksi otot, mendukung fungsi saraf, serta mengontrol tekanan darah. Kekurangan mineral ini bisa menyebabkan lemas dan kram otot, sementara sumber alaminya mudah ditemukan dalam makanan sehari-hari.",
     },
     {
       number: 20,
-      category: "logam",
+      category: "logam_alkali_tanah",
       symbol: "Ca",
       name: "Kalsium",
       description:
-        "Kalsium adalah unsur kimia dengan simbol Ca dan nomor atom 20. Kalsium adalah logam alkali tanah berwarna abu-abu lembut, unsur kelima yang paling melimpah berdasarkan massa di bumi's crust. The ion Ca2+ is also the fifth-most-abundant dissolved ion in seawater by both molarity and mass, after sodium, chloride, magnesium, and sulfate.",
+        "Kalsium adalah mineral krusial yang berfungsi utama untuk membentuk dan memelihara kepadatan tulang serta gigi. Karena tubuh tidak memproduksinya secara alami, Anda harus memenuhinya melalui pola makan sehari-hari atau suplemen.",
     },
     {
       number: 21,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Sc",
       name: "Skandium",
       description:
-        "Skandium adalah suatu unsur kimia dengan simbol Sc dan nomor atom 21. Merupakan unsur blok d metalik berwarna putih keperakan, secara historis kadang-kadang diklasifikasikan sebagai unsur tanah jarang, bersama dengan yttrium dan lantanoid. Ditemukan pada tahun 1879 melalui analisis spektral mineral euxenite dan gadolinite dari Skandinavia.",
+        "Skandium (simbol Sc, nomor atom 21) adalah logam transisi berwarna putih keperakan. Dikenal karena bobotnya yang ringan dan titik lelehnya yang tinggi, skandium sangat strategis sebagai paduan penguat (aloi) aluminium untuk industri kedirgantaraan serta material berteknologi tinggi seperti sel bahan bakar.",
     },
     {
       number: 22,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Ti",
       name: "Titanium",
       description:
-        "Titanium adalah unsur kimia dengan simbol Ti dan nomor atom 22. Merupakan logam transisi berkilau dengan warna perak, kepadatan rendah dan kekuatan tinggi. Sangat tahan terhadap korosi pada air laut, aqua regia dan klorin.",
+        "Titanium adalah unsur kimia logam dengan simbol Ti dan nomor atom 22. Logam ini sangat populer karena karakteristiknya yang ringan, sangat kuat, dan tahan korosi.",
     },
     {
       number: 23,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "V",
       name: "Vanadium",
       description:
-        "Vanadium adalah unsur kimia dengan simbol V dan nomor atom 23. Merupakan logam transisi yang keras, berwarna abu-abu keperakan, ulet, dan mudah dibentuk. Unsur ini hanya ditemukan dalam bentuk gabungan kimia di alam, tetapi setelah diisolasi secara artifisial, pembentukan lapisan oksida akan menstabilkan logam bebas terhadap oksidasi lebih lanjut.",
+        "Vanadium adalah unsur kimia logam transisi yang sangat kuat, ringan, dan tahan korosi, dengan lambang V dan nomor atom 23. Kegunaan utamanya adalah sebagai campuran aditif untuk menghasilkan baja berkekuatan tinggi serta bahan utama untuk baterai penyimpanan energi skala besar.",
     },
     {
       number: 24,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Cr",
       name: "Kromium",
       description:
-        "Kromium adalah suatu unsur kimia dengan simbol Cr dan nomor atom 24. Kromium adalah unsur pertama dalam Golongan 6. Kromium merupakan logam berwarna abu-abu baja, berkilau, keras dan rapuh, mudah dipoles, tahan noda, dan memiliki titik leleh tinggi.",
+        "Kromium adalah unsur kimia dengan simbol Cr dan nomor atom 24. Di dunia, kromium memiliki dua fungsi utama: sebagai mineral penting untuk mengatur gula darah tubuh manusia dan sebagai logam keras yang digunakan untuk melapisi atau memperkuat logam lain seperti baja tahan karat (stainless steel).",
     },
     {
       number: 25,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Mn",
       name: "Mangan",
       description:
-        "Mangan adalah suatu unsur kimia dengan simbol Mn dan nomor atom 25. Ia tidak ditemukan sebagai unsur bebas di alam; sering ditemukan dalam kombinasi dengan zat besi, dan banyak mineral. Mangan adalah logam dengan kegunaan paduan logam industri yang penting, khususnya pada baja tahan karat.",
+        "Mangan, batu kawi, atau bekawi adalah sebuah unsur kimia dengan lambang Mn dan nomor atom 25. Ia adalah logam yang keras, rapuh, dan berwarna keperakan yang sering ditemukan dalam mineral yang dikombinasikan dengan besi.",
     },
     {
       number: 26,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Fe",
       name: "Besi",
       description:
-        "Besi adalah suatu unsur kimia dengan lambang Fe (dari bahasa Latin:ferrum) dan nomor atom 26. Merupakan logam pada deret transisi pertama. Berdasarkan massanya, unsur ini merupakan unsur paling umum di Bumi dan membentuk sebagian besar Bumi's outer and inner core.",
+        "Besi adalah unsur kimia logam dengan simbol \\(Fe\\) (dari bahasa Latin: ferrum) dan nomor atom 26. Sebagai material paling melimpah di Bumi berdasarkan massa, besi merupakan bahan baku utama dalam industri konstruksi dan manufaktur serta zat gizi esensial bagi tubuh manusia.",
     },
     {
       number: 27,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Co",
-      name: "Kobal",
+      name: "Kobalt",
       description:
-        "Cobalt adalah unsur kimia dengan simbol Co dan nomor atom 27. Seperti nikel, kobalt di Bumi's crust is found only in chemically combined form, save for small deposits found in alloys of natural meteoric iron. The free element, produced by reductive smelting, is a hard, lustrous, silver-gray metal.",
+        "Kobalt adalah unsur kimia logam transisi dengan simbol Co dan nomor atom 27, yang dikenal sebagai bahan baku penting untuk baterai kendaraan listrik (EV), superalloy mesin pesawat, dan pigmen biru. Di Indonesia, kobalt diproduksi sebagai mineral ikutan dari pengolahan bijih nikel laterit.",
     },
     {
       number: 28,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Ni",
       name: "Nikel",
       description:
-        "Nikel adalah unsur kimia dengan simbol Ni dan nomor atom 28. Nikel merupakan logam berkilau berwarna putih keperakan dengan sedikit semburat emas. Nikel termasuk dalam logam transisi dan bersifat keras serta ulet.",
+        "Nikel adalah unsur kimia metalik dalam tabel periodik yang memiliki simbol Ni dan nomor atom 28. Nikel adalah logam berwarna putih keperak–perakan sedikit semburat keemasan. Nikel termasuk logam transisi, dan memiliki sifat keras serta ulet.",
     },
     {
       number: 29,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Cu",
       name: "Tembaga",
       description:
-        "Tembaga adalah unsur kimia dengan simbol Cu (dari bahasa Latin: tembaga) dan nomor atom 29. Tembaga merupakan logam lunak, mudah dibentuk, dan ulet dengan konduktivitas termal dan listrik yang sangat tinggi. Permukaan tembaga murni yang baru terpapar memiliki warna oranye kemerahan.",
+        "Tembaga adalah sebuah unsur kimia dengan lambang Cu dan nomor atom 29. Ia adalah logam yang lunak, mudah ditempa, dan ulet dengan konduktivitas termal dan listrik yang sangat tinggi. Permukaan tembaga murni yang baru diekspos memiliki warna oranye merah muda.",
     },
     {
       number: 30,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Zn",
       name: "Seng",
       description:
-        "Seng, dalam perdagangan juga spelter, adalah suatu unsur kimia dengan simbol Zn dan nomor atom 30. Seng adalah unsur pertama golongan 12 pada tabel periodik. Dalam beberapa hal seng secara kimiawi mirip dengan magnesium: ionnya berukuran sama dan satu-satunya bilangan oksidasi yang umum adalah +2.",
+        "Seng, adalah sebuah unsur kimia dengan lambang Zn dan nomor atom 30. Seng adalah logam yang sedikit rapuh pada suhu kamar dan memiliki penampilan keabu-abuan keperakan ketika oksidasi dihilangkan. Ia merupakan unsur pertama dalam golongan 12 dari tabel periodik.",
     },
     {
       number: 31,
-      category: "logam",
+      category: "logam_pascatransisi",
       symbol: "Ga",
       name: "Galium",
       description:
-        "Gallium adalah unsur kimia dengan simbol Ga dan nomor atom 31. Unsur galium tidak terdapat dalam bentuk bebas di alam, tetapi sebagai senyawa galium(III) yang terdapat dalam jumlah kecil pada bijih seng dan bauksit. Gallium adalah logam lunak berwarna keperakan, dan unsur galium adalah padatan rapuh pada suhu rendah, dan meleleh pada suhu 29,76 °C (85,57 °F) (sedikit di atas suhu kamar).",
+        "Galium (simbol Ga, nomor atom 31) adalah logam unik berwarna abu-abu kebiruan yang sangat terkenal karena titik lelehnya yang sangat rendah (\\(29,76^\\circ\\text{C}\\)). Unsur kimia ini bisa mencair hanya dengan suhu tubuh saat dipegang di tangan.",
     },
     {
       number: 32,
@@ -277,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
       symbol: "Ge",
       name: "Germanium",
       description:
-        "Germanium adalah unsur kimia dengan simbol Ge dan nomor atom 32. Merupakan metaloid putih keabu-abuan yang berkilau, keras, dalam gugus karbon, secara kimia mirip dengan tetangganya, timah dan silikon. Germanium yang dimurnikan adalah semikonduktor, dengan penampilan paling mirip dengan unsur silikon.",
+        "Germanium (simbol kimia Ge, nomor atom 32) adalah metaloid (semilogam) berwarna putih keabu-abuan yang sangat rapuh. Unsur ini adalah komponen vital dalam industri modern karena kemampuannya dalam menghantarkan listrik (semikonduktor) dan sifat optiknya yang unik.",
     },
     {
       number: 33,
@@ -285,23 +304,23 @@ document.addEventListener("DOMContentLoaded", () => {
       symbol: "As",
       name: "Arsen",
       description:
-        "Arsenik adalah unsur kimia dengan simbol As dan nomor atom 33. Arsenik terdapat di banyak mineral, biasanya bersama dengan belerang dan logam, dan juga sebagai kristal unsur murni. Arsenik adalah metaloid.",
+        "Arsen atau arsenik (simbol As, nomor atom 33) adalah unsur kimia golongan metaloid yang terkenal sangat beracun. Unsur ini sering kali ditemukan secara alami di dalam kerak bumi, tanah, dan air, namun juga dapat mencemari lingkungan melalui aktivitas industri.",
     },
     {
       number: 34,
-      category: "nonlogam",
+      category: "nonlogam_reaktif",
       symbol: "Se",
       name: "Selenium",
       description:
-        "Selenium adalah suatu unsur kimia dengan simbol Se dan nomor atom 34. Selenium merupakan unsur bukan logam yang sifat-sifatnya berada di antara sifat-sifat unsur kalkogen yang bersebelahan dengan kolom tabel periodik, belerang dan telurium. Jarang terjadi dalam bentuk unsur di alam, atau sebagai senyawa bijih murni.",
+        "Selenium merujuk pada dua hal yang sangat populer: mineral nutrisi penting yang dibutuhkan tubuh untuk menjaga sistem kekebalan dan metabolisme, atau perangkat lunak (framework) untuk otomatisasi browser web yang sangat populer di kalangan pengembang.",
     },
     {
       number: 35,
-      category: "nonlogam",
-      symbol: "Br",
+      category: "nonlogam_reaktif",
+      symbol: "BR",
       name: "Bromin",
       description:
-        'Brom (dari bahasa Yunani Kuno:βρῶμος, brómos, yang berarti "bau busuk") adalah suatu unsur kimia dengan simbol Br, dan nomor atom 35. Merupakan unsur halogen. Unsur ini diisolasi secara independen oleh dua ahli kimia, Carl Jacob Löwig dan Antoine Jerome Balard, pada tahun 1825–1826.',
+        "Bromin (Br) adalah unsur kimia golongan halogen dengan nomor atom 35. Bromin adalah satu-satunya unsur nonlogam yang berwujud cair pada suhu ruang, berwarna merah-cokelat, mudah menguap, dan memiliki bau menyengat yang sangat tajam.",
     },
     {
       number: 36,
@@ -309,119 +328,119 @@ document.addEventListener("DOMContentLoaded", () => {
       symbol: "Kr",
       name: "Kripton",
       description:
-        'Kripton (dari bahasa Yunani:κρυπτός kryptos "yang tersembunyi") adalah suatu unsur kimia dengan simbol Kr dan nomor atom 36. Ia adalah anggota unsur golongan 18 (gas mulia). Sebuah gas mulia yang tidak berwarna, tidak berbau, dan tidak berasa, kripton terdapat dalam jumlah kecil di atmosfer, diisolasi dengan penyulingan fraksional udara cair, dan sering digunakan dengan gas langka lainnya dalam lampu neon.',
+        "Kripton (simbol: Kr, nomor atom: 36) adalah unsur gas mulia yang tidak berwarna, tidak berbau, dan sangat stabil (inert). Unsur kimia ini umumnya digunakan dalam industri penerangan, seperti lampu fluoresen dan lampu mercusuar, serta pada teknologi laser dan insulasi kaca jendela.",
     },
     {
       number: 37,
-      category: "logam",
+      category: "logam_alkali",
       symbol: "Rb",
       name: "Rubidium",
       description:
-        "Rubidium adalah suatu unsur kimia dengan lambang Rb dan nomor atom 37. Rubidium adalah unsur logam lunak berwarna putih keperakan dari golongan logam alkali, dengan massa atom 85,4678. Unsur rubidium sangat reaktif, dengan sifat yang mirip dengan logam alkali lainnya, seperti oksidasi yang sangat cepat di udara.",
+        "Rubidium (simbol Rb, nomor atom 37) adalah logam alkali yang sangat lunak dan reaktif. Berwarna putih keperangan, unsur ini sangat mudah meledak jika bersentuhan dengan air. Rubidium sering menjadi elemen utama dalam fisika kuantum, seperti pembuatan jam atom dan kondensat Bose-Einstein.",
     },
     {
       number: 38,
-      category: "logam",
+      category: "logam_alkali_tanah",
       symbol: "Sr",
       name: "Stronsium",
       description:
-        "Strontium adalah suatu unsur kimia dengan lambang Sr dan nomor atom 38. Merupakan logam alkali tanah, strontium adalah unsur logam lunak berwarna putih keperakan atau kekuningan yang sangat reaktif secara kimia. Logam menjadi kuning ketika terkena udara.",
+        "Stronsium (simbol: Sr, nomor atom: 38) adalah logam alkali tanah berwarna perak-kekuningan yang sangat reaktif. Di alam, unsur ini paling dikenal melalui senyawa garamnya yang menghasilkan nyala merah cemerlang untuk kembang api dan suar darurat.",
     },
     {
       number: 39,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Y",
       name: "Itrium",
       description:
-        'Yttrium adalah unsur kimia dengan simbol Y dan nomor atom 39. Ini adalah logam transisi keperakan-logam yang secara kimia mirip dengan lantanida dan sering diklasifikasikan sebagai "unsur tanah jarang". Yttrium hampir selalu ditemukan dikombinasikan dengan lantanida dalam mineral tanah jarang dan tidak pernah ditemukan di alam sebagai unsur bebas.',
+        "Itrium (atau Yttrium) adalah unsur kimia dengan simbol Y dan nomor atom 39. Logam transisi berwarna keperakan ini diklasifikasikan sebagai unsur tanah jarang. Itrium sangat penting dalam teknologi modern, mulai dari pembuatan laser, superkonduktor, hingga pengobatan kanker.",
     },
     {
       number: 40,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Zr",
       name: "Zirkonium",
       description:
-        'Zirkonium adalah suatu unsur kimia dengan lambang Zr dan nomor atom 40. Nama zirkonium diambil dari nama mineral zirkon, sumber zirkonium terpenting. Kata zirkon berasal dari kata Persia zargun زرگون, yang berarti "berwarna emas".',
+        "Zirkonium adalah unsur kimia logam transisi dengan lambang Zr dan nomor atom 40. Logam putih keperakan ini terkenal karena sangat tahan terhadap korosi dan panas, menjadikannya material vital dalam berbagai sektor industri khusus.",
     },
     {
       number: 41,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Nb",
       name: "Niobium",
       description:
-        "Niobium, sebelumnya columbium, adalah suatu unsur kimia dengan simbol Nb (sebelumnya Cb) dan nomor atom 41. Merupakan logam transisi lunak, abu-abu, dan ulet, yang sering ditemukan dalam mineral piroklor, sumber komersial utama niobium, dan kolumbita. Nama tersebut berasal dari mitologi Yunani: Niobe, putri Tantalus karena sangat mirip dengan tantalum.",
+        "Niobium adalah logam transisi dengan lambang Nb dan nomor atom 41. Bersifat mengilap, berwarna abu-abu, lunak, dan mudah dibentuk. Logam ini sangat tahan panas dan korosi, serta memiliki sifat superkonduktor.",
     },
     {
       number: 42,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Mo",
       name: "Molibdenum",
       description:
-        "Molibdenum adalah suatu unsur kimia dengan simbol Mo dan nomor atom 42. Namanya berasal dari Neo-Latin molybdaenum, dari bahasa Yunani Kuno Μόλυβδος molybdos, yang berarti timbal, karena bijihnya disalahartikan sebagai bijih timah. Mineral molibdenum telah dikenal sepanjang sejarah, namun unsur tersebut ditemukan (dalam arti membedakannya sebagai entitas baru dari garam mineral logam lain) pada tahun 1778 oleh Carl Wilhelm Scheele.",
+        "Molibdenum (simbol kimia: Mo, nomor atom: 42) adalah logam transisi berwarna abu-abu keperakan dengan titik leleh sangat tinggi (\\(2.623^{\\circ }\\text{C}\\)). Logam tahan api ini sangat penting dalam industri metalurgi untuk meningkatkan kekuatan baja, dan merupakan mikronutrien esensial bagi metabolisme tubuh manusia serta tanaman.",
     },
     {
       number: 43,
-      category: "radioaktif",
+      category: "logam_transisi",
       symbol: "Tc",
       name: "Teknesium",
       description:
-        "Technetium (/tɛkˈniːʃiəm/) adalah suatu unsur kimia dengan simbol Tc dan nomor atom 43. Ini adalah unsur dengan nomor atom terendah dalam tabel periodik yang tidak memiliki isotop stabil: setiap bentuknya bersifat radioaktif. Hampir semua teknesium diproduksi secara sintetis, dan hanya dalam jumlah kecil yang ditemukan di alam.",
+        "Teknesium adalah unsur kimia dengan lambang Tc dan nomor atom 43. Logam transisi sintetis berwarna abu-abu keperakan ini sangat terkenal dalam dunia medis, khususnya isotop Teknesium-99m (Tc-99m), yang menjadi radiofarmaka paling umum digunakan untuk prosedur pencitraan diagnostik.",
     },
     {
       number: 44,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Ru",
       name: "Rutenium",
       description:
-        "Rutenium adalah unsur kimia dengan simbol Ru dan nomor atom 44. Ini adalah logam transisi langka yang termasuk dalam kelompok platina pada tabel periodik. Seperti logam lain dari kelompok platina, rutenium bersifat inert terhadap sebagian besar bahan kimia lainnya.",
+        "Rutenium (simbol Ru, nomor atom 44) adalah logam transisi langka dan keras berwarna putih keperakan yang termasuk dalam kelompok platina. Sangat tahan korosi, rutenium banyak digunakan dalam industri elektronik (resistor chip), katalis kimia, dan sebagai paduan untuk mengeraskan platina atau paladium.",
     },
     {
       number: 45,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Rh",
       name: "Rodium",
       description:
-        "Rhodium adalah unsur kimia dengan simbol Rh dan nomor atom 45. Merupakan logam transisi langka, berwarna putih keperakan, keras, dan inert secara kimia. Ini adalah anggota grup platinum.",
+        "Rodium (simbol Rh, nomor atom 45) adalah salah satu logam paling langka dan berharga di dunia, bahkan sering kali melebihi harga emas. Logam transisi berwarna putih keperakan ini sangat tahan karat, reflektif, dan memiliki titik lebur yang sangat tinggi.",
     },
     {
       number: 46,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Pd",
       name: "Paladium",
       description:
-        "Paladium adalah unsur kimia dengan simbol Pd dan nomor atom 46. Merupakan logam putih keperakan langka dan berkilau yang ditemukan pada tahun 1803 oleh William Hyde Wollaston. Dia menamainya setelah asteroid Pallas, yang diambil dari julukan dewi Yunani Athena, yang diperolehnya saat dia membunuh Pallas.",
+        "Paladium (simbol Pd, nomor atom 46) adalah logam transisi langka berwarna putih keperakan yang termasuk dalam kelompok platina. Dikenal karena sifatnya yang tahan korosi dan tidak mudah pudar, paladium banyak digunakan sebagai bahan baku perhiasan (terutama cincin kawin), komponen vital elektronik, dan katalis otomotif.",
     },
     {
       number: 47,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Ag",
       name: "Perak",
       description:
-        'Perak adalah suatu unsur kimia dengan simbol Ag (Yunani:άργυρος árguros, Latin:argentum, berasal dari akar bahasa Indo-Eropa *h₂erǵ- untuk "abu-abu" atau "bersinar") dan nomor atom 47. Merupakan logam transisi lunak, putih, berkilau, ia memiliki konduktivitas listrik, konduktivitas termal, dan reflektifitas tertinggi dibandingkan logam mana pun. Logam ini terdapat secara alami dalam bentuknya yang murni dan bebas (perak asli), sebagai paduan dengan emas dan logam lainnya, dan dalam mineral seperti argentit dan klorargyrit.',
+        'Perak adalah unsur logam dengan nomor atom 47. Simbolnya adalah Ag, dari bahasa Latin argentum, dari akar PIE yang direkonstruksi sebagai *h₂erǵ-, "abu-abu" atau "bersinar".',
     },
     {
       number: 48,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Cd",
       name: "Kadmium",
       description:
-        "Kadmium adalah suatu unsur kimia dengan lambang Cd dan nomor atom 48. Logam lunak berwarna putih kebiruan ini secara kimiawi mirip dengan dua logam stabil lainnya pada golongan 12, seng dan merkuri. Seperti seng, ia lebih menyukai bilangan oksidasi +2 di sebagian besar senyawanya dan seperti merkuri, ia menunjukkan titik leleh yang rendah dibandingkan dengan logam transisi.",
+        "Kadmium (Cd) adalah logam berat beracun yang secara alami ditemukan dalam kerak bumi. Unsur kimia dengan nomor atom 48 ini sering digunakan dalam industri baterai isi ulang, pelapisan logam (anti-korosi), cat, dan plastik. Paparannya sangat berbahaya dan dapat memicu berbagai masalah kesehatan yang serius.",
     },
     {
       number: 49,
-      category: "logam",
+      category: "logam_pascatransisi",
       symbol: "In",
       name: "Indium",
       description:
-        "Indium adalah suatu unsur kimia dengan lambang In dan nomor atom 49. Merupakan unsur logam pasca transisi yang langka di Bumi's crust. The metal is very soft, malleable and easily fusible, with a melting point higher than sodium, but lower than lithium or tin.",
+        "Indium adalah logam langka yang sangat lunak dengan simbol In dan nomor atom 49. Logam ini sangat penting dalam teknologi modern karena dapat menghantarkan listrik, menempel kuat pada kaca, dan bersifat transparan.",
     },
     {
       number: 50,
-      category: "logam",
+      category: "logam_pascatransisi",
       symbol: "Sn",
       name: "Timah",
       description:
-        "Timah adalah suatu unsur kimia dengan lambang Sn (bahasa Latin:stannum) dan nomor atom 50. Timah merupakan logam golongan utama pada golongan 14 tabel periodik. Timah menunjukkan kemiripan kimia dengan unsur tetangganya golongan-14, germanium dan timbal, dan memiliki dua kemungkinan bilangan oksidasi, +2 dan +4 yang sedikit lebih stabil.",
+        "Timah adalah sebuah unsur kimia dalam tabel periodik yang memiliki simbol Sn dan nomor atom 50. Timah termasuk logam pasca-transisi di kelompok 14 dalam tabel periodik.",
     },
     {
       number: 51,
@@ -429,7 +448,7 @@ document.addEventListener("DOMContentLoaded", () => {
       symbol: "Sb",
       name: "Antimon",
       description:
-        "Antimon adalah unsur kimia dengan simbol Sb (dari bahasa Latin:stibium) dan nomor atom 51. Merupakan metaloid abu-abu berkilau, ditemukan di alam terutama sebagai mineral sulfida stibnite (Sb2S3). Senyawa antimon telah dikenal sejak zaman dahulu dan digunakan untuk kosmetik; antimon logam juga diketahui, namun secara keliru diidentifikasi sebagai timbal pada penemuannya.",
+        "Antimon (simbol kimia: Sb, nomor atom: 51) adalah unsur metaloid berwarna putih keperakan yang bersifat rapuh. Di alam, unsur ini dikenal sejak zaman kuno dengan nama Stibium dan umumnya ditemukan berikatan dengan mineral lain seperti bijih stibnit.",
     },
     {
       number: 52,
@@ -437,15 +456,15 @@ document.addEventListener("DOMContentLoaded", () => {
       symbol: "Te",
       name: "Telurium",
       description:
-        "Telurium adalah unsur kimia dengan simbol Te dan nomor atom 52. Merupakan metaloid putih keperakan yang rapuh, agak beracun, langka. Telurium secara kimia berhubungan dengan selenium dan belerang.",
+        "Telurium (simbol Te, nomor atom 52) adalah unsur metaloid berwarna putih keperakan yang rapuh dan termasuk dalam golongan kalkogen. Telurium lebih langka di kerak bumi daripada emas dan sering kali diperoleh sebagai produk sampingan dari pemurnian tembaga atau timbal.",
     },
     {
       number: 53,
-      category: "nonlogam",
+      category: "nonlogam_reaktif",
       symbol: "I",
-      name: "Yodium",
+      name: "Iodin",
       description:
-        "Yodium adalah suatu unsur kimia dengan lambang I dan nomor atom 53. Namanya berasal dari bahasa Yunani ἰοειδής ioeidēs, artinya ungu atau ungu, karena warna uap yodium. Yodium dan senyawanya terutama digunakan dalam nutrisi, dan industri dalam produksi asam asetat dan polimer tertentu.",
+        "Iodin (atau yodium) adalah unsur kimia dengan lambang I dan nomor atom 53. Mineral esensial ini sangat krusial bagi kelenjar tiroid untuk memproduksi hormon yang mengatur metabolisme, serta sering digunakan sebagai antiseptik untuk mencegah infeksi pada luka.",
     },
     {
       number: 54,
@@ -453,560 +472,556 @@ document.addEventListener("DOMContentLoaded", () => {
       symbol: "Xe",
       name: "Xenon",
       description:
-        "Xenon adalah unsur kimia dengan simbol Xe dan nomor atom 54. Xenon adalah gas mulia yang tidak berwarna, padat, dan tidak berbau, yang terdapat di Bumi's atmosphere in trace amounts. Although generally unreactive, xenon can undergo a few chemical reactions such as the formation of xenon hexafluoroplatinate, the first noble gas compound to be synthesized.",
+        "Xenon (simbol kimia: Xe, nomor atom 54) adalah gas mulia yang sangat padat, tidak berwarna, dan tidak berbau. Gas langka ini terdapat di atmosfer Bumi dalam jumlah yang sangat kecil dan diperoleh melalui pemisahan udara cair.",
     },
     {
       number: 55,
-      category: "logam",
+      category: "logam_alkali",
       symbol: "Cs",
       name: "Sesium",
       description:
-        "Cesium atau cesium adalah unsur kimia dengan simbol Cs dan nomor atom 55. Ini adalah logam alkali lunak berwarna emas keperakan dengan titik leleh 28 °C (82 °F), yang menjadikannya salah satu dari hanya lima unsur logam yang berbentuk cair pada atau mendekati suhu kamar. Cesium merupakan logam alkali dan memiliki sifat fisik dan kimia yang mirip dengan rubidium dan kalium.",
+        "Caesium (atau sesium) adalah logam alkali dengan simbol Cs dan nomor atom 55. Dikenal sebagai salah satu logam paling reaktif di dunia, unsur ini meleleh pada suhu nyaris ruang (\\(\\approx 28,4^\\circ\\text{C}\\)). Isotop radioaktifnya, Caesium-137, digunakan dalam kalibrasi medis, namun berbahaya bagi kesehatan.",
     },
     {
       number: 56,
-      category: "logam",
+      category: "logam_alkali_tanah",
       symbol: "Ba",
       name: "Barium",
       description:
-        "Barium adalah unsur kimia dengan simbol Ba dan nomor atom 56. Ini adalah unsur kelima dalam Golongan 2, logam alkali tanah lunak berwarna keperakan. Karena reaktivitas kimianya yang tinggi, barium tidak pernah ditemukan di alam sebagai unsur bebas.",
+        "Barium adalah unsur kimia dengan lambang Ba dan nomor atom 56. Logam alkali tanah yang lunak ini sangat reaktif dan tidak ditemukan di alam dalam bentuk unsur murni. Unsur ini paling dikenal luas melalui senyawa seperti barium sulfat yang berfungsi sebagai zat kontras sinar-X medis.",
     },
     {
       number: 57,
-      category: "logam",
+      category: "lantanida",
       symbol: "La",
       name: "Lantanum",
       description:
-        "Lantanum adalah unsur kimia metalik berwarna putih keperakan yang lembut, ulet, dengan simbol La dan nomor atom 57. Lantanum cepat memudar jika terkena udara dan cukup lunak untuk dipotong dengan pisau. Ia memberi namanya pada deret lantanida, sekelompok 15 unsur serupa antara lantanum dan lutetium dalam tabel periodik: ia juga kadang-kadang dianggap sebagai unsur pertama dari logam transisi periode ke-6.",
+        'Lantanum (simbol kimia: La, nomor atom: 57) adalah logam tanah jarang yang lunak, mudah ditempa, dan berwarna putih keperakan. Unsur ini menjadi pionir dari deret lantanida dalam tabel periodik. Meskipun disebut "tanah jarang", lantanum sebenarnya berlimpah di kerak bumi dan digunakan secara luas dalam teknologi dan medis.',
     },
     {
       number: 58,
-      category: "logam",
+      category: "lantanida",
       symbol: "Ce",
       name: "Serium",
       description:
-        "Cerium adalah suatu unsur kimia dengan lambang Ce dan nomor atom 58. Cerium merupakan logam lunak, berwarna keperakan, ulet yang mudah teroksidasi di udara. Nama Cerium diambil dari nama planet kerdil Ceres (namanya diambil dari nama dewi pertanian Romawi).",
+        "Serium (Cerium) adalah logam tanah jarang dengan simbol Ce dan nomor atom 58. Unsur kimia ini sangat reaktif, berwarna abu-abu keperakan, dan banyak digunakan sebagai bahan pemoles kaca, batu korek api (pemantik), dan katalis.",
     },
     {
       number: 59,
-      category: "logam",
+      category: "lantanida",
       symbol: "Pr",
       name: "Praseodimium",
       description:
-        "Praseodymium adalah suatu unsur kimia dengan lambang Pr dan nomor atom 59. Praseodymium adalah logam lunak, berwarna keperakan, mudah dibentuk, dan ulet dalam golongan lantanida. Ia dihargai karena sifat magnetik, listrik, kimia, dan optiknya.",
+        "Praseodimium (simbol Pr, nomor atom 59) adalah logam tanah jarang dari deret lantanida. Logam berwarna putih keperakan ini lunak dan ulet. Ditemukan pada tahun 1885, unsur ini terkenal karena sifat magnetik, kelistrikan, dan optiknya, serta sangat penting dalam teknologi modern.",
     },
     {
       number: 60,
-      category: "logam",
+      category: "lantanida",
       symbol: "Nd",
       name: "Neodimium",
       description:
-        "Neodymium adalah unsur kimia dengan simbol Nd dan nomor atom 60. Merupakan logam lunak berwarna keperakan yang mudah ternoda di udara. Neodymium ditemukan pada tahun 1885 oleh ahli kimia Austria Carl Auer von Welsbach.",
+        "Neodimium adalah sebuah unsur kimia dengan lambang Nd dan nomor atom 60. Ia adalah anggota keempat dari deret lantanida dan dianggap sebagai salah satu logam tanah jarang. Ia adalah logam keperakan yang keras, sedikit dapat ditempa, dan akan cepat ternoda di udara dan kelembapan.",
     },
     {
       number: 61,
-      category: "radioaktif",
+      category: "lantanida",
       symbol: "Pm",
       name: "Prometium",
       description:
-        "Promethium, aslinya prometheum, adalah suatu unsur kimia dengan simbol Pm dan nomor atom 61. Semua isotopnya bersifat radioaktif; ia adalah salah satu dari hanya dua unsur yang dalam tabel periodik diikuti oleh unsur-unsur dengan bentuk stabil, perbedaan yang sama dengan teknesium. Secara kimia, prometium adalah lantanida, yang membentuk garam jika digabungkan dengan unsur lain.",
+        "Prometium (simbol Pm, nomor atom 61) adalah unsur kimia langka dalam deret lantanida yang seluruh isotopnya bersifat radioaktif. Karena jumlahnya di kerak bumi sangat sedikit (sekitar 500–600 gram secara total), unsur ini sebagian besar diproduksi secara artifisial.",
     },
     {
       number: 62,
-      category: "logam",
+      category: "lantanida",
       symbol: "Sm",
       name: "Samarium",
       description:
-        "Samarium adalah suatu unsur kimia dengan simbol Sm dan nomor atom 62. Merupakan logam keperakan agak keras yang mudah teroksidasi di udara. Menjadi anggota khas deret lantanida, samarium biasanya mengasumsikan bilangan oksidasi +3.",
+        "Samarium (Sm) adalah unsur kimia logam tanah jarang dengan nomor atom 62 dan simbol Sm. Unsur ini banyak digunakan untuk membuat magnet permanen yang sangat kuat dan, dalam bentuk radioaktifnya, sebagai obat paliatif untuk meredakan nyeri akibat kanker yang telah menyebar (metastasis) ke tulang.",
     },
     {
       number: 63,
-      category: "logam",
+      category: "lantanida",
       symbol: "Eu",
       name: "Europium",
       description:
-        "Europium adalah suatu unsur kimia dengan simbol Eu dan nomor atom 63. Ia diisolasi pada tahun 1901 dan dinamai menurut benua Eropa. Ini adalah logam keperakan yang cukup keras dan mudah teroksidasi di udara dan air.",
+        "Europium adalah unsur kimia logam tanah jarang dengan lambang Eu dan nomor atom 63. Dikenal sebagai yang paling reaktif dari kelompok lantanida, unsur ini sangat berharga dalam teknologi modern berkat kemampuan pendarannya (luminesensi) yang menghasilkan cahaya merah terang.",
     },
     {
       number: 64,
-      category: "logam",
+      category: "lantanida",
       symbol: "Gd",
       name: "Gadolinium",
       description:
-        "Gadolinium adalah unsur kimia dengan simbol Gd dan nomor atom 64. Merupakan logam tanah jarang berwarna putih keperakan, mudah dibentuk, dan ulet. Itu ditemukan di alam hanya dalam bentuk gabungan (garam).",
+        "Gadolinium adalah unsur kimia logam tanah jarang dengan nomor atom 64 dan simbol Gd. Bahan ini paling dikenal sebagai komponen utama dalam zat kontras MRI (Magnetic Resonance Imaging) yang digunakan untuk mempertajam visualisasi pembuluh darah, organ, dan kelainan seperti tumor.",
     },
     {
       number: 65,
-      category: "logam",
+      category: "lantanida",
       symbol: "Tb",
       name: "Terbium",
       description:
-        "Terbium adalah suatu unsur kimia dengan lambang Tb dan nomor atom 65. Merupakan logam tanah jarang berwarna putih keperakan yang mudah dibentuk, ulet, dan cukup lunak untuk dipotong dengan pisau. Terbium tidak pernah ditemukan di alam sebagai unsur bebas, namun terkandung dalam banyak mineral, termasuk cerite, gadolinit, monasit, xenotime, dan euxenite.",
+        "Terbium (Tb) adalah unsur kimia logam tanah jarang dengan nomor atom 65. Ditemukan pada tahun 1843, unsur berwarna putih keperakan yang lunak ini sangat berharga karena kemampuannya memancarkan cahaya hijau terang serta sifat magnetiknya. Terbium banyak digunakan dalam teknologi penerangan dan perangkat elektronik.",
     },
     {
       number: 66,
-      category: "logam",
+      category: "lantanida",
       symbol: "Dy",
       name: "Disprosium",
       description:
-        "Disprosium adalah suatu unsur kimia dengan lambang Dy dan nomor atom 66. Merupakan unsur tanah jarang dengan kilau perak metalik. Disprosium tidak pernah ditemukan di alam sebagai unsur bebas, meskipun ditemukan dalam berbagai mineral, seperti xenotime.",
+        'Disprosium (simbol kimia: Dy, nomor atom: 66) adalah logam tanah jarang berwarna perak yang lunak dan mudah ditempa. Namanya berasal dari bahasa Yunani dysprositos, yang berarti "sulit didapat", karena logam ini sangat menantang untuk diisolasi. Berikut adalah rincian fakta utamanya',
     },
     {
       number: 67,
-      category: "logam",
+      category: "lantanida",
       symbol: "Ho",
       name: "Holmium",
       description:
-        "Holmium adalah suatu unsur kimia dengan lambang Ho dan nomor atom 67. Bagian dari deret lantanida, holmium merupakan unsur tanah jarang. Holmium ditemukan oleh ahli kimia Swedia Per Theodor Cleve.",
+        "Holmium adalah unsur kimia logam tanah jarang dengan simbol Ho dan nomor atom 67. Dikenal karena sifat kemagnetannya yang luar biasa, unsur ini banyak dimanfaatkan dalam teknologi medis modern—terutama untuk operasi batu ginjal dan prostat—serta dalam reaktor nuklir",
     },
     {
       number: 68,
-      category: "logam",
+      category: "lantanida",
       symbol: "Er",
       name: "Erbium",
       description:
-        "Erbium adalah unsur kimia dalam deret lantanida, dengan lambang Er dan nomor atom 68. Merupakan logam padat berwarna putih keperakan jika diisolasi secara buatan, erbium alami selalu ditemukan dalam kombinasi kimia dengan unsur lain di Bumi. Dengan demikian, ini adalah unsur tanah jarang yang berasosiasi dengan beberapa unsur langka lainnya dalam mineral gadolinit dari Ytterby di Swedia, tempat ditemukannya yttrium, ytterbium, dan terbium.",
+        "Erbium (simbol Er, nomor atom 68) adalah logam tanah jarang berwarna putih keperakan. Unsur ini sangat penting dalam teknologi telekomunikasi (sebagai penguat sinyal kabel serat optik) dan dunia kecantikan/medis (sebagai teknologi laser ablatif untuk peremajaan kulit).",
     },
     {
       number: 69,
-      category: "logam",
+      category: "lantanida",
       symbol: "Tm",
       name: "Tulium",
       description:
-        "Thulium adalah unsur kimia dengan simbol Tm dan nomor atom 69. Merupakan unsur ketiga belas dan antepenultimate (ketiga terakhir) dalam deret lantanida. Seperti lantanida lainnya, bilangan oksidasi yang paling umum adalah +3, terlihat pada oksida, halida, dan senyawa lainnya.",
+        "Tulium adalah sebuah unsur kimia dengan lambang Tm dan nomor atom 69. Ia adalah unsur ketiga belas dan ketiga terakhir dalam deret lantanida. Seperti lantanida lainnya, keadaan oksidasi yang paling umum adalah +3, terlihat pada oksida, halida, dan senyawanya yang lain; tetapi, keadaan oksidasi +2 juga dapat stabil.",
     },
     {
       number: 70,
-      category: "logam",
+      category: "lantanida",
       symbol: "Yb",
       name: "Iterbium",
       description:
-        "Ytterbium adalah unsur kimia dengan simbol Yb dan nomor atom 70. Ini adalah unsur keempat belas dan kedua dari belakang dalam deret lantanida, yang merupakan dasar dari stabilitas relatif bilangan oksidasi +2. Namun, seperti lantanida lainnya, bilangan oksidasi yang paling umum adalah +3, terlihat pada oksida, halida, dan senyawa lainnya.",
+        "Iterbium adalah sebuah unsur kimia dengan lambang Yb dan nomor atom 70. Iterbium adalah sebuah logam, unsur keempat belas dan kedua dari belakang dalam deret lantanida, yang menjadi dasar kestabilan relatif keadaan oksidasi +2-nya.",
     },
     {
       number: 71,
-      category: "logam",
+      category: "lantanida",
       symbol: "Lu",
-      name: "Lutetium",
+      name: "Lutesium",
       description:
-        "Lutetium adalah unsur kimia dengan simbol Lu dan nomor atom 71. Merupakan logam berwarna putih keperakan, tahan korosi di udara kering, tetapi tidak di udara lembab. Ia dianggap sebagai unsur pertama dari logam transisi periode ke-6 dan unsur terakhir dalam deret lantanida, dan secara tradisional termasuk di antara tanah jarang.",
+        "Lutetium adalah unsur kimia logam tanah jarang dengan simbol Lu dan nomor atom 71. Elemen ini sangat langka, keras, dan berwarna putih keperakan. Isotop radioaktifnya, Lutetium-177, sangat krusial dalam dunia medis sebagai terapi bertarget untuk menghancurkan sel kanker.",
     },
     {
       number: 72,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Hf",
       name: "Hafnium",
       description:
-        "Hafnium adalah unsur kimia dengan simbol Hf dan nomor atom 72. Merupakan logam transisi tetravalen berwarna abu-abu keperakan, hafnium secara kimia menyerupai zirkonium dan ditemukan dalam mineral zirkonium. Keberadaannya telah diprediksi oleh Dmitri Mendeleev pada tahun 1869, meskipun ia baru teridentifikasi pada tahun 1923, menjadikannya unsur stabil kedua dari belakang yang ditemukan (renium diidentifikasi dua tahun kemudian).",
+        "Hafnium adalah unsur kimia dengan lambang Hf dan nomor atom 72. Logam transisi berwarna abu-keperakan ini sangat tahan korosi dan memiliki sifat penyerapan neutron yang luar biasa, sehingga memegang peranan krusial dalam teknologi reaktor nuklir, industri dirgantara, dan manufaktur mikroelektronika modern.",
     },
     {
       number: 73,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Ta",
       name: "Tantalum",
       description:
-        "Tantalum adalah suatu unsur kimia dengan lambang Ta dan nomor atom 73. Sebelumnya dikenal dengan nama tantalium, namanya berasal dari Tantalus, seorang antihero dari mitologi Yunani. Tantalum adalah logam transisi langka, keras, biru keabu-abuan, berkilau dan sangat tahan korosi.",
+        "Tantalum adalah logam transisi dengan simbol kimia Ta dan nomor atom 73. Sangat keras, tahan korosi, dan memiliki titik leleh tertinggi ketiga di Bumi (\\(2.996\\,^{\\circ}\\text{C}\\)). Ini menjadikannya material vital untuk elektronik, dirgantara, dan implan medis.",
     },
     {
       number: 74,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "W",
-      name: "Tungsten",
+      name: "Wolfram",
       description:
-        "Tungsten, juga dikenal sebagai wolfram, adalah suatu unsur kimia dengan simbol W dan nomor atom 74. Kata tungsten berasal dari bahasa Swedia tung sten, yang artinya batu berat. Namanya dalam bahasa Swedia adalah volfram, namun untuk membedakannya dari scheelite, yang dalam bahasa Swedia disebut tungsten.",
+        "Wolfram, dikenal juga sebagai tungsten, adalah suatu unsur kimia dalam tabel periodik yang memiliki lambang W dan nomor atom 74. Istilah tungsten berasal dari bahasa Swedia tung sten, yang berarti batu berat.",
     },
     {
       number: 75,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Re",
       name: "Renium",
       description:
-        "Renium adalah unsur kimia dengan simbol Re dan nomor atom 75. Merupakan logam transisi baris ketiga berwarna putih keperakan, berat, dalam golongan 7 tabel periodik. Dengan perkiraan konsentrasi rata-rata 1 bagian per miliar (ppb), renium adalah salah satu unsur paling langka di bumi's crust.",
+        "Renium adalah unsur kimia langka dengan lambang Re dan nomor atom 75. Logam transisi berat berwarna abu-abu keperakan ini memiliki titik lebur dan didih tertinggi ketiga di antara semua unsur, serta sangat tahan terhadap suhu ekstrem dan korosi.",
     },
     {
       number: 76,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Os",
       name: "Osmium",
       description:
-        'Osmium (dari bahasa Yunani osme (ὀσμή) yang berarti "bau") adalah suatu unsur kimia dengan simbol Os dan nomor atom 76. Ini adalah logam transisi yang keras, rapuh, berwarna putih kebiruan dalam golongan platina yang ditemukan sebagai unsur jejak dalam paduan, sebagian besar dalam bijih platina. Osmium adalah unsur alami terpadat, dengan massa jenis 22,59 g/cm3.',
+        "Osmium adalah sebuah unsur kimia dengan lambang Os dan nomor atom 76. Ia adalah sebuah logam transisi yang keras, rapuh, berwarna putih kebiruan dalam golongan platina yang ditemukan sebagai unsur jejak dalam paduan, kebanyakan dalam bijih platina. Osmium adalah unsur alami yang paling padat.",
     },
     {
       number: 77,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Ir",
       name: "Iridium",
       description:
-        "Iridium adalah suatu unsur kimia dengan simbol Ir dan nomor atom 77. Merupakan logam transisi yang sangat keras, rapuh, berwarna putih keperakan dari golongan platina, iridium umumnya dianggap sebagai unsur terpadat kedua (setelah osmium) berdasarkan massa jenis yang diukur, meskipun perhitungan yang melibatkan kisi ruang unsur-unsur tersebut menunjukkan bahwa iridium lebih padat. Ini juga merupakan logam yang paling tahan korosi, bahkan pada suhu setinggi 2000 °C. Meskipun hanya garam cair dan halogen tertentu yang bersifat korosif terhadap iridium padat, debu iridium yang terbagi halus jauh lebih reaktif dan mudah terbakar.",
+        "Iridium adalah unsur kimia logam transisi bernomor atom 77 (simbol \\(Ir\\)) yang sangat langka, keras, dan tahan panas, serta dikenal luas dalam teknologi komunikasi satelit dan industri otomotif.",
     },
     {
       number: 78,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Pt",
       name: "Platina",
       description:
-        'Platinum adalah unsur kimia dengan simbol Pt dan nomor atom 78. Platinum merupakan logam transisi padat, mudah dibentuk, ulet, sangat tidak reaktif, berharga, berwarna putih abu-abu. Namanya berasal dari istilah Spanyol platina, yang secara harfiah diterjemahkan menjadi "perak kecil".',
+        'Platina, yang juga disebut platinum, adalah unsur kimia dengan lambang Pt dan nomor atom 78. Logam transisi putih abu-abu ini padat, lunak, ulet, sangat tidak reaktif, dan berharga. Namanya berasal dari istilah Spanyol platina, yang jika diterjemahkan secara harfiah berarti "perak kecil".',
     },
     {
       number: 79,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Au",
       name: "Emas",
       description:
-        "Emas adalah suatu unsur kimia dengan simbol Au (dari bahasa Latin:aurum) dan nomor atom 79. Dalam bentuknya yang paling murni, emas adalah logam berwarna kuning cerah, agak kemerahan, padat, lunak, mudah dibentuk, dan ulet. Secara kimia, emas merupakan logam transisi dan unsur golongan 11.",
+        "Emas adalah sebuah unsur kimia dengan lambang Au dan nomor atom 79. Dalam bentuknya yang murni, emas menampilkan warna kuning jingga yang cerah dan memiliki sifat-sifat padat, lembut, lentur, dan ulet.",
     },
     {
       number: 80,
-      category: "logam",
+      category: "logam_transisi",
       symbol: "Hg",
       name: "Raksa",
       description:
-        "Merkuri adalah suatu unsur kimia dengan lambang Hg dan nomor atom 80. Umumnya dikenal dengan nama air raksa dan sebelumnya bernama hydrargyrum (/haɪˈdrɑːrdʒərəm/). Sebagai unsur blok d yang berat dan berwarna keperakan, merkuri adalah satu-satunya unsur logam yang berbentuk cair pada kondisi suhu dan tekanan standar; satu-satunya unsur lain yang berbentuk cair pada kondisi ini adalah brom, meskipun logam seperti sesium, galium, dan rubidium meleleh tepat di atas suhu kamar.",
+        'Raksa (sering disebut air raksa atau merkuri) adalah unsur kimia logam golongan transisi dengan simbol Hg dan nomor atom 80. Dikenal sebagai "perak cair", ini adalah satu-satunya logam yang berwujud cair pada suhu kamar dan sangat beracun.',
     },
     {
       number: 81,
-      category: "logam",
+      category: "logam_pascatransisi",
       symbol: "Tl",
       name: "Talium",
       description:
-        "Talium adalah unsur kimia dengan simbol Tl dan nomor atom 81. Logam pasca transisi berwarna abu-abu lembut ini tidak ditemukan bebas di alam. Jika diisolasi, bentuknya menyerupai timah, namun berubah warna jika terkena udara.",
+        "Talium (simbol: Tl, nomor atom: 81) adalah unsur kimia berupa logam lunak berwarna abu-abu kebiruan yang sangat beracun. Logam ini mirip timbal secara fisik tetapi mirip aluminium secara kimia. Karena sifatnya yang tidak berbau dan tidak berasa, talium pernah banyak disalahgunakan sebagai racun.",
     },
     {
       number: 82,
-      category: "logam",
+      category: "logam_pascatransisi",
       symbol: "Pb",
       name: "Timbal",
       description:
-        "Timbal (/lɛd/) adalah suatu unsur kimia dalam golongan karbon dengan lambang Pb (dari bahasa Latin:plumbum) dan nomor atom 82. Timbal merupakan logam pasca transisi yang lunak, mudah dibentuk, dan berat. Timbal metalik memiliki warna putih kebiruan setelah baru dipotong, namun segera memudar menjadi warna keabu-abuan kusam jika terkena udara.",
+        "Timbal (dikenal juga sebagai timah hitam atau plumbum) adalah unsur kimia logam berat dengan lambang Pb dan nomor atom 82. Bersifat lunak, mudah dibentuk, dan tahan karat, logam ini sangat beracun dan berbahaya karena mudah terakumulasi di lingkungan serta dalam tubuh manusia.",
     },
     {
       number: 83,
-      category: "logam",
+      category: "logam_pascatransisi",
       symbol: "Bi",
       name: "Bismut",
       description:
-        "Bismut adalah suatu unsur kimia dengan lambang Bi dan nomor atom 83. Bismut, suatu logam pasca transisi pentavalen, secara kimia menyerupai arsenik dan antimon. Unsur bismut dapat terbentuk secara alami, meskipun sulfida dan oksidanya membentuk bijih komersial yang penting.",
+        "Bismut (simbol kimia: Bi, nomor atom: 83) adalah logam rapuh berwarna putih keperakan yang tidak beracun, sering digunakan sebagai alternatif pengganti timbal. Logam ini dikenal memiliki sifat diamagnetik yang kuat dan sering diolah menjadi kristal warna-warni karena proses oksidasinya.",
     },
     {
       number: 84,
-      category: "radioaktif",
+      category: "logam_pascatransisi",
       symbol: "Po",
       name: "Polonium",
       description:
-        "Polonium adalah unsur kimia dengan simbol Po dan nomor atom 84, ditemukan pada tahun 1898 oleh Marie Curie dan Pierre Curie. Unsur langka dan sangat radioaktif tanpa isotop stabil, polonium secara kimia mirip dengan bismut dan telurium, dan terdapat pada bijih uranium. Penerapan polonium sedikit.",
+        "Polonium (simbol Po, nomor atom 84) adalah salah satu unsur paling langka dan sangat radioaktif di dunia. Ditemukan oleh Marie dan Pierre Curie pada tahun 1898, logam metaloid ini memancarkan partikel alfa berenergi tinggi yang, jika terhirup atau tertelan, menjadikannya racun mematikan tingkat ekstrem bagi tubuh manusia.",
     },
     {
       number: 85,
-      category: "radioaktif",
+      category: "logam_pascatransisi",
       symbol: "At",
       name: "Astatin",
       description:
-        "Astatin adalah unsur kimia radioaktif yang sangat langka dengan simbol kimia At dan nomor atom 85. Astatin terdapat di Bumi sebagai produk peluruhan berbagai unsur yang lebih berat. Semua isotopnya berumur pendek; yang paling stabil adalah astatin-210, dengan waktu paruh 8,1 jam.",
+        "Astatin adalah sebuah unsur kimia dengan lambang At dan nomor atom 85. Ia adalah unsur alami yang paling langka di kerak Bumi, hanya terjadi sebagai produk peluruhan dari berbagai unsur yang lebih berat. Semua isotop astatin berumur pendek; yang paling stabil adalah astatin-210, dengan waktu paruh 8,1 jam.",
     },
     {
       number: 86,
-      category: "radioaktif",
+      category: "gas_mulia",
       symbol: "Rn",
       name: "Radon",
       description:
-        "Radon adalah unsur kimia dengan simbol Rn dan nomor atom 86. Radon adalah gas mulia radioaktif, tidak berwarna, tidak berbau, tidak berasa, terjadi secara alami sebagai produk peluruhan radium. Isotopnya yang paling stabil, 222Rn, mempunyai waktu paruh 3,8 hari.",
+        "Radon adalah gas radioaktif alami yang tidak berbau, tidak berwarna, dan tidak berasa. Terbentuk dari peluruhan uranium atau torium di dalam tanah, radon dapat merembes ke dalam rumah atau gedung melalui retakan. Paparan jangka panjang merupakan penyebab utama kanker paru-paru pada bukan perokok.",
     },
     {
       number: 87,
-      category: "radioaktif",
+      category: "logam_alkali",
       symbol: "Fr",
       name: "Fransium",
       description:
-        "Fransium adalah unsur kimia dengan simbol Fr dan nomor atom 87. Dulunya dikenal sebagai eka-cesium dan aktinium K. Ini adalah unsur elektronegatif terkecil kedua, setelah sesium. Fransium adalah logam sangat radioaktif yang terurai menjadi astatin, radium, dan radon.",
+        "Fransium (simbol \\(Fr\\), nomor atom 87) adalah logam alkali radioaktif yang sangat langka dan tidak stabil. Dikenal sebagai salah satu unsur termahal di Bumi (diperkirakan mencapai lebih dari $1 miliar per gramnya), unsur ini sebagian besar dipelajari untuk penelitian struktur atom dan eksperimen spektroskopi.",
     },
     {
       number: 88,
-      category: "radioaktif",
+      category: "logam_alkali_tanah",
       symbol: "Ra",
       name: "Radium",
       description:
-        "Radium adalah suatu unsur kimia dengan lambang Ra dan nomor atom 88. Merupakan unsur keenam dalam golongan 2 tabel periodik, juga dikenal sebagai logam alkali tanah. Radium murni hampir tidak berwarna, namun mudah bergabung dengan nitrogen (bukan oksigen) jika terkena udara, membentuk lapisan permukaan hitam radium nitrida (Ra3N2).",
+        "Radium adalah unsur kimia logam radioaktif berwarna putih keperakan (simbol Ra, nomor atom 88). Ditemukan oleh Marie dan Pierre Curie pada tahun 1898, zat ini sangat langka dan sangat reaktif, memancarkan radiasi kuat yang menghasilkan pendaran biru dalam gelap.",
     },
     {
       number: 89,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Ac",
       name: "Aktinium",
       description:
-        "Aktinium adalah unsur kimia radioaktif dengan simbol Ac (jangan bingung dengan singkatan gugus asetil) dan nomor atom 89, yang ditemukan pada tahun 1899. Ini adalah unsur radioaktif non-primordial pertama yang diisolasi. Polonium, radium dan radon diamati sebelum aktinium, tetapi mereka tidak diisolasi sampai tahun 1902.",
+        "Aktinium (Ac) adalah unsur logam radioaktif berwarna putih keperakan dengan nomor atom 89, yang ditemukan pada 1899 dan menjadi dasar penamaan deret aktinida. Aktinium sangat langka, ditemukan dalam jumlah kecil di bijih uranium, dan lebih sering diproduksi di laboratorium karena sifatnya yang sangat radioaktif (150 kali lebih kuat dari radium).",
     },
     {
       number: 90,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Th",
       name: "Torium",
       description:
-        "Torium adalah suatu unsur kimia dengan simbol Th dan nomor atom 90. Merupakan logam aktinida radioaktif, torium adalah salah satu dari hanya dua unsur radioaktif signifikan yang masih terdapat secara alami dalam jumlah besar sebagai unsur primordial (yang lainnya adalah uranium). Ditemukan pada tahun 1828 oleh Pendeta Norwegia dan ahli mineralogi amatir Morten Thrane Esmark dan diidentifikasi oleh ahli kimia Swedia Jöns Jakob Berzelius, yang menamainya dengan nama Thor, dewa guntur Norse.",
+        "Torium adalah suatu unsur kimia dalam tabel periodik yang memiliki lambang Th dan nomor atom 90. Logam torium berwarna keperakan dan bernoda hitam saat terkena udara, membentuk torium dioksida; logam ini cukup keras, mudah dibentuk, dan memiliki titik lebur yang tinggi.",
     },
     {
       number: 91,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Pa",
       name: "Protaktinium",
       description:
-        "Protaktinium adalah unsur kimia dengan simbol Pa dan nomor atom 91. Merupakan logam padat berwarna abu-abu keperakan yang mudah bereaksi dengan oksigen, uap air, dan asam anorganik. Ia membentuk berbagai senyawa kimia di mana protaktinium biasanya terdapat dalam bilangan oksidasi +5, tetapi juga dapat mengambil bilangan +4 dan bahkan +2 atau +3.",
+        "Protaktinium (simbol Pa, nomor atom 91) adalah logam radioaktif langka yang termasuk dalam deret aktinida. Karena kelangkaan, radioaktivitas, dan toksisitasnya yang tinggi, unsur ini sangat mahal dan penggunaannya terbatas hanya pada penelitian ilmiah.",
     },
     {
       number: 92,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "U",
       name: "Uranium",
       description:
-        "Uranium adalah suatu unsur kimia dengan simbol U dan nomor atom 92. Merupakan logam berwarna putih keperakan dalam deret aktinida pada tabel periodik. Sebuah atom uranium memiliki 92 proton dan 92 elektron, 6 di antaranya adalah elektron valensi.",
+        "Uranium adalah logam radioaktif alami bernomor atom 92 (simbol U) yang menjadi bahan bakar utama pembangkit listrik tenaga nuklir. Unsur ini sangat efisien; satu kilogram uranium dapat menghasilkan energi setara 3.000 ton batu bara.",
     },
     {
       number: 93,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Np",
       name: "Neptunium",
       description:
-        "Neptunium adalah suatu unsur kimia dengan simbol Np dan nomor atom 93. Merupakan logam aktinida radioaktif, neptunium adalah unsur transuranik pertama. Posisinya dalam tabel periodik tepat setelah uranium, dinamai menurut nama planet Uranus, menyebabkan ia dinamai menurut Neptunus, planet berikutnya setelah Uranus.",
+        "Neptunium (simbol: Np, nomor atom: 93) adalah logam aktinida radioaktif dan unsur transuranium pertama. Ditemukan pada tahun 1940 di laboratorium radiasi Berkeley, unsur sintetis ini umumnya dihasilkan sebagai produk sampingan dari reaktor nuklir.",
     },
     {
       number: 94,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Pu",
       name: "Plutonium",
       description:
-        "Plutonium adalah unsur kimia radioaktif transuranik dengan lambang Pu dan nomor atom 94. Merupakan logam aktinida berwarna abu-abu keperakan yang memudar bila terkena udara, dan membentuk lapisan kusam bila teroksidasi. Unsur ini biasanya menunjukkan enam alotrop dan empat bilangan oksidasi.",
+        "Plutonium adalah unsur kimia radioaktif golongan aktinida dengan lambang Pu dan nomor atom 94. Logam berwarna keperakan ini sangat padat dan reaktif. Ditemukan pada tahun 1940, unsur ini diproduksi secara artifisial melalui iradiasi neutron pada uranium di reaktor nuklir.",
     },
     {
       number: 95,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Am",
       name: "Amerisium",
       description:
-        "Amerisium adalah unsur kimia transuranik radioaktif dengan simbol Am dan nomor atom 95. Anggota deret aktinida ini terletak dalam tabel periodik di bawah unsur lantanida europium, dan dengan analogi dinamai menurut nama Amerika. Americium pertama kali diproduksi pada tahun 1944 oleh kelompok Glenn T.Seaborg dari Berkeley, California, di laboratorium metalurgi Universitas Chicago.",
+        "Amerisium (lambang Am, nomor atom 95) adalah unsur kimia sintetis yang sangat radioaktif dan termasuk dalam deret aktinida. Ditemukan pada tahun 1944, unsur ini dinamai sesuai benua Amerika. Isotop yang paling umum digunakan adalah Amerisium-241.",
     },
     {
       number: 96,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Cm",
       name: "Kurium",
       description:
-        "Curium adalah unsur kimia radioaktif transuranik dengan simbol Cm dan nomor atom 96. Unsur seri aktinida ini dinamai Marie dan Pierre Curie – keduanya dikenal karena penelitian mereka tentang radioaktivitas. Curium pertama kali sengaja diproduksi dan diidentifikasi pada bulan Juli 1944 oleh kelompok Glenn T. Seaborg di Universitas California, Berkeley.",
+        "Kurium adalah unsur kimia sintetik dalam sistem periodik unsur yang memiliki lambang Cm dan nomor atom 96. Nama elemen ini diambil dari nama ilmuwan Marie Curie.",
     },
     {
       number: 97,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Bk",
       name: "Berkelium",
       description:
-        "Berkelium adalah unsur kimia radioaktif transuranik dengan lambang Bk dan nomor atom 97. Ia merupakan anggota rangkaian unsur aktinida dan transuranium. Namanya diambil dari kota Berkeley, California, lokasi Laboratorium Radiasi Universitas California di mana ia ditemukan pada bulan Desember 1949.",
+        "Berkelium adalah unsur kimia sintetis radioaktif dalam tabel periodik dengan lambang Bk dan nomor atom 97. Logam transuranium yang termasuk dalam deret aktinida ini tidak ditemukan di alam, melainkan dibuat melalui proses reaktor nuklir khusus.",
     },
     {
       number: 98,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Cf",
       name: "Kalifornium",
       description:
-        "Kalifornium adalah unsur kimia logam radioaktif dengan lambang Cf dan nomor atom 98. Unsur ini pertama kali dibuat pada tahun 1950 di Laboratorium Radiasi Universitas California di Berkeley, dengan membombardir curium dengan partikel alfa (ion helium-4). Ini adalah unsur aktinida, unsur transuranium keenam yang disintesis, dan memiliki massa atom tertinggi kedua dari semua unsur yang telah diproduksi dalam jumlah yang cukup besar untuk dilihat dengan mata telanjang (setelah einsteinium).",
+        "Kalifornium adalah unsur kimia sintetis yang sangat radioaktif dengan lambang Cf dan nomor atom 98. Logam ini sangat langka dan berharga. Ditemukan pertama kali pada tahun 1950 di Universitas California, Berkeley, unsur ini digunakan secara krusial sebagai sumber neutron portabel.",
     },
     {
       number: 99,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Es",
       name: "Einsteinium",
       description:
-        "Einsteinium adalah unsur sintetik dengan simbol Es dan nomor atom 99. Ia adalah unsur transuranium ketujuh, dan merupakan aktinida. Einsteinium ditemukan sebagai komponen puing-puing ledakan bom hidrogen pertama pada tahun 1952, dan dinamai menurut nama Albert Einstein.",
+        'Einsteinium (simbol \\(Es\\), nomor atom \\(99\\)) adalah unsur kimia sintetis yang sangat radioaktif dan termasuk dalam deret aktinida. Unsur ini pertama kali ditemukan pada puing-puing ledakan bom hidrogen pertama ("Ivy Mike") pada tahun 1952.',
     },
     {
       number: 100,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Fm",
       name: "Fermium",
       description:
-        "Fermium adalah unsur sintetik dengan simbol Fm dan nomor atom 100. Fermium merupakan anggota deret aktinida. Ini adalah unsur terberat yang dapat dibentuk melalui bombardir neutron terhadap unsur yang lebih ringan, dan karenanya merupakan unsur terakhir yang dapat dibuat dalam jumlah makroskopis, meskipun logam fermium murni belum dapat dibuat.",
+        "Fermium adalah unsur kimia sintetis (buatan) radioaktif dengan lambang Fm dan nomor atom 100. Sebagai anggota deret aktinida, fermium adalah unsur terberat yang dapat diproduksi melalui pemboman neutron pada unsur yang lebih ringan, dinamai untuk menghormati fisikawan nuklir Enrico Fermi.",
     },
     {
       number: 101,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Md",
       name: "Mendelevium",
       description:
-        "Mendelevium adalah unsur sintetik dengan simbol kimia Md (sebelumnya Mv) dan nomor atom 101. Unsur transuranik radioaktif logam dalam deret aktinida, merupakan unsur pertama yang saat ini tidak dapat diproduksi dalam jumlah makroskopis melalui pemboman neutron terhadap unsur yang lebih ringan. Ini adalah aktinida antepenultimate dan elemen transuranik kesembilan.",
+        "Mendelevium adalah unsur kimia sintetis radioaktif dengan simbol Md dan nomor atom 101. Termasuk dalam deret aktinida, unsur buatan ini ditemukan pada tahun 1955 di Universitas California, Berkeley, dan dinamai untuk menghormati Dmitri Mendeleev, pencipta tabel periodik.",
     },
     {
       number: 102,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "No",
       name: "Nobelium",
       description:
-        "Nobelium adalah unsur kimia sintetik dengan simbol No dan nomor atom 102. Nama ini diambil untuk menghormati Alfred Nobel, penemu dinamit dan dermawan ilmu pengetahuan. Merupakan logam radioaktif, merupakan unsur transuranik kesepuluh dan merupakan anggota kedua dari belakang deret aktinida.",
+        "Nobelium adalah unsur kimia sintetis dengan simbol No dan nomor atom 102. Logam radioaktif langka ini termasuk dalam deret aktinida dan hanya dapat dibuat di laboratorium dengan membombardir unsur yang lebih ringan menggunakan partikel bermuatan.",
     },
     {
       number: 103,
-      category: "radioaktif",
+      category: "aktinida",
       symbol: "Lr",
       name: "Lawrensium",
       description:
-        "Lawrencium adalah unsur kimia sintetis dengan simbol kimia Lr (sebelumnya Lw) dan nomor atom 103. Nama ini diambil untuk menghormati Ernest Lawrence, penemu siklotron, perangkat yang digunakan untuk menemukan banyak unsur radioaktif buatan. Sebuah logam radioaktif, lawrencium adalah unsur transuranik kesebelas dan juga merupakan anggota terakhir dari deret aktinida.",
+        "Lawrencium adalah unsur kimia sintetis radioaktif dengan simbol Lr dan nomor atom 103. Sebagai anggota terakhir dari deret aktinida, unsur ini tidak ditemukan di alam dan hanya dapat diproduksi di laboratorium melalui reaksi partikel nuklir.",
     },
     {
       number: 104,
-      category: "radioaktif",
+      category: "logam_transisi",
       symbol: "Rf",
-      name: "Rutherfordium",
+      name: "Ruterfordium",
       description:
-        "Rutherfordium adalah unsur kimia dengan simbol Rf dan nomor atom 104, dinamai untuk menghormati fisikawan Ernest Rutherford. Merupakan unsur sintetik (unsur yang dapat dibuat di laboratorium tetapi tidak ditemukan di alam) dan radioaktif; isotop paling stabil yang diketahui, 267Rf, memiliki waktu paruh sekitar 1,3 jam. Dalam tabel periodik unsur, unsur ini merupakan unsur blok d dan unsur transisi baris kedua dari baris keempat.",
+        "Rutherfordium adalah unsur kimia sintetis yang sangat radioaktif dengan lambang Rf dan nomor atom 104. Karena tidak terdapat di alam, logam transisi superberat ini dibuat di laboratorium melalui reaksi nuklir. Belum ada kegunaan praktis selain untuk penelitian sains.",
     },
     {
       number: 105,
-      category: "radioaktif",
+      category: "logam_transisi",
       symbol: "Db",
       name: "Dubnium",
       description:
-        "Dubnium adalah suatu unsur kimia dengan simbol Db dan nomor atom 105. Namanya diambil dari nama kota Dubna di Rusia (utara Moskow), tempat ia pertama kali diproduksi. Merupakan unsur sintetik (unsur yang dapat dibuat di laboratorium tetapi tidak ditemukan di alam) dan radioaktif; isotop paling stabil yang diketahui, dubnium-268, memiliki waktu paruh sekitar 28 jam.",
+        "Dubnium adalah unsur kimia sintetis (buatan) dengan lambang Db dan nomor atom 105. Unsur ini sangat radioaktif dan tidak terjadi secara alami; ia diproduksi di laboratorium melalui reaksi nuklir. Dubnium dinamai untuk menghormati kota Dubna di Rusia, tempat institut penelitian nuklir menemukannya.",
     },
     {
       number: 106,
-      category: "radioaktif",
+      category: "logam_transisi",
       symbol: "Sg",
       name: "Seaborgium",
       description:
-        "Seaborgium adalah unsur sintetik dengan simbol Sg dan nomor atom 106. Isotop paling stabilnya, 271Sg, memiliki waktu paruh 1,9 menit. Isotop 269Sg yang baru ditemukan berpotensi memiliki waktu paruh yang sedikit lebih lama (ca.",
+        "Seaborgium (Sg) adalah unsur kimia sintetis yang sangat radioaktif dengan nomor atom 106. Ditemukan pada tahun 1974, unsur ini termasuk dalam golongan logam transisi dan diberi nama untuk menghormati ilmuwan nuklir Glenn T. Seaborg, menjadikannya salah satu unsur pertama yang dinamai untuk menghormati ilmuwan yang masih hidup.",
     },
     {
       number: 107,
-      category: "radioaktif",
+      category: "logam_transisi",
       symbol: "Bh",
       name: "Bohrium",
       description:
-        "Bohrium adalah suatu unsur kimia dengan simbol Bh dan nomor atom 107. Namanya diambil dari nama fisikawan Denmark Niels Bohr. Merupakan unsur sintetik (unsur yang dapat dibuat di laboratorium tetapi tidak ditemukan di alam) dan radioaktif; isotop paling stabil yang diketahui, 270Bh, memiliki waktu paruh sekitar 61 detik.",
+        "Bohrium adalah unsur kimia sintetik dalam sistem periodik unsur yang memiliki lambang Bh dan nomor atom 107. Nama elemen ini bertujuan untuk mengenang Niels Bohr, penemu orbit elektron.",
     },
     {
       number: 108,
-      category: "radioaktif",
+      category: "logam_transisi",
       symbol: "Hs",
-      name: "Hassium",
+      name: "Hasium",
       description:
-        "Hassium adalah unsur kimia dengan simbol Hs dan nomor atom 108, dinamai berdasarkan nama negara bagian Hesse di Jerman. Merupakan unsur sintetik (unsur yang dapat dibuat di laboratorium tetapi tidak ditemukan di alam) dan radioaktif; isotop paling stabil yang diketahui, 269Hs, memiliki waktu paruh sekitar 9,7 detik, meskipun keadaan metastabil yang belum dikonfirmasi, 277mHs, mungkin memiliki waktu paruh lebih lama sekitar 130 detik. Lebih dari 100 atom hassium telah disintesis hingga saat ini.",
+        "Hasium adalah unsur kimia sintetik dalam sistem periodik unsur yang memiliki lambang Hs dan nomor atom 108. Dari kelimabelas isotop dari hasium yang diketahui, Hs-276 memiliki waktu-paruh paling lama, yaitu 1.1 jam. Hasium pertamakali terbentuk pada 1984 Gesellschaft für Schwerionenforschung di Darmstadt, Jerman.",
     },
     {
       number: 109,
-      category: "radioaktif",
+      category: "sifat_kimia_tidak_diketahui",
       symbol: "Mt",
       name: "Meitnerium",
       description:
-        "Meitnerium adalah unsur kimia dengan simbol Mt dan nomor atom 109. Meitnerium adalah unsur sintetik yang sangat radioaktif (unsur yang tidak ditemukan di alam dan dapat dibuat di laboratorium). Isotop paling stabil yang diketahui, meitnerium-278, memiliki waktu paruh 7,6 detik.",
+        "Meitnerium adalah unsur kimia sintetis dengan lambang Mt dan nomor atom 109. Logam transisi yang sangat radioaktif ini tidak terdapat di alam dan hanya dapat dibuat di laboratorium. Karena waktu paruhnya yang sangat singkat (maksimal sekitar 8 detik untuk isotop Mt-278), kegunaannya terbatas pada penelitian ilmiah.",
     },
     {
       number: 110,
-      category: "radioaktif",
+      category: "sifat_kimia_tidak_diketahui",
       symbol: "Ds",
       name: "Darmstadtium",
       description:
-        "Darmstadtium adalah suatu unsur kimia dengan simbol Ds dan nomor atom 110. Merupakan unsur sintetik yang sangat radioaktif. Isotop paling stabil yang diketahui, darmstadtium-281, memiliki waktu paruh sekitar 10 detik.",
+        "Darmstadtium adalah unsur kimia sintetis dengan lambang Ds dan nomor atom 110. Sangat radioaktif dan tidak stabil, unsur logam transisi ini dibuat di laboratorium melalui tumbukan partikel atom berat dan hanya digunakan untuk tujuan penelitian ilmiah.",
     },
     {
       number: 111,
-      category: "radioaktif",
+      category: "sifat_kimia_tidak_diketahui",
       symbol: "Rg",
       name: "Roentgenium",
       description:
-        "Roentgenium adalah unsur kimia dengan simbol Rg dan nomor atom 111. Merupakan unsur sintetik yang sangat radioaktif (unsur yang dapat dibuat di laboratorium tetapi tidak ditemukan di alam); isotop paling stabil yang diketahui, roentgenium-282, memiliki waktu paruh 2,1 menit. Roentgenium pertama kali dibuat pada tahun 1994 oleh Pusat Penelitian Ion Berat GSI Helmholtz dekat Darmstadt, Jerman.",
+        "Roentgenium (lambang Rg, nomor atom 111) adalah unsur kimia sintetis dan sangat radioaktif yang tidak ditemukan di alam. Logam transisi ini diciptakan di laboratorium melalui reaksi nuklir dan dinamai untuk menghormati fisikawan penemu sinar-X, Wilhelm Conrad Röntgen.",
     },
     {
       number: 112,
-      category: "radioaktif",
+      category: "sifat_kimia_tidak_diketahui",
       symbol: "Cn",
       name: "Kopernisium",
       description:
-        "Copernicium adalah unsur kimia dengan simbol Cn dan nomor atom 112. Merupakan unsur sintetik yang sangat radioaktif yang hanya dapat dibuat di laboratorium. Isotop paling stabil yang diketahui, copernicium-285, memiliki waktu paruh sekitar 29 detik, namun ada kemungkinan bahwa isotop copernicium ini memiliki isomer nuklir dengan waktu paruh lebih lama, 8,9 menit.",
+        "Kopernisium (Cn) adalah unsur kimia sintetis super berat dengan nomor atom 112 dan lambang Cn, yang secara resmi dinamai berdasarkan astronom Nicolaus Copernicus. Unsur radioaktif ini, yang pertama kali dibuat pada tahun 1996, berada dalam golongan 12 (logam transisi) dan diperkirakan memiliki wujud cair pada suhu ruangan dengan sifat mudah menguap.",
     },
     {
       number: 113,
-      category: "radioaktif",
+      category: "sifat_kimia_tidak_diketahui",
       symbol: "Nh",
       name: "Nihonium",
       description:
-        "Nihonium adalah unsur kimia dengan nomor atom 113. Ia memiliki simbol Nh. Ini adalah unsur sintetis (unsur yang dapat dibuat di laboratorium tetapi tidak ditemukan di alam) dan sangat radioaktif; isotop paling stabil yang diketahui, nihonium-286, memiliki waktu paruh 20 detik.",
+        "Nihonium (simbol kimia Nh, nomor atom 113) adalah unsur logam sintetis yang sangat radioaktif. Ditemukan oleh para ilmuwan di lembaga penelitian RIKEN, Jepang, unsur ini bersejarah karena menjadi elemen pertama yang ditemukan di Asia dan seluruh wilayah di luar Eropa atau Amerika Serikat.",
     },
     {
       number: 114,
-      category: "radioaktif",
+      category: "sifat_kimia_tidak_diketahui",
       symbol: "Fl",
       name: "Flerovium",
       description:
-        "Flerovium adalah unsur kimia buatan superberat dengan simbol Fl dan nomor atom 114. Ini adalah unsur sintetis yang sangat radioaktif. Nama unsur ini diambil dari Laboratorium Reaksi Nuklir Flerov dari Institut Gabungan untuk Penelitian Nuklir di Dubna, Rusia, tempat unsur tersebut ditemukan pada tahun 1998.",
+        "Flerovium adalah unsur kimia sintetis (buatan) yang sangat radioaktif dengan lambang Fl dan nomor atom 114. Unsur superberat ini termasuk dalam golongan logam pasca-transisi pada tabel periodik.",
     },
     {
       number: 115,
-      category: "radioaktif",
+      category: "sifat_kimia_tidak_diketahui",
       symbol: "Mc",
       name: "Moskovium",
       description:
-        "Moscovium adalah nama suatu unsur superberat sintetik dalam tabel periodik yang memiliki simbol Mc dan memiliki nomor atom 115. Merupakan unsur yang sangat radioaktif; isotop paling stabil yang diketahui, moscovium-289, memiliki waktu paruh hanya 220 milidetik. Ia juga dikenal sebagai eka-bismut atau hanya unsur 115.",
+        "Moskovium adalah unsur kimia sintetis yang sangat radioaktif dengan lambang Mc dan nomor atom 115. Ditemukan pada tahun 2003 melalui kolaborasi ilmuwan Rusia dan Amerika, unsur ini dinamai untuk menghormati wilayah Moskow dan wilayah sekitarnya.",
     },
     {
       number: 116,
-      category: "radioaktif",
+      category: "sifat_kimia_tidak_diketahui",
       symbol: "Lv",
       name: "Livermorium",
       description:
-        "Livermorium adalah unsur superberat sintetik dengan simbol Lv dan nomor atom 116. Ini adalah unsur yang sangat radioaktif yang hanya dibuat di laboratorium dan belum pernah diamati di alam. Nama unsur ini diambil dari nama Laboratorium Nasional Lawrence Livermore di Amerika Serikat, yang bekerja sama dengan Institut Gabungan untuk Penelitian Nuklir di Dubna, Rusia untuk menemukan livermorium pada tahun 2000.",
+        "Livermorium (simbol Lv, nomor atom 116) adalah unsur kimia sintetis superberat yang sangat radioaktif. Ditemukan pada tahun 2000 melalui kolaborasi ilmuwan Rusia dan AS, unsur ini tidak terdapat secara alami dan hanya dapat dibuat di laboratorium.",
     },
     {
       number: 117,
-      category: "radioaktif",
+      category: "sifat_kimia_tidak_diketahui",
       symbol: "Ts",
       name: "Tenesin",
       description:
-        "Tennessine adalah unsur kimia buatan superberat dengan nomor atom 117 dan simbol Ts. Juga dikenal sebagai eka-astatin atau unsur 117, unsur ini merupakan unsur terberat kedua dan unsur kedua dari belakang pada periode ke-7 tabel periodik. Pada tahun 2016, lima belas atom tennessine telah diamati: enam saat pertama kali disintesis pada tahun 2010, tujuh pada tahun 2012, dan dua pada tahun 2014.",
+        "Tenesin (simbol kimia: Ts, nomor atom: 117) adalah unsur kimia buatan super berat yang sangat radioaktif. Ditemukan pada tahun 2010 melalui kolaborasi ilmuwan Rusia dan Amerika, unsur ini dikategorikan dalam kelompok halogen.",
     },
     {
       number: 118,
-      category: "radioaktif",
+      category: "sifat_kimia_tidak_diketahui",
       symbol: "Og",
-      name: "Oganesson",
+      name: "Oganeson",
       description:
-        "Oganesson adalah IUPAC's name for the transactinide element with the atomic number 118 and element symbol Og. It is also known as eka-radon or element 118, and on the periodic table of the elements it is a p-block element and the last one of the 7th period. Oganesson is currently the only synthetic member of group 18.",
-    },
-    {
-      number: 119,
-      category: "radioaktif",
-      symbol: "Uue",
-      name: "Ununennium",
-      description:
-        "Ununennium, juga dikenal sebagai eka-francium atau sederhananya unsur 119, adalah unsur kimia hipotetis dengan simbol Uue dan nomor atom 119. Ununennium dan Uue masing-masing merupakan nama dan simbol sistematis sementara IUPAC, hingga nama permanen ditentukan. Dalam tabel periodik unsur, diperkirakan merupakan unsur blok s, logam alkali, dan unsur pertama pada periode kedelapan.",
+        "Oganeson (simbol Og, nomor atom 118) adalah unsur sintetis terberat di tabel periodik yang termasuk dalam golongan gas mulia. Sangat radioaktif dan tidak stabil, unsur ini pertama kali dibuat pada tahun 2002 dan dinamai untuk menghormati fisikawan nuklir Yuri Oganessian.",
     },
   ];
 
+  // Fungsi ini membuat modal detail unsur berdasarkan data kartu yang diklik.
   const openModal = (data) => {
+    // Jika modal sudah ada, fungsi dihentikan agar tidak membuat modal dobel.
     if (document.getElementById("dynamic-modal")) return;
 
+    // Buat elemen pembungkus modal secara dinamis.
     const modalOverlay = document.createElement("div");
     modalOverlay.className = "modal-overlay";
     modalOverlay.id = "dynamic-modal";
 
+    // Template literal memudahkan menyisipkan data JavaScript ke HTML.
     modalOverlay.innerHTML = `
             <div class="modal-card" data-category="${data.category}">
                 <button class="close-btn" id="close-modal" aria-label="Tutup Modal">
                     <img src="images/close.svg" alt="Tutup">
                 </button>
-                <div class="modal-top">
-                    <span class="atomic-number">${data.number}</span>
-                    <h2 class="symbol">${data.symbol}</h2>
-                </div>
-                <div class="modal-bottom">
-                    <h3 class="name">${data.name}</h3>
-                    <p class="description">${data.description}</p>
-                </div>
+                <span class="atomic-number">${data.number}</span>
+                <h2 class="symbol">${data.symbol}</h2>
+                <h3 class="name">${data.name}</h3>
+                <p class="description">${data.description}</p>
             </div>
         `;
 
+    // Masukkan modal ke body agar muncul di halaman.
     document.body.appendChild(modalOverlay);
 
+    // Membaca offsetWidth memaksa browser menghitung layout sebelum animasi dimulai.
     void modalOverlay.offsetWidth;
 
+    // Class active memicu animasi CSS, sedangkan modal-open mencegah scroll halaman.
     modalOverlay.classList.add("active");
     document.body.classList.add("modal-open");
 
+    // Fungsi lokal untuk menutup modal dan menghapus elemennya setelah animasi selesai.
     const closeModal = () => {
       modalOverlay.classList.remove("active");
       document.body.classList.remove("modal-open");
@@ -1016,14 +1031,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 300);
     };
 
+    // Tutup modal saat tombol close diklik.
     document
       .getElementById("close-modal")
       .addEventListener("click", closeModal);
 
+    // Tutup modal saat area gelap di luar kartu diklik.
     modalOverlay.addEventListener("click", (e) => {
       if (e.target === modalOverlay) closeModal();
     });
 
+    // Tutup modal dengan tombol Escape agar nyaman untuk pengguna keyboard.
     const escHandler = (e) => {
       if (e.key === "Escape") {
         closeModal();
@@ -1033,64 +1051,80 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("keydown", escHandler);
   };
 
+  // Container ini adalah tempat semua kartu unsur akan dimasukkan.
   const elementsContainer = document.querySelector(".main-content");
 
-  // Set up Intersection Observer for GSAP-like scroll animations
+  // Intersection Observer dipakai untuk mendeteksi kartu yang masuk area layar.
   const observerOptions = {
     root: null,
-    rootMargin: '50px 0px -50px 0px',
-    threshold: 0.1
+    rootMargin: "50px 0px -50px 0px",
+    threshold: 0.1,
   };
 
+  // delayCounter membuat animasi kartu muncul bergantian, bukan serentak.
   let delayCounter = 0;
   let delayTimer = null;
 
+  // Observer akan menambahkan class in-view saat kartu terlihat.
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        // Staggered delay for elements entering at the same time
+        // Delay bertahap untuk kartu yang masuk layar pada waktu bersamaan.
         setTimeout(() => {
-          entry.target.classList.add('in-view');
-        }, delayCounter * 60); // 60ms stagger
-        
+          entry.target.classList.add("in-view");
+        }, delayCounter * 60); // Jarak 60ms antar kartu.
+
         delayCounter++;
-        
-        // Reset delay counter after a short gap
+
+        // Reset penghitung delay setelah jeda pendek.
         clearTimeout(delayTimer);
         delayTimer = setTimeout(() => {
           delayCounter = 0;
         }, 150);
 
-        // Stop observing once animated in
+        // Setelah animasi pertama selesai, kartu tidak perlu diamati lagi.
         observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
+  // Label kategori dipakai untuk membuat tombol filter di header.
   const categoryLabels = {
     semua: "Semua",
-    logam: "Logam",
-    nonlogam: "Non-Logam",
-    metaloid: "Metaloid",
+    aktinida: "Aktinida",
     gas_mulia: "Gas Mulia",
-    radioaktif: "Radioaktif",
+    lantanida: "Lantanida",
+    logam_alkali: "Logam Alkali",
+    logam_alkali_tanah: "Logam Alkali Tanah",
+    logam_pascatransisi: "Logam Pascatransisi",
+    logam_transisi: "Logam Transisi",
+    metaloid: "Metaloid",
+    nonlogam_reaktif: "Non-logam Reaktif",
+    sifat_kimia_tidak_diketahui: "Sifat Kimia Tidak Diketahui",
   };
 
-  const footer = document.getElementById("main-footer");
-  if (footer) {
+  // Header menu diisi tombol filter menggunakan JavaScript, bukan ditulis manual di HTML.
+  if (categoryActions) {
+    // Object.entries mengubah object kategori menjadi pasangan [key, label].
     for (const [key, label] of Object.entries(categoryLabels)) {
+      // Buat satu tombol untuk setiap kategori.
       const btn = document.createElement("button");
       btn.className = "category-btn";
+      btn.type = "button";
       const iconSrc =
-        key === "semua" ? "images/explosion.svg" : "images/matter.svg";
-      btn.innerHTML = `<img src="${iconSrc}" alt="${label}">`;
+        key === "semua" ? "images/explosion.svg" : "images/communities.svg";
+      btn.innerHTML = `<img src="${iconSrc}" alt="${label}" />`;
+      // dataset akan menjadi atribut data-category dan data-tooltip di HTML.
       btn.dataset.category = key;
       btn.dataset.tooltip = label;
+      btn.setAttribute("aria-label", label);
 
+      // Tombol "semua" aktif pertama kali karena semua kartu tampil di awal.
       if (key === "semua") {
         btn.classList.add("active");
       }
 
+      // Saat tombol kategori diklik, status aktif dan daftar kartu diperbarui.
       btn.addEventListener("click", () => {
         document
           .querySelectorAll(".category-btn")
@@ -1100,50 +1134,60 @@ document.addEventListener("DOMContentLoaded", () => {
         const selectedCategory = key;
 
         document.querySelectorAll(".element-card").forEach((card) => {
-          // Temporarily remove animation class to re-animate when category changes
-          card.classList.remove('in-view');
-          
+          // Hapus class animasi agar kartu bisa dianimasikan ulang saat filter berubah.
+          card.classList.remove("in-view");
+
           if (
             selectedCategory === "semua" ||
             card.dataset.category === selectedCategory
           ) {
-            card.style.display = "block";
-            // Re-observe the card to trigger the entrance animation again
+            // Kartu yang cocok ditampilkan lagi.
+            card.style.display = "flex";
+            // Observe ulang agar animasi masuk berjalan kembali.
             setTimeout(() => observer.observe(card), 10);
           } else {
+            // Kartu yang tidak cocok disembunyikan dan berhenti diamati.
             card.style.display = "none";
             observer.unobserve(card);
           }
         });
+
+        if (window.innerWidth <= 760) {
+          setMenuExpanded(false);
+        }
       });
 
-      footer.appendChild(btn);
+      categoryActions.appendChild(btn);
     }
   }
 
+  // Loop ini membuat satu kartu HTML untuk setiap object di elementData.
   elementData.forEach((data) => {
+    // Buat elemen kartu dan beri class yang sudah diatur di CSS.
     const card = document.createElement("div");
     card.className = "element-card";
+    // tabIndex membuat kartu bisa difokuskan dengan keyboard.
     card.tabIndex = 0;
 
+    // data-category dipakai CSS untuk warna dan JavaScript untuk filter.
     card.dataset.category = data.category;
 
+    // Isi kartu dibuat dari data unsur: nomor atom, simbol, dan nama.
     card.innerHTML = `
-            <div class="card-top">
-                <span class="atomic-number">${data.number}</span>
-                <h2 class="symbol">${data.symbol}</h2>
-            </div>
-            <div class="card-bottom">
-                <h3 class="name">${data.name}</h3>
-            </div>
+            <span class="atomic-number">${data.number}</span>
+            <h2 class="symbol">${data.symbol}</h2>
+            <h3 class="name">${data.name}</h3>
         `;
 
+    // Klik mouse membuka modal detail unsur.
     card.addEventListener("click", () => openModal(data));
+    // Tombol Enter juga membuka modal agar kartu ramah keyboard.
     card.addEventListener("keypress", (e) => {
       if (e.key === "Enter") openModal(data);
     });
 
+    // Masukkan kartu ke halaman, lalu mulai diamati untuk animasi scroll.
     elementsContainer.appendChild(card);
-    observer.observe(card); // Observe card for scroll animation
+    observer.observe(card);
   });
 });

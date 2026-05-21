@@ -1,145 +1,95 @@
+/* Variabel di :root adalah tema bawaan (light mode).
+   Keuntungannya: warna bisa diganti dari satu tempat saja. */
 :root {
   --bg-color: #fafafa;
-  --header-footer-bg: #9e9e9e;
+  --floating-control-bg: #9e9e9e;
   --text-primary: #212121;
   --shadow-color: rgba(0, 0, 0, 0.08);
 
   --logo-filter: invert(10%) sepia(3%) saturate(15%) hue-rotate(314deg)
     brightness(97%) contrast(91%);
-  --theme-btn-filter: invert(37%) sepia (3%) saturate(11%) hue-rotate(314deg)
+  --control-icon-filter: invert(37%) sepia (3%) saturate(11%) hue-rotate(314deg)
     brightness(97%) contrast(89%);
-  --footer-btn-filter: invert(37%) sepia (3%) saturate(11%) hue-rotate(314deg)
-    brightness(97%) contrast(89%);
-  --footer-btn-active-filter: invert(10%) sepia(3%) saturate(15%)
+  --control-icon-active-filter: invert(10%) sepia(3%) saturate(15%)
     hue-rotate(314deg) brightness(97%) contrast(91%);
-
-  --logam-name-bg: #ffcdd2;
-  --logam-symbol-bg1: #ef9a9a;
-  --logam-symbol-bg2: #ef5350;
-  --logam-font: #b71c1c;
-
-  --nonlogam-name-bg: #bbdefb;
-  --nonlogam-symbol-bg1: #90caf9;
-  --nonlogam-symbol-bg2: #42a5f5;
-  --nonlogam-font: #0d47a1;
-
-  --metaloid-name-bg: #c8e6c9;
-  --metaloid-symbol-bg1: #c8e6c9;
-  --metaloid-symbol-bg2: #66bb6a;
-  --metaloid-font: #1b5e20;
-
-  --gasmulia-name-bg: #ffe0b2;
-  --gasmulia-symbol-bg1: #ffcc80;
-  --gasmulia-symbol-bg2: #ffa726;
-  --gasmulia-font: #e65100;
-
-  --radioaktif-name-bg: #e1bee7;
-  --radioaktif-symbol-bg1: #ce93d8;
-  --radioaktif-symbol-bg2: #ab47bc;
-  --radioaktif-font: #4a148c;
 }
 
+/* Saat HTML punya data-theme="dark", nilai variabel di bawah menimpa :root. */
 [data-theme="dark"] {
   --bg-color: #212121;
-  --header-footer-bg: #757575;
+  --floating-control-bg: #757575;
   --text-primary: #fafafa;
   --shadow-color: rgba(0, 0, 0, 0.3);
 
   --logo-filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg)
     brightness(102%) contrast(102%);
-  --theme-btn-filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(185deg)
+  --control-icon-filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(185deg)
     brightness(95%) contrast(89%);
-  --footer-btn-filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(185deg)
-    brightness(95%) contrast(89%);
-  --footer-btn-active-filter: invert(100%) sepia(100%) saturate(0%)
+  --control-icon-active-filter: invert(100%) sepia(100%) saturate(0%)
     hue-rotate(288deg) brightness(102%) contrast(102%);
-
-  --logam-name-bg: #e53935;
-  --logam-symbol-bg1: #d32f2f;
-  --logam-symbol-bg2: #b71c1c;
-  --logam-font: #ffebee;
-
-  --nonlogam-name-bg: #1e88e5;
-  --nonlogam-symbol-bg1: #1976d2;
-  --nonlogam-symbol-bg2: #0d47a1;
-  --nonlogam-font: #e3f2fd;
-
-  --metaloid-name-bg: #43a047;
-  --metaloid-symbol-bg1: #388e3c;
-  --metaloid-symbol-bg2: #1b5e20;
-  --metaloid-font: #e8f5e9;
-
-  --gasmulia-name-bg: #fb8c00;
-  --gasmulia-symbol-bg1: #f57c00;
-  --gasmulia-symbol-bg2: #e65100;
-  --gasmulia-font: #fff3e0;
-
-  --radioaktif-name-bg: #8e24aa;
-  --radioaktif-symbol-bg1: #7b1fa2;
-  --radioaktif-symbol-bg2: #4a148c;
-  --radioaktif-font: #f3e5f5;
 }
 
-[data-category="logam"] {
-  --name-bg: var(--logam-name-bg);
-  --symbol-bg1: var(--logam-symbol-bg1);
-  --symbol-bg2: var(--logam-symbol-bg2);
-  --font-color: var(--logam-font);
-  --card-name-bg: var(--name-bg);
-  --card-symbol-bg1: var(--symbol-bg1);
-  --card-symbol-bg2: var(--symbol-bg2);
-  --card-color: var(--font-color);
+/* Warna dasar kategori mengikuti palet 3D Periodic Table Google Arts & Culture. */
+[data-category] {
+  --card-name-bg: color-mix(in srgb, var(--category-color) 82%, black);
+  --card-symbol-bg1: color-mix(in srgb, var(--category-color) 76%, white);
+  --card-symbol-bg2: var(--category-color);
+  --card-symbol-bg3: color-mix(in srgb, var(--category-color) 82%, black);
+  --card-symbol-bg4: color-mix(in srgb, var(--category-color) 58%, black);
+  --card-color: #ffffff;
 }
 
-[data-category="nonlogam"] {
-  --name-bg: var(--nonlogam-name-bg);
-  --symbol-bg1: var(--nonlogam-symbol-bg1);
-  --symbol-bg2: var(--nonlogam-symbol-bg2);
-  --font-color: var(--nonlogam-font);
-  --card-name-bg: var(--name-bg);
-  --card-symbol-bg1: var(--symbol-bg1);
-  --card-symbol-bg2: var(--symbol-bg2);
-  --card-color: var(--font-color);
-}
-
-[data-category="metaloid"] {
-  --name-bg: var(--metaloid-name-bg);
-  --symbol-bg1: var(--metaloid-symbol-bg1);
-  --symbol-bg2: var(--metaloid-symbol-bg2);
-  --font-color: var(--metaloid-font);
-  --card-name-bg: var(--name-bg);
-  --card-symbol-bg1: var(--symbol-bg1);
-  --card-symbol-bg2: var(--symbol-bg2);
-  --card-color: var(--font-color);
+[data-category="aktinida"] {
+  --category-color: #c73200;
 }
 
 [data-category="gas_mulia"] {
-  --name-bg: var(--gasmulia-name-bg);
-  --symbol-bg1: var(--gasmulia-symbol-bg1);
-  --symbol-bg2: var(--gasmulia-symbol-bg2);
-  --font-color: var(--gasmulia-font);
-  --card-name-bg: var(--name-bg);
-  --card-symbol-bg1: var(--symbol-bg1);
-  --card-symbol-bg2: var(--symbol-bg2);
-  --card-color: var(--font-color);
+  --category-color: #cd1d5e;
 }
 
-[data-category="radioaktif"] {
-  --name-bg: var(--radioaktif-name-bg);
-  --symbol-bg1: var(--radioaktif-symbol-bg1);
-  --symbol-bg2: var(--radioaktif-symbol-bg2);
-  --font-color: var(--radioaktif-font);
-  --card-name-bg: var(--name-bg);
-  --card-symbol-bg1: var(--symbol-bg1);
-  --card-symbol-bg2: var(--symbol-bg2);
-  --card-color: var(--font-color);
+[data-category="lantanida"] {
+  --category-color: #003355;
+}
+
+[data-category="logam_alkali"] {
+  --category-color: #00758c;
+}
+
+[data-category="logam_alkali_tanah"] {
+  --category-color: #d60024;
+}
+
+[data-category="logam_pascatransisi"] {
+  --category-color: #002c00;
+}
+
+[data-category="logam_transisi"] {
+  --category-color: #6232ec;
+}
+
+[data-category="metaloid"] {
+  --category-color: #945700;
+}
+
+[data-category="nonlogam_reaktif"] {
+  --category-color: #0060f0;
+}
+
+[data-category="sifat_kimia_tidak_diketahui"] {
+  --category-color: #3f374f;
+}
+
+[data-category="semua"] {
+  --category-color: #4285f4;
 }
 
 html {
+  /* Menyediakan ruang scrollbar agar layout tidak bergeser saat halaman panjang. */
   scrollbar-gutter: stable;
 }
 
 * {
+  /* Reset sederhana: menghilangkan margin/padding bawaan browser. */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -151,11 +101,13 @@ html {
 
 img.header-icon,
 .close-btn img {
+  /* filter membuat ikon SVG mengikuti warna tema tanpa mengganti file gambar. */
   filter: var(--logo-filter);
   transition: filter 0.3s ease;
 }
 
 body {
+  /* Warna body mengambil variabel supaya otomatis berubah saat tema berganti. */
   background-color: var(--bg-color);
   color: var(--text-primary);
   display: flex;
@@ -167,77 +119,239 @@ body {
 }
 
 body.modal-open {
+  /* Saat modal terbuka, halaman belakang tidak bisa di-scroll. */
   overflow: hidden;
 }
 
 .floating-header {
+  /* Header fixed memakai bentuk pill dan expand horizontal seperti referensi. */
   position: fixed;
   top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 32px;
-  background-color: var(--header-footer-bg);
-  padding: 12px 24px;
+  gap: 3px;
+  max-width: calc(100% - 40px);
+  background-color: transparent;
   border-radius: 50px;
-  width: fit-content;
-  box-shadow: 0 4px 12px var(--shadow-color);
   z-index: 100;
-  
+
   opacity: 0;
-  transform: translateY(-50px);
-  animation: slideDown 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform: translateY(-24px) scale(0.94);
+  animation: headerFloatIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-@keyframes slideDown {
+@keyframes headerFloatIn {
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
-.logo-area {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.menu-toggle,
+.theme-switch,
+.category-menu {
+  background-color: var(--floating-control-bg);
+  box-shadow: 0 4px 12px var(--shadow-color);
 }
 
-.header-icon {
+.menu-toggle,
+.menu-close,
+.theme-switch,
+.category-btn {
+  border: none;
+  cursor: pointer;
   color: var(--text-primary);
 }
 
-.floating-header h1 {
-  font-size: 1.25rem;
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 64px;
+  max-width: 156px;
+  padding: 0 20px;
+  border-radius: 50px;
+  font-size: 1rem;
   font-weight: 700;
+  position: relative;
+  transition:
+    opacity 0.25s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    max-width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    padding 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: visible;
+  white-space: nowrap;
 }
 
-.theme-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  transition: all 0.2s ease;
-  position: relative;
+.menu-toggle .material-symbols-outlined,
+.menu-close .material-symbols-outlined,
+.category-btn .material-symbols-outlined,
+.theme-switch .material-symbols-outlined {
+  font-size: 28px;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 600,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+.category-menu {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
+  width: 0;
+  max-width: 0;
+  min-height: 64px;
+  padding: 0;
+  border-radius: 50px;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transform: scaleX(0.72);
+  transform-origin: center;
+  transition:
+    width 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    max-width 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    padding 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.theme-btn img {
-  filter: var(--theme-btn-filter);
-  opacity: 0.5
-  transition: filter 0.3s ease;
-  width: 36px;
-  height: 36px;
-}
-
-.theme-btn:hover img {
+.floating-header.menu-expanded .category-menu {
+  width: min(640px, calc(100vw - 158px));
+  max-width: min(640px, calc(100vw - 158px));
+  padding: 8px 8px 8px 8px;
   opacity: 1;
-  transform: scale(1.1);
-  transition: 0.3s ease;
+  pointer-events: auto;
+  transform: scaleX(1);
+  overflow: visible;
 }
 
-.theme-btn::after {
+.category-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  overflow: visible;
+  scrollbar-width: none;
+}
+
+.category-actions::-webkit-scrollbar {
+  display: none;
+}
+
+.floating-header.menu-expanded .menu-toggle {
+  max-width: 0;
+  padding-inline: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: scale(0.72);
+  pointer-events: none;
+}
+
+.menu-close {
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  background-color: transparent;
+  border-radius: 50%;
+  position: relative;
+  opacity: 0;
+  transform: scale(0.72) rotate(-45deg);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease;
+}
+
+.floating-header.menu-expanded .menu-close {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  pointer-events: auto;
+}
+
+.theme-switch {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: 50%;
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+  transition:
+    transform 0.25s ease,
+    background-color 0.3s ease;
+}
+
+.theme-switch-track {
+  position: relative;
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.theme-switch-icon {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  filter: var(--control-icon-filter);
+  opacity: 0;
+  transition:
+    filter 0.3s ease,
+    opacity 0.22s ease,
+    transform 0.5s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.theme-switch-icon-dark {
+  transform: translateY(-48px) scale(0.82);
+}
+
+.theme-switch-icon-light {
+  transform: translateY(48px) scale(0.82);
+}
+
+.theme-switch[data-theme-state="light"] .theme-switch-icon-light {
+  filter: var(--control-icon-active-filter);
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.theme-switch[data-theme-state="light"] .theme-switch-icon-dark {
+  transform: translateY(-48px) scale(0.82);
+}
+
+.theme-switch[data-theme-state="dark"] .theme-switch-icon-dark {
+  filter: var(--control-icon-active-filter);
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.theme-switch[data-theme-state="dark"] .theme-switch-icon-light {
+  transform: translateY(48px) scale(0.82);
+}
+
+.theme-switch:hover,
+.menu-toggle:hover,
+.menu-close:hover,
+.category-btn:hover,
+.category-btn.active {
+  transform: translateY(-2px);
+}
+
+.theme-switch:hover .theme-switch-icon {
+  filter: var(--control-icon-active-filter);
+}
+
+.menu-toggle::after,
+.menu-close::after,
+.theme-switch::after {
   content: attr(data-tooltip);
   position: absolute;
   top: 100%;
@@ -249,16 +363,22 @@ body.modal-open {
   padding: 6px 12px;
   border-radius: 6px;
   font-size: 0.8rem;
+  line-height: 1.2;
+  text-align: center;
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
   pointer-events: none;
   box-shadow: 0 4px 6px var(--shadow-color);
-  font-weight: 500
+  font-weight: 500;
 }
 
-.theme-btn::before {
+.menu-toggle::before,
+.menu-close::before,
+.theme-switch::before {
   content: "";
   position: absolute;
   top: 100%;
@@ -270,71 +390,168 @@ body.modal-open {
   border-color: transparent transparent var(--text-primary) transparent;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
   pointer-events: none;
 }
 
-.theme-btn:hover::after, .theme-btn:hover::before {
+.menu-toggle:hover::after,
+.menu-toggle:hover::before,
+.menu-close:hover::after,
+.menu-close:hover::before,
+.theme-switch:hover::after,
+.theme-switch:hover::before {
   opacity: 1;
   visibility: visible;
 }
 
+@media (max-width: 760px) {
+  .floating-header {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .floating-header.menu-expanded {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .category-menu {
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+
+  .floating-header.menu-expanded .category-menu {
+    width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
+    padding: 10px 12px;
+    border-radius: 28px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .category-actions {
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 520px) {
+  .floating-header {
+    top: 12px;
+    gap: 6px;
+    max-width: calc(100% - 16px);
+  }
+
+  .menu-toggle {
+    min-height: 48px;
+    padding: 0 18px;
+  }
+
+  .theme-switch {
+    width: 48px;
+    height: 48px;
+  }
+
+  .theme-switch-track {
+    width: 28px;
+    height: 28px;
+  }
+
+  .floating-header.menu-expanded .category-menu {
+    width: calc(100vw - 16px);
+    max-width: calc(100vw - 16px);
+    min-height: 48px;
+    padding: 8px 10px;
+  }
+
+  .category-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    overflow-x: hidden;
+  }
+
+  .category-btn {
+    width: 38px;
+    height: 38px;
+  }
+}
+
 .main-content {
+  /* Grid menjaga kartu rapi dan menampilkan 6 kolom saat ruang maksimal tersedia. */
   margin-top: 100px;
   margin-bottom: 100px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 200px);
   gap: 24px;
   justify-content: center;
-  align-items: flex-start;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1320px;
 }
 
 .element-card {
+  /* Satu kartu memakai satu gradient penuh agar warna tidak bertabrakan. */
+  background: linear-gradient(
+    135deg,
+    var(--card-symbol-bg1) 0%,
+    var(--card-symbol-bg2) 34%,
+    var(--card-symbol-bg3) 68%,
+    var(--card-symbol-bg4) 100%
+  );
+  color: var(--card-color);
   width: 200px;
+  min-height: 240px;
+  padding: 36px 16px 18px;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 12px var(--shadow-color);
   cursor: pointer;
-  
-  /* Initial state for scroll animation */
-  opacity: 0;
-  transform: translateY(60px) scale(0.9);
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
-  will-change: transform, opacity;
-}
-
-.element-card.in-view {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.element-card.in-view:hover, .element-card.in-view:focus-visible{
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 16px 32px var(--shadow-color);
-  outline: none;
-}
-
-.card-top {
-  background: linear-gradient(135deg, var(--card-symbol-bg1), var(--card-symbol-bg2));
-  color: var(--card-color);
-  padding: 16px;
-  height: 160px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+
+  /* Kondisi awal sebelum kartu masuk viewport untuk animasi scroll. */
+  opacity: 0;
+  transform: translateY(60px) scale(0.9);
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
+  will-change: transform, opacity;
+}
+
+.element-card.in-view {
+  /* Class ini ditambahkan JavaScript saat kartu terlihat di layar. */
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.element-card.in-view:hover,
+.element-card.in-view:focus-visible {
+  /* focus-visible membantu pengguna keyboard melihat kartu yang sedang aktif. */
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 32px var(--shadow-color);
+  outline: none;
 }
 
 .atomic-number {
- position: absolute;
- top: 12px;
- left: 12px;
- font-size: 0.9rem;
- font-style: italic;
- opacity: 0.9;
+  /* Nomor atom diposisikan di pojok kiri atas kartu/modal. */
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.9;
 }
 
 .symbol {
@@ -343,17 +560,20 @@ body.modal-open {
   font-style: italic;
 }
 
-.card-bottom {
-  background-color: var(--card-name-bg);
-  color: var(--card-color);
-  padding: 16px;
-  text-align: center;
+.element-card .symbol {
+  /* Simbol unsur dibuat besar sebagai fokus utama kartu. */
+  line-height: 1;
+  margin-top: auto;
 }
 
 .name {
   font-size: 1.25rem;
   font-weight: 500;
-  margin-bottom: 4px;
+}
+
+.element-card .name {
+  margin-top: auto;
+  margin-bottom: 0;
 }
 
 .category {
@@ -362,195 +582,247 @@ body.modal-open {
   opacity: 0.8;
 }
 
-.floating-footer {
-  position: fixed;
-  bottom: 20px;
-  display: flex;
-  gap: 24px;
-  background-color: var(--header-footer-bg);
-  padding: 12px 24px;
-  border-radius: 50px;
-  width: fit-content;
-  box-shadow: 0 4px 12px var(--shadow-color);
-  z-index: 100;
-  
-  opacity: 0;
-  transform: translateY(50px);
-  animation: slideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: 0.3s;
-}
-
-@keyframes slideUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .category-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px 12px;
-  transition: all 0.2s ease;
+  /* Tombol kategori kini berada di header expand. */
+  background: transparent;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  opacity: 0;
+  transform: translateY(-4px) scale(0.82);
+  transition:
+    color 0.2s ease,
+    opacity 0.26s ease,
+    transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease;
 }
 
-.category-btn img {
-  filter: var(--footer-btn-filter);
-  opacity: 0.5;
-  transition: all 0.2s ease;
-  width: 32px;
-  height: 32px;
+.floating-header.menu-expanded .category-btn {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
-.category-btn:hover img, .category-btn.active img {
- filter: var(--footer-btn-active-filter);
- opacity: 1;
- transform: scale(1.1);
- transition: 0.3s ease;
+.floating-header.menu-expanded .category-btn:nth-child(1) {
+  transition-delay: 0.03s;
+}
+
+.floating-header.menu-expanded .category-btn:nth-child(2) {
+  transition-delay: 0.06s;
+}
+
+.floating-header.menu-expanded .category-btn:nth-child(3) {
+  transition-delay: 0.09s;
+}
+
+.floating-header.menu-expanded .category-btn:nth-child(4) {
+  transition-delay: 0.12s;
+}
+
+.floating-header.menu-expanded .category-btn:nth-child(5) {
+  transition-delay: 0.15s;
+}
+
+.floating-header.menu-expanded .category-btn:nth-child(6) {
+  transition-delay: 0.18s;
+}
+
+.floating-header.menu-expanded .category-btn:nth-child(7) {
+  transition-delay: 0.21s;
+}
+
+.floating-header.menu-expanded .category-btn:nth-child(8) {
+  transition-delay: 0.24s;
+}
+
+.floating-header.menu-expanded .category-btn:nth-child(9) {
+  transition-delay: 0.27s;
+}
+
+.floating-header.menu-expanded .category-btn:nth-child(10) {
+  transition-delay: 0.3s;
+}
+
+.floating-header.menu-expanded .category-btn:nth-child(11) {
+  transition-delay: 0.33s;
+}
+
+.category-btn:hover,
+.category-btn.active {
+  background-color: color-mix(in srgb, var(--category-color) 28%, transparent);
+  color: var(--category-color);
+}
+
+.category-btn.active .material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 700,
+    "GRAD" 0,
+    "opsz" 24;
 }
 
 .category-btn::after {
+  /* Tooltip kategori mengambil teks dari atribut data-tooltip di JavaScript. */
   content: attr(data-tooltip);
   position: absolute;
-  bottom: 100%;
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  margin-bottom: 12px;
+  margin-top: 12px;
   background-color: var(--text-primary);
   color: var(--bg-color);
   padding: 6px 12px;
   border-radius: 6px;
   font-size: 0.8rem;
-  white-space: nowrap;
+  line-height: 1.2;
+  max-width: min(240px, calc(100vw - 40px));
+  text-align: center;
+  white-space: normal;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
   pointer-events: none;
   box-shadow: 0 4px 6px var(--shadow-color);
   font-weight: 500;
 }
 
 .category-btn::before {
+  /* Segitiga tooltip untuk tombol kategori header. */
   content: "";
   position: absolute;
-  bottom: 100%;
+  top: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(50%);
-  margin-bottom: 6px;
+  transform: translateX(-50%) translateY(-50%);
+  margin-top: 6px;
   border-width: 6px;
   border-style: solid;
-  border-color: var(--text-primary) transparent transparent transparent;
+  border-color: transparent transparent var(--text-primary) transparent;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
   pointer-events: none;
 }
 
-.category-btn:hover::after, .category-btn:hover::before {
+.category-btn:hover::after,
+.category-btn:hover::before {
+  /* Tooltip kategori muncul saat hover. */
   opacity: 1;
   visibility: visible;
 }
 
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  /* Overlay menutup seluruh layar dan memusatkan kartu modal. */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 
-    opacity: 0;
-    visibility: hidden;
-    backdrop-filter: blur(0px);
-    transition: opacity 0.4s ease, visibility 0.4s ease, backdrop-filter 0.4s ease;
-    padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  backdrop-filter: blur(0px);
+  transition:
+    opacity 0.4s ease,
+    visibility 0.4s ease,
+    backdrop-filter 0.4s ease;
+  padding: 20px;
 }
 
 .modal-overlay.active {
-    opacity: 1;
-    visibility: visible;
-    backdrop-filter: blur(8px);
+  /* Class active ditambahkan JavaScript untuk menampilkan modal. */
+  opacity: 1;
+  visibility: visible;
+  backdrop-filter: blur(8px);
 }
 
 .modal-card {
-    width: 100%;
-    max-width: 600px;
-    overflow: hidden;
-    position: relative;
-    border-radius: 12px;
-    box-shadow: 0 24px 48px var(--shadow-color);
-    transform: scale(0.8) translateY(40px);
-    opacity: 0;
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Modal expand memakai satu gradient penuh seperti kartu utama. */
+  background: linear-gradient(
+    135deg,
+    var(--card-symbol-bg1) 0%,
+    var(--card-symbol-bg2) 34%,
+    var(--card-symbol-bg3) 68%,
+    var(--card-symbol-bg4) 100%
+  );
+  color: var(--card-color);
+  width: 100%;
+  max-width: 600px;
+  max-height: 85vh;
+  padding: 48px 32px 32px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 12px;
+  box-shadow: 0 24px 48px var(--shadow-color);
+  transform: scale(0.8) translateY(40px);
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .modal-overlay.active .modal-card {
-    transform: scale(1) translateY(0);
-    opacity: 1;
+  /* Saat overlay aktif, kartu modal kembali ke ukuran normal. */
+  transform: scale(1) translateY(0);
+  opacity: 1;
 }
 
 .close-btn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 10;
-    opacity: 0.7;
-    transition: opacity 0.2s ease;
+  /* Tombol close diposisikan absolut di pojok kanan atas modal. */
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
 }
 
 .close-btn:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
-.modal-top .symbol {
-    font-size: 6rem;
+.modal-card .symbol {
+  /* Simbol di modal lebih besar daripada simbol di kartu. */
+  font-size: 6rem;
+  line-height: 1;
+  margin: 24px 0 16px;
 }
 
-.modal-top {
-    background: linear-gradient(135deg, var(--card-symbol-bg1), var(--card-symbol-bg2));
-    color: var(--card-color);
-    padding: 32px;
-    min-height: 220px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-bottom {
-    background-color: var(--card-name-bg);
-    color: var(--card-color);
-    padding: 24px;
-    max-height: 50vh;
-    overflow-y: auto;
-}
-
-.modal-bottom .name {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 12px
+.modal-card .name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
 }
 
 .description {
-    font-size: 1rem;
-    line-height: 1.5;
-    font-style: italic;
-    opacity: 0.9;
+  /* line-height membuat paragraf deskripsi lebih nyaman dibaca. */
+  font-size: 1rem;
+  line-height: 1.5;
+  font-style: italic;
+  opacity: 0.9;
+  max-height: 45vh;
+  overflow-y: auto;
 }
 
-/* Hero overview styles (added for vanilla animations) */
+/* Gaya hero overview ini siap dipakai jika nanti kamu menambahkan section pembuka. */
 .hero-overview {
   width: 100%;
   display: flex;
@@ -572,13 +844,50 @@ body.modal-open {
   opacity: 0.85;
   margin-bottom: 18px;
 }
-.hero-ctas { display:flex; gap:12px; justify-content:center; margin-bottom:24px; }
-.btn { padding:10px 18px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); cursor:pointer; }
-.btn.primary { background: #0b5fff; color: #fff; border: none; }
-.btn.ghost { background: transparent; color: inherit; }
-.feature-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-top:12px; }
-.feature-card { background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0.04)); padding:20px; border-radius:12px; box-shadow:0 6px 20px var(--shadow-color); font-weight:600; }
+.hero-ctas {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+/* Class .btn adalah gaya dasar tombol, lalu .primary/.ghost menjadi variasinya. */
+.btn {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+.btn.primary {
+  background: #0b5fff;
+  color: #fff;
+  border: none;
+}
+.btn.ghost {
+  background: transparent;
+  color: inherit;
+}
+/* auto-fit membuat jumlah kolom feature card menyesuaikan lebar layar. */
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+.feature-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(0, 0, 0, 0.04)
+  );
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px var(--shadow-color);
+  font-weight: 600;
+}
 
-/* initial state for elements to be animated */
-.will-animate { transform: translateY(20px) scale(0.995); opacity: 0; will-change: transform, opacity; }
-
+/* Kondisi awal untuk elemen yang ingin dianimasikan secara manual. */
+.will-animate {
+  transform: translateY(20px) scale(0.995);
+  opacity: 0;
+  will-change: transform, opacity;
+}

@@ -1,54 +1,83 @@
 <!doctype html>
+<!-- Atribut lang membantu browser dan pembaca layar memahami bahasa halaman. -->
 <html lang="id" data-theme="dark">
   <head>
+    <!-- Charset UTF-8 membuat karakter Indonesia dan simbol bisa tampil benar. -->
     <meta charset="UTF-8" />
+    <!-- Viewport membuat tampilan responsif di layar HP dan desktop. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tabel Periodik</title>
+    <!-- Favicon adalah ikon kecil yang muncul di tab browser. -->
     <link rel="icon" href="images/explosion.svg" type="image/svg+xml" />
+    <!-- Font dari Google Fonts dipakai agar teks terlihat konsisten. -->
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,700&display=swap"
     />
+    <!-- Material Symbols bisa dipakai jika nanti ingin menambahkan ikon berbasis font. -->
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
     />
+    <!-- style.css berisi seluruh tampilan visual halaman. -->
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
+    <!-- Header dibuat fixed/floating lewat CSS agar tetap berada di atas layar. -->
     <header class="floating-header">
-      <div class="logo-area">
-        <img
-          src="images/explosion.svg"
-          alt="Ikon Tabel Periodik"
-          class="header-icon"
-          width="36"
-          height="36"
-        />
-        <h1>Tabel Periodik</h1>
-      </div>
       <button
-        class="theme-btn"
-        id="theme-toggle"
+        class="menu-toggle"
+        id="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="category-menu"
+        data-tooltip="Buka Menu"
+      >
+        <img src="images/explosion.svg" alt="Menu" />
+        <span>Menu</span>
+      </button>
+
+      <!-- Tombol filter kategori dibuat oleh script.js di dalam panel ini. -->
+      <nav
+        class="category-menu"
+        id="category-menu"
+        aria-label="Filter kategori unsur"
+      >
+        <div class="category-actions" id="category-actions"></div>
+        <button
+          class="menu-close"
+          id="menu-close"
+          type="button"
+          aria-label="Tutup Menu"
+          data-tooltip="Tutup Menu"
+        >
+          <img src="images/close.svg" alt="Tutup" />
+        </button>
+      </nav>
+
+      <button
+        class="theme-switch"
+        id="theme-switch"
+        type="button"
         aria-label="Ganti Tema"
         data-tooltip="Ganti Tema"
       >
-        <img
-          src="images/light_mode.svg"
-          alt="Ganti Tema"
-          class="theme-icon"
-          id="theme-icon"
-          width="36"
-          height="36"
-        />
+        <span class="theme-switch-track" aria-hidden="true">
+          <span class="theme-switch-icon theme-switch-icon-light">
+            <span class="material-symbols-outlined">light_mode</span>
+          </span>
+          <span class="theme-switch-icon theme-switch-icon-dark">
+            <span class="material-symbols-outlined">dark_mode</span>
+          </span>
+        </span>
       </button>
     </header>
 
+    <!-- Kartu-kartu unsur dibuat secara dinamis oleh script.js dan dimasukkan ke sini. -->
     <main class="main-content" id="elements-container"></main>
 
-    <footer class="floating-footer" id="main-footer"></footer>
-
+    <!-- Script diletakkan di akhir body agar elemen HTML sudah terbaca sebelum JS berjalan. -->
     <script src="script.js"></script>
   </body>
 </html>
