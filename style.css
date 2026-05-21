@@ -232,7 +232,7 @@ body.modal-open {
 .category-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 3px;
   min-width: 0;
   overflow: visible;
   scrollbar-width: none;
@@ -252,9 +252,9 @@ body.modal-open {
 }
 
 .menu-close {
-  width: 44px;
-  min-width: 44px;
-  height: 44px;
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
   background-color: transparent;
   border-radius: 50%;
   position: relative;
@@ -274,8 +274,8 @@ body.modal-open {
 }
 
 .theme-switch {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   padding: 0;
   border-radius: 50%;
   position: relative;
@@ -376,32 +376,9 @@ body.modal-open {
   font-weight: 500;
 }
 
-.menu-toggle::before,
-.menu-close::before,
-.theme-switch::before {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  margin-top: 6px;
-  border-width: 6px;
-  border-style: solid;
-  border-color: transparent transparent var(--text-primary) transparent;
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.2s ease,
-    visibility 0.2s ease;
-  pointer-events: none;
-}
-
 .menu-toggle:hover::after,
-.menu-toggle:hover::before,
 .menu-close:hover::after,
-.menu-close:hover::before,
-.theme-switch:hover::after,
-.theme-switch:hover::before {
+.theme-switch:hover::after {
   opacity: 1;
   visibility: visible;
 }
@@ -411,7 +388,7 @@ body.modal-open {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 4px;
+    gap: 3px;
   }
 
   .floating-header.menu-expanded {
@@ -427,8 +404,8 @@ body.modal-open {
   .floating-header.menu-expanded .category-menu {
     width: calc(100vw - 24px);
     max-width: calc(100vw - 24px);
-    padding: 10px 12px;
-    border-radius: 28px;
+    padding: 8px 8px;
+    border-radius: 20px;
     opacity: 1;
     pointer-events: auto;
     transform: none;
@@ -436,7 +413,7 @@ body.modal-open {
 
   .category-actions {
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 3px;
     justify-content: center;
     overflow-x: hidden;
   }
@@ -445,13 +422,13 @@ body.modal-open {
 @media (max-width: 520px) {
   .floating-header {
     top: 12px;
-    gap: 6px;
+    gap: 3px;
     max-width: calc(100% - 16px);
   }
 
   .menu-toggle {
     min-height: 48px;
-    padding: 0 18px;
+    padding: 0 12px;
   }
 
   .theme-switch {
@@ -468,25 +445,25 @@ body.modal-open {
     width: calc(100vw - 16px);
     max-width: calc(100vw - 16px);
     min-height: 48px;
-    padding: 8px 10px;
+    padding: 6px 6px;
   }
 
   .category-actions {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 6px;
+    gap: 3px;
     overflow-x: hidden;
   }
 
   .category-btn {
-    width: 38px;
-    height: 38px;
+    width: 32px;
+    height: 32px;
   }
 }
 
 .main-content {
   /* Grid menjaga kartu rapi dan menampilkan 6 kolom saat ruang maksimal tersedia. */
-  margin-top: 100px;
+  margin-top: 86px; /* jarak 10px di bawah header fixed */
   margin-bottom: 100px;
   display: grid;
   grid-template-columns: repeat(auto-fit, 200px);
@@ -691,27 +668,7 @@ body.modal-open {
   font-weight: 500;
 }
 
-.category-btn::before {
-  /* Segitiga tooltip untuk tombol kategori header. */
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  margin-top: 6px;
-  border-width: 6px;
-  border-style: solid;
-  border-color: transparent transparent var(--text-primary) transparent;
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.2s ease,
-    visibility 0.2s ease;
-  pointer-events: none;
-}
-
-.category-btn:hover::after,
-.category-btn:hover::before {
+.category-btn:hover::after {
   /* Tooltip kategori muncul saat hover. */
   opacity: 1;
   visibility: visible;
