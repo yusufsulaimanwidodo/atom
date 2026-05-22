@@ -2,6 +2,8 @@ const optionMenu = document.querySelector(".select-menu"),
   selectBtn = optionMenu.querySelector(".select-btn"),
   options = optionMenu.querySelectorAll(".option"),
   sBtn_text = optionMenu.querySelector(".sBtn-text");
+let activeElements = null;
+const elementContainer = document.querySelector("#elements-container");
 
 selectBtn.addEventListener("click", () =>
   optionMenu.classList.toggle("active"),
@@ -14,7 +16,9 @@ options.forEach((option) => {
     const filteredElements =
       selectedCategory === "semua"
         ? elementData
-        : elementData.filter((element) => element.category === selectedCategory);
+        : elementData.filter(
+            (element) => element.category === selectedCategory,
+          );
 
     sBtn_text.innerText = selectedOption;
     renderElements(filteredElements);
@@ -67,6 +71,7 @@ themeSwitch.addEventListener("click", () => {
   void themeSwitch.offsetWidth;
   darkmode !== "active" ? enableDarkmode() : disableDarkmode();
   themeSwitch.classList.add(animationClass);
+  renderElements(activeElements || elementData);
 
   setTimeout(() => {
     themeSwitch.classList.remove(animationClass);
@@ -1028,6 +1033,56 @@ const elementData = [
   },
 ];
 
+const categoryColors = {
+  aktinida: {
+    light: "#e57373",
+    dark: "#b71c1c",
+  },
+  gas_mulia: {
+    light: "#f06292",
+    dark: "#880e4f",
+  },
+  lantanida: {
+    light: "#ba68c8",
+    dark: "#4a148c",
+  },
+  logam_alkali: {
+    light: "#9575cd",
+    dark: "#311b92",
+  },
+  logam_alkali_tanah: {
+    light: "#7986cb",
+    dark: "#283593",
+  },
+  logam_pascatransisi: {
+    light: "#64b5f6",
+    dark: "#0d47a1",
+  },
+  logam_transisi: {
+    light: "#4dd0e1",
+    dark: "#006064",
+  },
+  metaloid: {
+    light: "#81c784",
+    dark: "#1b5e20",
+  },
+  nonlogam_reaktif: {
+    light: "#fff176",
+    dark: "#f57f17",
+  },
+  sifat_kimia_tidak_diketahui: {
+    light: "#ffb74d",
+    dark: "#e65100",
+  },
+};
+
+const getCategoryColor = (category) => {
+  const color = categoryColors[category];
+  const isDark = document.body.classList.contains("darkmode");
+
+  return color ? color[isDark ? "dark" : "light"] : "var(--base-color)";
+};
+
 const openModal = (data) => {
   if (document.getElementById("dynamic-modal")) return;
 
@@ -1048,6 +1103,10 @@ const openModal = (data) => {
   `;
 
   document.body.appendChild(modalOverlay);
+  const modalCard = modalOverlay.querySelector(".modal-card");
+  modalCard.style.background = getCategoryColor(data.category);
+  modalCard.style.borderColor = getCategoryColor(data.category);
+  modalCard.style.color = "var(--text-color)";
 
   void modalOverlay.offsetWidth;
 
@@ -1077,8 +1136,6 @@ const openModal = (data) => {
 
   document.addEventListener("keydown", escHandler);
 };
-
-const elementContainer = document.querySelector("#elements-container");
 
 const observerOptions = {
   root: null,
@@ -1123,6 +1180,7 @@ const categoryLabels = {
 };
 
 const renderElements = (elements = elementData) => {
+  activeElements = elements;
   elementContainer.innerHTML = "";
 
   elements.forEach((element) => {
@@ -1130,6 +1188,9 @@ const renderElements = (elements = elementData) => {
     card.className = "element-card";
     card.dataset.category = element.category;
     card.tabIndex = 0;
+    card.style.background = getCategoryColor(element.category);
+    card.style.borderColor = getCategoryColor(element.category);
+    card.style.color = "var(--text-color)";
     card.innerHTML = `
       <span class="atomic-number">#${element.number}</span>
       <h2 class="symbol">${element.symbol}</h2>
