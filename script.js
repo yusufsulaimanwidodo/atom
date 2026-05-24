@@ -1037,50 +1037,153 @@ const categoryColors = {
   aktinida: {
     light: "#e57373",
     dark: "#b71c1c",
+    gradient: {
+      light: ["#ffcdd2", "#ef9a9a", "#e57373", "#ef5350"],
+      dark: ["#b71c1c", "#c62828", "#d32f2f", "#e53935"],
+    },
+    modalBorder: {
+      light: "#f44336",
+      dark: "#f44336",
+    },
   },
   gas_mulia: {
     light: "#f06292",
     dark: "#880e4f",
+    gradient: {
+      light: ["#f8bbd0", "#f48fb1", "#f06292", "#ec407a"],
+      dark: ["#880e4f", "#ad1457", "#c2185b", "#d81b60"],
+    },
+    modalBorder: {
+      light: "#e91e63",
+      dark: "#e91e63",
+    },
   },
   lantanida: {
     light: "#ba68c8",
     dark: "#4a148c",
+    gradient: {
+      light: ["#e1bee7", "#ce93d8", "#ba68c8", "#ab47bc"],
+      dark: ["#4a148c", "#6a1b9a", "#7b1fa2", "#8e24aa"],
+    },
+    modalBorder: {
+      light: "#9c27b0",
+      dark: "#9c27b0",
+    },
   },
   logam_alkali: {
     light: "#9575cd",
     dark: "#311b92",
+    gradient: {
+      light: ["#d1c4e9", "#b39ddb", "#9575cd", "#7e57c2"],
+      dark: ["#311b92", "#4527a0", "#512da8", "#5e35b1"],
+    },
+    modalBorder: {
+      light: "#673ab7",
+      dark: "#673ab7",
+    },
   },
   logam_alkali_tanah: {
     light: "#7986cb",
     dark: "#283593",
+    gradient: {
+      light: ["#c5cae9", "#9fa8da", "#7986cb", "#5c6bc0"],
+      dark: ["#1a237e", "#283593", "#303f9f", "#3949ab"],
+    },
+    modalBorder: {
+      light: "#3f51b5",
+      dark: "#3f51b5",
+    },
   },
   logam_pascatransisi: {
     light: "#64b5f6",
     dark: "#0d47a1",
+    gradient: {
+      light: ["#bbdefb", "#90caf9", "#64b5f6", "#42a5f5"],
+      dark: ["#0d47a1", "#1565c0", "#1976d2", "#1e88e5"],
+    },
+    modalBorder: {
+      light: "#2196f3",
+      dark: "#2196f3",
+    },
   },
   logam_transisi: {
     light: "#4dd0e1",
     dark: "#006064",
+    gradient: {
+      light: ["#b2ebf2", "#80deea", "#4dd0e1", "#26c6da"],
+      dark: ["#006064", "#00838f", "#0097a7", "#00acc1"],
+    },
+    modalBorder: {
+      light: "#00bcd4",
+      dark: "#00bcd4",
+    },
   },
   metaloid: {
     light: "#81c784",
     dark: "#1b5e20",
+    gradient: {
+      light: ["#c8e6c9", "#a5d6a7", "#81c784", "#66bb6a"],
+      dark: ["#1b5e20", "#2e7d32", "#388e3c", "#43a047"],
+    },
+    modalBorder: {
+      light: "#4caf50",
+      dark: "#4caf50",
+    },
   },
   nonlogam_reaktif: {
     light: "#fff176",
     dark: "#f57f17",
+    gradient: {
+      light: ["#fff9c4", "#fff59d", "#fff176", "#ffee58"],
+      dark: ["#f57f17", "#f9a825", "#fbc02d", "#fdd835"],
+    },
+    modalBorder: {
+      light: "#ffee58",
+      dark: "#ffee58",
+    },
   },
   sifat_kimia_tidak_diketahui: {
     light: "#ffb74d",
     dark: "#e65100",
+    gradient: {
+      light: ["#ffe0b2", "#ffcc80", "#ffb74d", "#ffa726"],
+      dark: ["#e65100", "#ef6c00", "#f57c00", "#fb8c00"],
+    },
+    modalBorder: {
+      light: "#ff9800",
+      dark: "#ff9800",
+    },
   },
+};
+
+const getThemeMode = () => {
+  return document.body.classList.contains("darkmode") ? "dark" : "light";
 };
 
 const getCategoryColor = (category) => {
   const color = categoryColors[category];
-  const isDark = document.body.classList.contains("darkmode");
+  const mode = getThemeMode();
 
-  return color ? color[isDark ? "dark" : "light"] : "var(--base-color)";
+  return color ? color[mode] : "var(--base-color)";
+};
+
+const getCategoryBackground = (category) => {
+  const color = categoryColors[category];
+  const mode = getThemeMode();
+  const gradientColors = color?.gradient?.[mode] || [];
+  const hasFourColors = gradientColors.every((color) => color.trim() !== "");
+
+  if (!hasFourColors) return getCategoryColor(category);
+
+  return `linear-gradient(135deg, ${gradientColors.join(", ")})`;
+};
+
+const getModalBorderColor = (category) => {
+  const mode = getThemeMode();
+
+  return (
+    categoryColors[category]?.modalBorder?.[mode] || getCategoryColor(category)
+  );
 };
 
 const openModal = (data) => {
@@ -1104,8 +1207,8 @@ const openModal = (data) => {
 
   document.body.appendChild(modalOverlay);
   const modalCard = modalOverlay.querySelector(".modal-card");
-  modalCard.style.background = getCategoryColor(data.category);
-  modalCard.style.borderColor = getCategoryColor(data.category);
+  modalCard.style.background = getCategoryBackground(data.category);
+  modalCard.style.borderColor = getModalBorderColor(data.category);
   modalCard.style.color = "var(--text-color)";
 
   void modalOverlay.offsetWidth;
@@ -1188,7 +1291,7 @@ const renderElements = (elements = elementData) => {
     card.className = "element-card";
     card.dataset.category = element.category;
     card.tabIndex = 0;
-    card.style.background = getCategoryColor(element.category);
+    card.style.background = getCategoryBackground(element.category);
     card.style.borderColor = getCategoryColor(element.category);
     card.style.color = "var(--text-color)";
     card.innerHTML = `
