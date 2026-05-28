@@ -221,7 +221,7 @@ const elementData = [
     symbol: "Ar",
     name: "Argon",
     description:
-      "Inilah Argon, si nomor atom delapan belas yang menjadi penghuni setia di golongan gas mulia. Unsur gas ini punya keunikan yang sangat malas, karena ia bersifat super cuek dan sama sekali tidak mau bereaksi atau berteman dengan unsur kimia lainnya, mirip seperti namanya yang diambil dari bahasa Yunani kuno berarti "malas". Namun dalam keseharian, sifat cueknya ini justru jadi pahlawan karena sering diisikan ke dalam bola lampu pijar rumahan untuk melindungi kawat filamen panas di dalamnya agar tidak mudah putus atau terbakar oleh oksigen.",
+      "Inilah Argon, si nomor atom delapan belas yang menjadi penghuni setia di golongan gas mulia. Unsur gas ini punya keunikan yang sangat malas, karena ia bersifat super cuek dan sama sekali tidak mau bereaksi atau berteman dengan unsur kimia lainnya, mirip seperti namanya yang diambil dari bahasa Yunani kuno berarti malas. Namun dalam keseharian, sifat cueknya ini justru jadi pahlawan karena sering diisikan ke dalam bola lampu pijar rumahan untuk melindungi kawat filamen panas di dalamnya agar tidak mudah putus atau terbakar oleh oksigen.",
   },
   {
     number: 19,
@@ -533,7 +533,7 @@ const elementData = [
     symbol: "La",
     name: "Lantanum",
     description:
-      "Yuk, kenalan dengan Lantanium, si nomor atom lima puluh tujuh yang menjadi pemimpin terhormat dari golongan lantanida. Unsur logam berwarna perak keputihan ini punya keunikan yang sangat menarik karena ia begitu lunak sampai bisa dipotong halus dengan pisau, namun jika digores sedikit saja, ia akan langsung mengeluarkan percikan api yang terang. Di kehidupan kita sehari-hari, Lantanium adalah pahlawan di balik indahnya dunia visual karena senyawanya menjadi bahan utama pembuat lensa kamera berkualitas tinggi agar jepretan fotomu super jernih, sekaligus bekerja keras di dalam baterai mobil hibrida agar hemat energi.',
+      "Yuk, kenalan dengan Lantanium, si nomor atom lima puluh tujuh yang menjadi pemimpin terhormat dari golongan lantanida. Unsur logam berwarna perak keputihan ini punya keunikan yang sangat menarik karena ia begitu lunak sampai bisa dipotong halus dengan pisau, namun jika digores sedikit saja, ia akan langsung mengeluarkan percikan api yang terang. Di kehidupan kita sehari-hari, Lantanium adalah pahlawan di balik indahnya dunia visual karena senyawanya menjadi bahan utama pembuat lensa kamera berkualitas tinggi agar jepretan fotomu super jernih, sekaligus bekerja keras di dalam baterai mobil hibrida agar hemat energi.",
   },
   {
     number: 58,
@@ -701,7 +701,7 @@ const elementData = [
     symbol: "Pt",
     name: "Platina",
     description:
-      "Yuk, kenalan dengan Platina, si nomor atom tujuh puluh delapan yang menjadi bangsawan sejati di golongan logam transisi. Unsur berkilau perak keputihan ini punya keunikan yang luar biasa karena ia sangat malas bereaksi dengan zat lain, membuatnya luar biasa murni, antikarat, bahkan tidak akan pudar meski terkubur ribuan tahun di dalam tanah. Di kehidupan sehari-hari, Platina adalah pahlawan lingkungan dan kesehatan karena ia menjadi komponen vital pengubah asap beracun knalpot mobil menjadi udara yang lebih bersih, sekaligus menjadi bahan utama perhiasan mewah kelas dunia dan obat kemoterapi pelawan kanker.',
+      "Yuk, kenalan dengan Platina, si nomor atom tujuh puluh delapan yang menjadi bangsawan sejati di golongan logam transisi. Unsur berkilau perak keputihan ini punya keunikan yang luar biasa karena ia sangat malas bereaksi dengan zat lain, membuatnya luar biasa murni, antikarat, bahkan tidak akan pudar meski terkubur ribuan tahun di dalam tanah. Di kehidupan sehari-hari, Platina adalah pahlawan lingkungan dan kesehatan karena ia menjadi komponen vital pengubah asap beracun knalpot mobil menjadi udara yang lebih bersih, sekaligus menjadi bahan utama perhiasan mewah kelas dunia dan obat kemoterapi pelawan kanker.",
   },
   {
     number: 79,
